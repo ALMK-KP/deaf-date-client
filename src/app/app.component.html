@@ -4,51 +4,11 @@
   >
     deafdate
   </h1>
-  <!-- SEARCH BAR -->
 
-  <main class="px-4">
-    <app-search-for-track />
+  <main class="px-2">
+    <app-search-for-track (addTrack)="addTrackToPlaylist($event)" />
+    <app-track-list [tracks]="tracks" />
 
-    <!--ITEM LIST-->
-    <h2 class="mt-8 text-lg font-semibold text-green-500 tracking-widest">
-      Your current playlist
-    </h2>
-    <ul class="mt-2 text-white text-sm gap-2 flex flex-col">
-      <li class="flex rounded-sm p-2 gap-2 bg-neutral-600">
-        <img
-          src="https://i.ytimg.com/vi/q392mSz4VeY/default.jpg"
-          alt=""
-          width="80"
-        />
-        <div>
-          <h2>Imagine Dragons - Eyes Closed (Official Music Video)</h2>
-          <p>ImagineDragonsVEVO</p>
-        </div>
-      </li>
-      <li class="flex rounded-sm p-2 gap-2 bg-neutral-600">
-        <img
-          src="https://i.ytimg.com/vi/q392mSz4VeY/default.jpg"
-          alt=""
-          width="80"
-        />
-        <div>
-          <h2>Imagine Dragons - Eyes Closed (Official Music Video)</h2>
-          <p>ImagineDragonsVEVO</p>
-        </div>
-      </li>
-      <li class="flex rounded-sm p-2 gap-2 bg-neutral-600">
-        <img
-          src="https://i.ytimg.com/vi/q392mSz4VeY/default.jpg"
-          alt=""
-          width="80"
-        />
-        <div>
-          <h2>Imagine Dragons - Eyes Closed (Official Music Video)</h2>
-          <p>ImagineDragonsVEVO</p>
-        </div>
-      </li>
-    </ul>
-    <p class="text-green-500 text-center tracking-widest p-4">.. ... .. ...</p>
     <!--BUTTON TO GENERATE LINK-->
   </main>
 </div>

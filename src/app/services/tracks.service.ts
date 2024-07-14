@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
-import { environment } from '../environments/environment';
+import { map, Observable, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface Item {
   id: { videoId: string };
@@ -12,27 +12,25 @@ interface Item {
   };
 }
 
-interface YTData {
-  items: Item[];
-}
-
 @Injectable({
   providedIn: 'root',
 })
-export class YoutubeDataService {
+export class TracksService {
   private readonly httpClient = inject(HttpClient);
 
-  searchYouTubeData(q: string): Observable<any> {
+  saveTrackToPlaylist(track: any): Observable<any[]> {
+    const playlistId = localStorage.getItem('deafdatePlaylistId') || null;
     return this.httpClient
-      .get<YTData>('https://www.googleapis.com/youtube/v3/search', {
-        params: {
-          part: 'snippet',
-          type: 'video',
-          key: environment.YT_API_KEY,
-          q,
-        },
+      .post<any>(`${environment.BE_URL}/tracks/add`, {
+        ...track,
+        playlistId,
       })
-      .pipe(map((data) => this.mappedResults(data.items)));
+      .pipe(
+        tap((val) => console.log(val)),
+        tap((val: any) =>
+          localStorage.setItem('deafdatePlaylistId', val.playlistId),
+        ),
+      );
   }
 
   private mappedResults(items: any) {

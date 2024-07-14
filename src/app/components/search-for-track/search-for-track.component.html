@@ -8,9 +8,9 @@
     placeholder="Search for YouTube track"
     autocomplete="off"
     [formControl]="searchQuery"
-    (blur)="toggleAutocomplete(false)"
     (focus)="toggleAutocomplete(!!searchResults)"
   />
+<!--    (blur)="toggleAutocomplete(false)"-->
   @if (!!searchQuery.value?.length) {
     <button
       class="font-bold w-4 ml-2 hover:text-green-500"
@@ -25,5 +25,6 @@
   <app-search-for-track-autocomplete
     [searchResults]="searchResults"
     [loading]="loading"
+    (addTrack)="emitAddTrack($event)"
   />
 }
