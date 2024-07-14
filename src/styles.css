@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-700;
+  @apply bg-neutral-700 text-neutral-200;
 }
 
 /* HTML: <div class="loader"></div> */
