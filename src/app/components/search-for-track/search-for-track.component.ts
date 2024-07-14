@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { SearchForTrackAutocompleteComponent } from './search-for-track-autocomplete/search-for-track-autocomplete.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, debounceTime, filter, switchMap, tap } from 'rxjs';
+import { debounceTime, filter, switchMap, tap } from 'rxjs';
 import {YoutubeSearchService} from "../../services/youtube-search.service";
 
 @Component({
@@ -48,6 +48,7 @@ export class SearchForTrackComponent {
   }
 
   emitAddTrack($event: any) {
+    this.autocompleteOpened = false;
     this.addTrack.emit($event);
   }
 }
