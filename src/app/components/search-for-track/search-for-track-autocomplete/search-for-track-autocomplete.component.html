@@ -1,0 +1,31 @@
+<!--SEARCH BAR AUTOCOMPLETE-->
+<div
+  class="absolute top-[118px] left-0 right-0 bottom-0 bg-neutral-700 opacity-80"
+></div>
+<div
+  class="absolute right-4 left-4 mt-2 bg-neutral-600 ring-2 ring-green-500 text-white text-sm min-h-[76px] max-h-64 px-2 overflow-y-scroll"
+>
+  @if (loading) {
+    <div class="flex items-center justify-center h-[74px]">
+      <div class="loader"></div>
+    </div>
+  }
+  <ul>
+    <!--ITEM IN AUTOCOMPLETE-->
+    @for (track of searchResults; track track.id) {
+      <li
+        class="flex last-of-type:border-0 border-b border-green-500 py-2 gap-2"
+      >
+        <img
+          [src]="track.thumbnails.default.url"
+          alt=""
+          width="80"
+        />
+        <div>
+          <h2>{{ track.title }}</h2>
+          <p>{{ track.channelTitle }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+</div>

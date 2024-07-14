@@ -1,0 +1,29 @@
+<div
+  class="flex mt-4 bg-neutral-600 ring-2 ring-green-500 text-white text-sm focus:ring-4 focus:ring-green-500 w-full p-2"
+>
+  <input
+    type="text"
+    id="ytSearch"
+    class="outline-none bg-neutral-600 flex-grow"
+    placeholder="Search for YouTube track"
+    autocomplete="off"
+    [formControl]="searchQuery"
+    (blur)="toggleAutocomplete(false)"
+    (focus)="toggleAutocomplete(!!searchResults)"
+  />
+  @if (!!searchQuery.value?.length) {
+    <button
+      class="font-bold w-4 ml-2 hover:text-green-500"
+      (click)="clearSearchQuery()"
+    >
+      X
+    </button>
+  }
+</div>
+
+@if (autocompleteOpened && (loading || searchResults.length)) {
+  <app-search-for-track-autocomplete
+    [searchResults]="searchResults"
+    [loading]="loading"
+  />
+}

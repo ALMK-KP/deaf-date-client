@@ -1,21 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { YoutubeDataService } from './youtube-data.service';
+import {SearchForTrackComponent} from "./components/search-for-track/search-for-track.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SearchForTrackComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'deaf-date-yt';
-  private readonly ytData = inject(YoutubeDataService);
 
-  constructor() {
-    this.ytData
-      .searchYouTubeData('imagine dragons')
-      .subscribe((value) => console.log(value));
-  }
 }
