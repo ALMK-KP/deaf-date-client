@@ -1,26 +1,46 @@
 @if (tracks.length) {
-  @if (!encoded) {
+  @if (mode === "CREATION") {
     <h2 class="mt-8 text-lg font-semibold text-green-500 tracking-widest">
       Your current playlist
     </h2>
   }
   <ul
     class="mt-2 text-white text-sm gap-2 flex flex-col"
-    [class.mt-8]="encoded"
+    [class.mt-8]="mode !== 'CREATION'"
   >
     @for (track of tracks; track track.id; let i = $index) {
       <li class="rounded-sm p-2 bg-neutral-600">
         <div class="flex gap-2" (click)="toggleExpanded(track.id)">
           <p>{{ i + 1 }}.</p>
           @if (track.thumbnail) {
-            <img [src]="track.thumbnail" alt="" width="80" />
+            <a
+              [href]="track.ytLink"
+              target="_blank"
+              class="block flex-shrink-0"
+            >
+              <img [src]="track.thumbnail" alt="" width="50" height="40" />
+            </a>
           }
           <div>
-            <h2>{{ encoded ? track.customTitle : track.title }}</h2>
-            <p>{{ track.channelTitle }}</p>
+            @if (mode !== "CREATION") {
+              <p
+                [class.italic]="mode === 'DECODED'"
+                [class.text-neutral-300]="mode === 'DECODED'"
+                [class.border-b]="mode === 'DECODED'"
+                [class.border-orange-500]="mode === 'DECODED'"
+                [class.pb-2]="mode === 'DECODED'"
+                class="text-xs"
+              >
+                {{ track.customTitle }}
+              </p>
+            }
+            @if (mode !== "ENCODED") {
+              <h2 [class.mt-2]="mode === 'DECODED'">{{ track.title }}</h2>
+              <p>{{ track.channelTitle }}</p>
+            }
           </div>
         </div>
-        @if (expanded && track.id === expandedTrackId && encoded) {
+        @if (expanded && track.id === expandedTrackId && mode !== "CREATION") {
           <audio
             controls
             class="mt-2 mx-auto"
@@ -35,6 +55,18 @@
     }
   </ul>
 } @else {
-  <p class="text-center italic mt-24 mb-20">No tracks added yet</p>
+  @if (mode === "CREATION") {
+    <p class="text-center italic mt-24 mb-20">No tracks added yet</p>
+  } @else {
+    <div class="flex items-center justify-center h-screen">
+      <div class="loader"></div>
+    </div>
+  }
 }
-<p class="text-green-500 text-center tracking-widest p-4">.. ... .. ...</p>
+<p
+  class="text-center tracking-widest p-4"
+  [class.text-orange-500]="mode === 'DECODED'"
+  [class.text-green-500]="mode !== 'DECODED'"
+>
+  .. ... .. ...
+</p>

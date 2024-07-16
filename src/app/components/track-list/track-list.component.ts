@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class TrackListComponent {
   @Input() tracks: any = [];
-  @Input() encoded = false;
+  @Input() mode: 'ENCODED' | 'DECODED' | 'CREATION' = 'CREATION';
   expanded = false;
   expandedTrackId: number | null = null;
 
