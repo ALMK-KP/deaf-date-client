@@ -4,11 +4,7 @@
   >
     deafdate
   </h1>
-
   <main class="px-2">
-    <app-search-for-track (addTrack)="addTrackToPlaylist($event)" />
-    <app-track-list [tracks]="tracks" />
-
-    <!--BUTTON TO GENERATE LINK-->
+    <router-outlet></router-outlet>
   </main>
 </div>

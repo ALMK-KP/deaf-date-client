@@ -9,7 +9,6 @@ import {YoutubeSearchService} from "../../services/youtube-search.service";
   standalone: true,
   imports: [SearchForTrackAutocompleteComponent, ReactiveFormsModule],
   templateUrl: './search-for-track.component.html',
-  styleUrl: './search-for-track.component.css',
 })
 export class SearchForTrackComponent {
   @Output() addTrack = new EventEmitter();
