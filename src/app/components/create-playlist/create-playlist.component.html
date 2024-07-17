@@ -1,4 +1,21 @@
 <app-search-for-track (addTrack)="addTrackToPlaylist($event)" />
-<app-track-list [tracks]="tracks" (customTitleUpdated)="updateCustomTitle($event)" />
+<app-track-list
+  [tracks]="tracks"
+  (customTitleUpdated)="updateCustomTitle($event)"
+/>
+<div class="flex gap-2">
+  <a
+    [routerLink]="'/encoded/' + playlistId"
+    class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 text-nowrap w-full p-2 mb-2"
+  >
+    open as deaf date
+  </a>
+  <button
+    class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 text-nowrap p-2 mb-2 flex-grow-0"
+    [cdkCopyToClipboard]="getLink()"
+  >
+    copy link
+  </button>
+</div>
 
 <!--BUTTON TO GENERATE LINK-->

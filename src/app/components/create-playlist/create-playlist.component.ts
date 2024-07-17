@@ -3,22 +3,31 @@ import { TracksService } from '../../services/tracks.service';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { SearchForTrackComponent } from '../search-for-track/search-for-track.component';
 import { TrackListComponent } from '../track-list/track-list.component';
+import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
 
 @Component({
   selector: 'app-create-playlist',
   standalone: true,
-  imports: [SearchForTrackComponent, TrackListComponent],
+  imports: [
+    SearchForTrackComponent,
+    TrackListComponent,
+    RouterLink,
+    CdkCopyToClipboard,
+  ],
   templateUrl: './create-playlist.component.html',
 })
 export class CreatePlaylistComponent {
   private readonly tracksService = inject(TracksService);
+  playlistId: string | null = null;
   tracks = [];
 
   constructor() {
-    const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
-    if (playlistId) {
+    this.playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
+    if (this.playlistId) {
       this.tracksService
-        .getPlaylist(playlistId, 'FULL')
+        .getPlaylist(this.playlistId, 'FULL')
         .subscribe((val: any) => {
           this.tracks = val.data;
         });
@@ -37,5 +46,9 @@ export class CreatePlaylistComponent {
       .subscribe((value: any) => {
         this.tracks = value.data;
       });
+  }
+
+  getLink() {
+    return `${environment.BASE_URL}/encoded/${this.playlistId}`;
   }
 }
