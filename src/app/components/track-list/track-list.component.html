@@ -29,17 +29,31 @@
                 [class.border-b]="mode === 'DECODED'"
                 [class.border-orange-500]="mode === 'DECODED'"
                 [class.pb-2]="mode === 'DECODED'"
+                [class.mb-2]="mode === 'DECODED'"
                 class="text-xs"
               >
                 {{ track.customTitle }}
               </p>
             }
             @if (mode !== "ENCODED") {
-              <h2 [class.mt-2]="mode === 'DECODED'">{{ track.title }}</h2>
+              <h2>{{ track.title }}</h2>
               <p>{{ track.channelTitle }}</p>
+            }
+            @if (mode === "CREATION") {
+              <p
+                class="text-xs border-t border-green-500 pt-2 mt-2 text-neutral-300"
+              >
+                {{ track.customTitle }}
+              </p>
             }
           </div>
         </div>
+        @if (expanded && track.id === expandedTrackId && mode === "CREATION") {
+          <app-custom-description-input
+            [initialValue]="getInitialValueOfCustomTitle(track.customTitle)"
+          />
+        }
+
         @if (expanded && track.id === expandedTrackId && mode !== "CREATION") {
           <audio
             controls
