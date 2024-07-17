@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -9,6 +15,8 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class CustomDescriptionInputComponent implements OnInit {
   @Input() initialValue = '';
+  @Input() trackId: number | null = null;
+  @Output() customTitleUpdated = new EventEmitter();
   customDescription = new FormControl<string>('');
 
   clearSearchQuery() {
@@ -17,5 +25,12 @@ export class CustomDescriptionInputComponent implements OnInit {
 
   ngOnInit() {
     this.customDescription.setValue(this.initialValue);
+  }
+
+  updateTrackCustomTitle(value: string) {
+    this.customTitleUpdated.emit({
+      trackId: this.trackId,
+      newCustomTitle: value,
+    });
   }
 }

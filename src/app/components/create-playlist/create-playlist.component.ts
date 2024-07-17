@@ -30,4 +30,12 @@ export class CreatePlaylistComponent {
       this.tracks = value.data;
     });
   }
+
+  updateCustomTitle(event: any) {
+    this.tracksService
+      .updateCustomTitle(event.trackId, event.newCustomTitle)
+      .subscribe((value: any) => {
+        this.tracks = value.data;
+      });
+  }
 }

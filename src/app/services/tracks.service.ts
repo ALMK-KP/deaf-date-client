@@ -42,6 +42,14 @@ export class TracksService {
       .pipe(tap((val) => console.log(val)));
   }
 
+  updateCustomTitle(id: number, customTitle: string): Observable<any[]> {
+    return this.httpClient
+      .put<any>(`${environment.BE_URL}/tracks/${id}`, {
+        customTitle
+      })
+      .pipe(tap((val) => console.log(val)));
+  }
+
   private mappedResults(items: any) {
     return items.map((song: Item) => ({
       link: 'https://www.youtube.com/watch?v=' + song.id.videoId,

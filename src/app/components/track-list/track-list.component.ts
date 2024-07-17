@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 
 @Component({
@@ -10,6 +10,7 @@ import { CustomDescriptionInputComponent } from '../custom-description-input/cus
 export class TrackListComponent {
   @Input() tracks: any = [];
   @Input() mode: 'ENCODED' | 'DECODED' | 'CREATION' = 'CREATION';
+  @Output() customTitleUpdated = new EventEmitter();
   expanded = false;
   expandedTrackId: number | null = null;
 
@@ -25,5 +26,10 @@ export class TrackListComponent {
   getInitialValueOfCustomTitle(customTitle: string) {
     if (customTitle === '####') return '';
     return customTitle;
+  }
+
+  updateCustomTitle(event: any) {
+    this.customTitleUpdated.emit(event);
+    this.expanded = false;
   }
 }

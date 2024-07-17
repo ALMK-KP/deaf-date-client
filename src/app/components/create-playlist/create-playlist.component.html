@@ -1,4 +1,4 @@
 <app-search-for-track (addTrack)="addTrackToPlaylist($event)" />
-<app-track-list [tracks]="tracks" />
+<app-track-list [tracks]="tracks" (customTitleUpdated)="updateCustomTitle($event)" />
 
 <!--BUTTON TO GENERATE LINK-->

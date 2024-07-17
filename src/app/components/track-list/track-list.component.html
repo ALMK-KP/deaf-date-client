@@ -51,6 +51,8 @@
         @if (expanded && track.id === expandedTrackId && mode === "CREATION") {
           <app-custom-description-input
             [initialValue]="getInitialValueOfCustomTitle(track.customTitle)"
+            [trackId]="track.id"
+            (customTitleUpdated)="updateCustomTitle($event)"
           />
         }
 
