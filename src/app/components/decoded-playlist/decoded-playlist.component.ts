@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TrackListComponent } from '../track-list/track-list.component';
 import { TracksService } from '../../services/tracks.service';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-decoded-playlist',

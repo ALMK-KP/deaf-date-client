@@ -74,10 +74,12 @@
   @if (mode === "CREATION") {
     <p class="text-center italic mt-24 mb-20">No tracks added yet</p>
   } @else {
-    <div class="flex items-center justify-center h-screen">
-      <div class="loader"></div>
-    </div>
+    <p class="text-center italic mt-24 mb-20">Playlist doesn't exist</p>
   }
+  <!--  TODO: fix loading state-->
+  <!--  <div class="flex items-center justify-center h-screen">-->
+  <!--    <div class="loader"></div>-->
+  <!--  </div>-->
 }
 <p
   class="text-center tracking-widest p-4"
