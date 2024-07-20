@@ -1,8 +1,16 @@
 @if (tracks.length) {
   @if (mode === "CREATION") {
-    <h2 class="mt-8 text-lg font-semibold text-green-500 tracking-widest">
-      Your current playlist
-    </h2>
+    <div class="flex gap-2 justify-between items-center mt-8">
+      <h2 class="text-lg font-semibold text-green-500 tracking-widest">
+        Your current playlist
+      </h2>
+      <button
+        class="my-1 mx-2 text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 p-1"
+        (click)="openConfirmationDialog()"
+      >
+        <img src="assets/icons/icons8-remove-48.png" width="24" height="24" />
+      </button>
+    </div>
   }
   <ul
     class="mt-2 text-white text-sm gap-2 flex flex-col"
@@ -78,3 +86,9 @@
 >
   .. ... .. ...
 </p>
+@if (isConfirmationDialogOpened) {
+  <app-dialog
+    (emitDialogClicked)="removePlaylist($event)"
+    message="Are you sure you want to delete current playlist?"
+  />
+}

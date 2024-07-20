@@ -5,7 +5,7 @@ import { SearchForTrackComponent } from '../search-for-track/search-for-track.co
 import { TrackListComponent } from '../track-list/track-list.component';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-create-playlist',
@@ -37,6 +37,7 @@ export class CreatePlaylistComponent {
   addTrackToPlaylist($event: any) {
     this.tracksService.saveTrackToPlaylist($event).subscribe((value: any) => {
       this.tracks = value.data;
+      this.playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
     });
   }
 
@@ -50,5 +51,14 @@ export class CreatePlaylistComponent {
 
   getLink() {
     return `${environment.BASE_URL}/encoded/${this.playlistId}`;
+  }
+
+  removePlaylist() {
+    if (this.playlistId) {
+      this.tracksService.removePlaylist(this.playlistId).subscribe(() => {
+        this.tracks = [];
+        localStorage.removeItem(PLAYLIST_ID_LS_KEY);
+      });
+    }
   }
 }

@@ -2,6 +2,7 @@
 <app-track-list
   [tracks]="tracks"
   (customTitleUpdated)="updateCustomTitle($event)"
+  (playlistRemoved)="removePlaylist()"
 />
 <div class="flex gap-2">
   <a
@@ -17,5 +18,3 @@
     copy link
   </button>
 </div>
-
-<!--BUTTON TO GENERATE LINK-->

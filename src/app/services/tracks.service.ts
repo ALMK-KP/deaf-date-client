@@ -50,6 +50,12 @@ export class TracksService {
       .pipe(tap((val) => console.log(val)));
   }
 
+  removePlaylist(id: string): Observable<any[]> {
+    return this.httpClient
+      .delete<any>(`${environment.BE_URL}/playlist/${id}`)
+      .pipe(tap((val) => console.log(val)));
+  }
+
   private mappedResults(items: any) {
     return items.map((song: Item) => ({
       link: 'https://www.youtube.com/watch?v=' + song.id.videoId,
