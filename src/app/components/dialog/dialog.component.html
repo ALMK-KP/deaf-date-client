@@ -1,0 +1,22 @@
+<div
+  class="absolute top-[71px] left-0 right-0 bottom-0 bg-neutral-700 opacity-80"
+></div>
+<div
+  class="absolute right-4 left-4 mt-2 bg-neutral-600 ring-2 ring-green-500 text-white text-sm px-2 max-w-[400px]"
+>
+  <p class="text-center font-bold my-6">{{ message }}</p>
+  <div class="flex gap-2">
+    <button
+      class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 w-full p-2 mb-2"
+      (click)="emitDialogClicked.emit(true)"
+    >
+      Yes
+    </button>
+    <button
+      class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 w-full p-2 mb-2"
+      (click)="emitDialogClicked.emit(false)"
+    >
+      No
+    </button>
+  </div>
+</div>
