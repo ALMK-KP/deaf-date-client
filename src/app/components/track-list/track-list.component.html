@@ -22,30 +22,22 @@
             </a>
           }
           <div>
-            @if (mode !== "CREATION") {
-              <p
-                [class.italic]="mode === 'DECODED'"
-                [class.text-neutral-300]="mode === 'DECODED'"
-                [class.border-b]="mode === 'DECODED'"
-                [class.border-orange-500]="mode === 'DECODED'"
-                [class.pb-2]="mode === 'DECODED'"
-                [class.mb-2]="mode === 'DECODED'"
-                class="text-xs"
-              >
-                {{ track.customTitle }}
-              </p>
-            }
             @if (mode !== "ENCODED") {
               <h2>{{ track.title }}</h2>
               <p>{{ track.channelTitle }}</p>
             }
-            @if (mode === "CREATION") {
-              <p
-                class="text-xs border-t border-green-500 pt-2 mt-2 text-neutral-300"
-              >
-                {{ track.customTitle }}
-              </p>
-            }
+            <p
+              [class.italic]="mode === 'DECODED'"
+              [class.text-neutral-300]="mode === 'DECODED'"
+              [class.border-t]="mode !== 'ENCODED'"
+              [class.pt-2]="mode !== 'ENCODED'"
+              [class.mt-2]="mode !== 'ENCODED'"
+              [class.border-orange-500]="mode === 'DECODED'"
+              [class.border-green-500]="mode !== 'DECODED'"
+              class="text-xs"
+            >
+              {{ track.customTitle }}
+            </p>
           </div>
         </div>
         @if (expanded && track.id === expandedTrackId && mode === "CREATION") {
