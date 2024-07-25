@@ -10,6 +10,13 @@ import { DialogComponent } from '../dialog/dialog.component';
   standalone: true,
   imports: [TrackListComponent, RouterLink, DialogComponent],
   templateUrl: './encoded-playlist.component.html',
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+  `,
 })
 export class EncodedPlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);

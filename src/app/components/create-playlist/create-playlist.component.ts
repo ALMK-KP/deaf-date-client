@@ -17,6 +17,13 @@ import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
     CdkCopyToClipboard,
   ],
   templateUrl: './create-playlist.component.html',
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+  `,
 })
 export class CreatePlaylistComponent {
   private readonly tracksService = inject(TracksService);

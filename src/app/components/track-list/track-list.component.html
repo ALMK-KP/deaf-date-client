@@ -1,6 +1,6 @@
 @if (tracks.length) {
   @if (mode === "CREATION") {
-    <div class="flex gap-2 justify-between items-center mt-8">
+    <div class="flex gap-2 justify-between items-center pt-8">
       <h2 class="text-lg font-semibold text-green-500 tracking-widest">
         Your current playlist
       </h2>
@@ -13,7 +13,7 @@
     </div>
   }
   <ul
-    class="mt-2 text-white text-sm gap-2 flex flex-col"
+    class="pt-2 text-white text-sm gap-2 flex flex-col"
     [class.mt-8]="mode !== 'CREATION'"
   >
     @for (track of tracks; track track.id; let i = $index) {
@@ -72,9 +72,9 @@
   </ul>
 } @else {
   @if (mode === "CREATION") {
-    <p class="text-center italic mt-24 mb-20">No tracks added yet</p>
+    <p class="text-center italic pt-24 pb-20">No tracks added yet</p>
   } @else {
-    <p class="text-center italic mt-24 mb-20">Playlist doesn't exist</p>
+    <p class="text-center italic pt-24 pb-20">Playlist doesn't exist</p>
   }
   <!--  TODO: fix loading state-->
   <!--  <div class="flex items-center justify-center h-screen">-->

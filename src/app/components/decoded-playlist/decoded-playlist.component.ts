@@ -8,6 +8,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   standalone: true,
   imports: [TrackListComponent, RouterLink],
   templateUrl: './decoded-playlist.component.html',
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+  `,
 })
 export class DecodedPlaylistComponent implements OnInit {
   private readonly tracksService = inject(TracksService);
