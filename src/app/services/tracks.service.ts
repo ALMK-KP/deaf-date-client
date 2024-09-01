@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, of, tap } from 'rxjs';
+import { lastValueFrom, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PLAYLIST_ID_LS_KEY } from '../utils/constants';
 
@@ -19,41 +19,42 @@ interface Item {
 export class TracksService {
   private readonly httpClient = inject(HttpClient);
 
-  saveTrackToPlaylist(track: any): Observable<any[]> {
+  saveTrackToPlaylist(track: any): Promise<any[]> {
     const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
-    return this.httpClient
-      .post<any>(`${environment.BE_URL}/tracks/add`, {
-        ...track,
-        playlistId,
-      })
-      .pipe(
-        tap((val) => console.log(val)),
-        tap((val: any) =>
-          localStorage.setItem(PLAYLIST_ID_LS_KEY, val.playlistId),
+    return lastValueFrom(
+      this.httpClient
+        .post<any>(`${environment.BE_URL}/tracks/add`, {
+          ...track,
+          playlistId,
+        })
+        .pipe(
+          tap((val: any) =>
+            localStorage.setItem(PLAYLIST_ID_LS_KEY, val.playlistId),
+          ),
         ),
-      );
+    );
   }
 
-  getPlaylist(id: string, mode: 'FULL' | 'ENCODED'): Observable<any[]> {
-    return this.httpClient
-      .get<any>(`${environment.BE_URL}/playlist/${id}`, {
+  getPlaylist(id: string, mode: 'FULL' | 'ENCODED'): Promise<any[]> {
+    return lastValueFrom(
+      this.httpClient.get<any>(`${environment.BE_URL}/playlist/${id}`, {
         params: { mode },
-      })
-      .pipe(tap((val) => console.log(val)));
+      }),
+    );
   }
 
-  updateCustomTitle(id: number, customTitle: string): Observable<any[]> {
-    return this.httpClient
-      .put<any>(`${environment.BE_URL}/tracks/${id}`, {
-        customTitle
-      })
-      .pipe(tap((val) => console.log(val)));
+  updateCustomTitle(id: number, customTitle: string): Promise<any[]> {
+    return lastValueFrom(
+      this.httpClient.put<any>(`${environment.BE_URL}/tracks/${id}`, {
+        customTitle,
+      }),
+    );
   }
 
-  removePlaylist(id: string): Observable<any[]> {
-    return this.httpClient
-      .delete<any>(`${environment.BE_URL}/playlist/${id}`)
-      .pipe(tap((val) => console.log(val)));
+  removePlaylist(id: string): Promise<any[]> {
+    return lastValueFrom(
+      this.httpClient.delete<any>(`${environment.BE_URL}/playlist/${id}`),
+    );
   }
 
   private mappedResults(items: any) {

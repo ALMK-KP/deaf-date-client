@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TrackListComponent } from '../track-list/track-list.component';
-import { TracksService } from '../../services/tracks.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { GlobalStore } from '../../global.store';
 
 @Component({
   selector: 'app-decoded-playlist',
@@ -17,19 +17,17 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   `,
 })
 export class DecodedPlaylistComponent implements OnInit {
-  private readonly tracksService = inject(TracksService);
-  tracks = [];
+  readonly store = inject(GlobalStore);
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+    this.store.updateMode('DECODED');
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     const playlistId = this.route.snapshot.paramMap.get('id');
     if (playlistId) {
-      this.tracksService
-        .getPlaylist(playlistId, 'FULL')
-        .subscribe((val: any) => {
-          this.tracks = val.data;
-        });
+      this.store.updatePlaylistId(playlistId);
+      await this.store.loadTracks('FULL');
     }
   }
 }

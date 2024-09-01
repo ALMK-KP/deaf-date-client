@@ -1,5 +1,5 @@
-@if (tracks.length) {
-  @if (mode === "CREATION") {
+@if (store.tracks().length) {
+  @if (store.mode() === "CREATION") {
     <div class="flex gap-2 justify-between items-center pt-8">
       <h2 class="text-lg font-semibold text-green-500 tracking-widest">
         Your current playlist
@@ -14,9 +14,9 @@
   }
   <ul
     class="pt-2 text-white text-sm gap-2 flex flex-col"
-    [class.mt-8]="mode !== 'CREATION'"
+    [class.mt-8]="store.mode() !== 'CREATION'"
   >
-    @for (track of tracks; track track.id; let i = $index) {
+    @for (track of store.tracks(); track track.id; let i = $index) {
       <li class="rounded-sm p-2 bg-neutral-600">
         <div class="flex gap-2" (click)="toggleExpanded(track.id)">
           <p>{{ i + 1 }}.</p>
@@ -30,25 +30,25 @@
             </a>
           }
           <div>
-            @if (mode !== "ENCODED") {
+            @if (store.mode() !== "ENCODED") {
               <h2>{{ track.title }}</h2>
               <p>{{ track.channelTitle }}</p>
             }
             <p
-              [class.italic]="mode === 'DECODED'"
-              [class.text-neutral-300]="mode === 'DECODED'"
-              [class.border-t]="mode !== 'ENCODED'"
-              [class.pt-2]="mode !== 'ENCODED'"
-              [class.mt-2]="mode !== 'ENCODED'"
-              [class.border-orange-500]="mode === 'DECODED'"
-              [class.border-green-500]="mode !== 'DECODED'"
+              [class.italic]="store.mode() === 'DECODED'"
+              [class.text-neutral-300]="store.mode() === 'DECODED'"
+              [class.border-t]="store.mode() !== 'ENCODED'"
+              [class.pt-2]="store.mode() !== 'ENCODED'"
+              [class.mt-2]="store.mode() !== 'ENCODED'"
+              [class.border-orange-500]="store.mode() === 'DECODED'"
+              [class.border-green-500]="store.mode() !== 'DECODED'"
               class="text-xs"
             >
               {{ track.customTitle }}
             </p>
           </div>
         </div>
-        @if (expanded && track.id === expandedTrackId && mode === "CREATION") {
+        @if (expanded && track.id === expandedTrackId && store.mode() === "CREATION") {
           <app-custom-description-input
             [initialValue]="getInitialValueOfCustomTitle(track.customTitle)"
             [trackId]="track.id"
@@ -56,7 +56,7 @@
           />
         }
 
-        @if (expanded && track.id === expandedTrackId && mode !== "CREATION") {
+        @if (expanded && track.id === expandedTrackId && store.mode() !== "CREATION") {
           <audio
             controls
             class="mt-2 mx-auto"
@@ -71,20 +71,20 @@
     }
   </ul>
 } @else {
-  @if (mode === "CREATION") {
+  @if (store.isLoading()) {
+    <div class="flex items-center justify-center h-screen">
+      <div class="loader"></div>
+    </div>
+  } @else if (store.mode() === "CREATION") {
     <p class="text-center italic pt-24 pb-20">No tracks added yet</p>
   } @else {
     <p class="text-center italic pt-24 pb-20">Playlist doesn't exist</p>
   }
-  <!--  TODO: fix loading state-->
-  <!--  <div class="flex items-center justify-center h-screen">-->
-  <!--    <div class="loader"></div>-->
-  <!--  </div>-->
 }
 <p
   class="text-center tracking-widest p-4"
-  [class.text-orange-500]="mode === 'DECODED'"
-  [class.text-green-500]="mode !== 'DECODED'"
+  [class.text-orange-500]="store.mode() === 'DECODED'"
+  [class.text-green-500]="store.mode() !== 'DECODED'"
 >
   .. ... .. ...
 </p>

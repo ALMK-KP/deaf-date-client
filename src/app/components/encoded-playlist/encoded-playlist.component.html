@@ -1,5 +1,5 @@
 <div class="pt-4 flex-grow flex flex-col">
-  <app-track-list [tracks]="tracks" mode="ENCODED" />
+  <app-track-list/>
   <div class="flex gap-2 mt-auto">
     @if (isCreatorOfCurrentPlaylist) {
       <button
@@ -9,7 +9,7 @@
         back to creation
       </button>
     }
-    @if (tracks.length) {
+    @if (store.tracks().length) {
       <button
         class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 w-full p-2 mb-2"
         (click)="openConfirmationDialog()"

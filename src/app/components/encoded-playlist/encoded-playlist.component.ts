@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TracksService } from '../../services/tracks.service';
 import { TrackListComponent } from '../track-list/track-list.component';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { DialogComponent } from '../dialog/dialog.component';
+import { GlobalStore } from '../../global.store';
 
 @Component({
   selector: 'app-encoded-playlist',
@@ -19,27 +19,25 @@ import { DialogComponent } from '../dialog/dialog.component';
   `,
 })
 export class EncodedPlaylistComponent implements OnInit {
-  private readonly tracksService = inject(TracksService);
-  tracks = [];
-  playlistId: string | null = null;
+  readonly store = inject(GlobalStore);
   isCreatorOfCurrentPlaylist = false;
   isConfirmationDialogOpened = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) {
+    this.store.updateMode('ENCODED');
+  }
 
-  ngOnInit() {
-    this.playlistId = this.route.snapshot.paramMap.get('id');
-    if (this.playlistId) {
-      this.tracksService
-        .getPlaylist(this.playlistId, 'ENCODED')
-        .subscribe((val: any) => {
-          this.tracks = val.data;
-        });
+  async ngOnInit() {
+    const playlistId = this.route.snapshot.paramMap.get('id');
+    if (playlistId) {
+      this.store.updatePlaylistId(playlistId);
+      await this.store.loadTracks('ENCODED');
+
       this.isCreatorOfCurrentPlaylist =
-        localStorage.getItem(PLAYLIST_ID_LS_KEY) === this.playlistId;
+        localStorage.getItem(PLAYLIST_ID_LS_KEY) === playlistId;
     }
   }
 
@@ -50,7 +48,7 @@ export class EncodedPlaylistComponent implements OnInit {
   handleDialogClick(confirmed: boolean) {
     this.isConfirmationDialogOpened = false;
     if (confirmed) {
-      this.router.navigateByUrl(`decoded/${this.playlistId}`);
+      this.router.navigateByUrl(`decoded/${this.store.playlistId()}`);
     }
   }
 }

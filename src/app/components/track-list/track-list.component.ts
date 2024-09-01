@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import {GlobalStore} from "../../global.store";
 
 @Component({
   selector: 'app-track-list',
@@ -9,10 +10,9 @@ import { DialogComponent } from '../dialog/dialog.component';
   templateUrl: './track-list.component.html',
 })
 export class TrackListComponent {
-  @Input() tracks: any = [];
-  @Input() mode: 'ENCODED' | 'DECODED' | 'CREATION' = 'CREATION';
   @Output() customTitleUpdated = new EventEmitter();
   @Output() playlistRemoved = new EventEmitter();
+  readonly store = inject(GlobalStore);
   expanded = false;
   expandedTrackId: number | null = null;
   isConfirmationDialogOpened = false;
