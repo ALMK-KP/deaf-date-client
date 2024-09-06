@@ -34,7 +34,7 @@ export class CreatePlaylistComponent {
     if (playlistId) {
       this.store.updatePlaylistId(playlistId);
       (async function (store) {
-        await store.loadTracks('ENCODED');
+        await store.loadTracks('FULL');
       })(this.store);
     }
   }

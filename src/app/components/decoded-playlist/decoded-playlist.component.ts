@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TrackListComponent } from '../track-list/track-list.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalStore } from '../../global.store';
 
 @Component({
@@ -19,7 +19,10 @@ import { GlobalStore } from '../../global.store';
 export class DecodedPlaylistComponent implements OnInit {
   readonly store = inject(GlobalStore);
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     this.store.updateMode('DECODED');
   }
 
@@ -29,5 +32,10 @@ export class DecodedPlaylistComponent implements OnInit {
       this.store.updatePlaylistId(playlistId);
       await this.store.loadTracks('FULL');
     }
+  }
+
+  goToCreationMode() {
+    this.store.resetPlaylist();
+    this.router.navigateByUrl('/');
   }
 }

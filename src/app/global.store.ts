@@ -29,6 +29,9 @@ export const GlobalStore = signalStore(
     updatePlaylistId(playlistId: string) {
       patchState(store, { playlistId });
     },
+    resetPlaylist() {
+      patchState(store, { tracks: [], playlistId: '' });
+    },
     async updateTrack(trackId: number, customTitle: string) {
       patchState(store, { isLoading: true });
       const tracks: any = await tracksService.updateCustomTitle(
