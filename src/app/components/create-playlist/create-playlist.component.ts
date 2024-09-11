@@ -33,10 +33,10 @@ export class CreatePlaylistComponent {
     const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
     if (playlistId) {
       this.store.updatePlaylistId(playlistId);
-      (async function (store) {
-        await store.loadTracks('FULL');
-      })(this.store);
     }
+    (async function (store) {
+      await store.loadTracks('FULL');
+    })(this.store);
   }
 
   getLink() {

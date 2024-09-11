@@ -48,7 +48,11 @@
             </p>
           </div>
         </div>
-        @if (expanded && track.id === expandedTrackId && store.mode() === "CREATION") {
+        @if (
+          expanded &&
+          track.id === expandedTrackId &&
+          store.mode() === "CREATION"
+        ) {
           <app-custom-description-input
             [initialValue]="getInitialValueOfCustomTitle(track.customTitle)"
             [trackId]="track.id"
@@ -56,7 +60,11 @@
           />
         }
 
-        @if (expanded && track.id === expandedTrackId && store.mode() !== "CREATION") {
+        @if (
+          expanded &&
+          track.id === expandedTrackId &&
+          store.mode() !== "CREATION"
+        ) {
           <audio
             controls
             class="mt-2 mx-auto"
@@ -72,8 +80,10 @@
   </ul>
 } @else {
   @if (store.isLoading()) {
-    <div class="flex items-center justify-center h-screen">
-      <div class="loader"></div>
+    <div class="grow flex items-center justify-center">
+      <div class="grow justify-center flex">
+        <div class="loader"></div>
+      </div>
     </div>
   } @else if (store.mode() === "CREATION") {
     <p class="text-center italic pt-24 pb-20">No tracks added yet</p>

@@ -8,6 +8,14 @@ import {GlobalStore} from "../../global.store";
   standalone: true,
   imports: [CustomDescriptionInputComponent, DialogComponent],
   templateUrl: './track-list.component.html',
+  styles: `
+   :host {
+     flex-grow: 1;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+   }
+  `
 })
 export class TrackListComponent {
   @Output() customTitleUpdated = new EventEmitter();
