@@ -34,11 +34,6 @@ export class TrackListComponent {
     this.expandedTrackId = trackId;
   }
 
-  getInitialValueOfCustomTitle(customTitle: string) {
-    if (customTitle === '####') return '';
-    return customTitle;
-  }
-
   updateCustomTitle(event: any) {
     this.customTitleUpdated.emit(event);
     this.expanded = false;

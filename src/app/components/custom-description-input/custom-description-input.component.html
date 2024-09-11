@@ -20,7 +20,7 @@
   @if (customDescription.value !== initialValue) {
     <button
       class="my-1 mx-2"
-      (click)="updateTrackCustomTitle(customDescription.value || '####')"
+      (click)="updateTrackCustomTitle(customDescription.value || '')"
     >
       <img src="assets/icons/icons8-save-50.png" width="24" height="24" />
     </button>
