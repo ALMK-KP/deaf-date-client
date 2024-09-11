@@ -17,10 +17,7 @@
     [class.mt-8]="store.mode() !== 'CREATION'"
   >
     @for (track of store.tracks(); track track.id; let i = $index) {
-      <li
-        class="rounded-sm p-2 bg-neutral-600"
-        (click)="toggleExpanded(track.id)"
-      >
+      <li class="rounded-sm p-2 bg-neutral-600">
         <div class="flex gap-2">
           <p>{{ i + 1 }}.</p>
           @if (track.thumbnail && store.mode() !== "ENCODED") {
@@ -34,40 +31,69 @@
           }
           <div class="w-full">
             @if (store.mode() !== "ENCODED") {
-              <div class="flex justify-between">
+              <div class="flex justify-between items-start">
                 <h3>{{ track.title }}</h3>
-                @if (store.mode() === "CREATION") {
+                <button
+                  class="shrink-0 mb-1 ml-4 mr-1 text-center font-bold tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
+                  [class.ring-green-500]="store.mode() !== 'DECODED'"
+                  [class.ring-orange-500]="store.mode() === 'DECODED'"
+                  [class.text-green-500]="store.mode() !== 'DECODED'"
+                  [class.text-orange-500]="store.mode() === 'DECODED'"
+                  [class.focus:ring-green-500]="store.mode() !== 'DECODED'"
+                  [class.focus:ring-orange-500]="store.mode() === 'DECODED'"
+                  [class.hover:ring-green-500]="store.mode() !== 'DECODED'"
+                  [class.hover:ring-orange-500]="store.mode() === 'DECODED'"
+                  [class.bg-neutral-700]="
+                    expanded && expandedTrackId === track.id
+                  "
+                  (click)="toggleExpanded(track.id)"
+                >
+                  <img
+                    [src]="
+                      store.mode() === 'CREATION'
+                        ? 'assets/icons/icons8-edit-24.png'
+                        : store.mode() === 'DECODED'
+                          ? 'assets/icons/icons8-play-24-orange.png'
+                          : 'assets/icons/icons8-play-24.png'
+                    "
+                    width="12"
+                    height="12"
+                  />
+                </button>
+              </div>
+              <p>
+                {{ track.channelTitle }}
+              </p>
+            }
+            @if (track.customTitle) {
+              <p
+                [class.italic]="store.mode() === 'DECODED'"
+                [class.text-neutral-300]="store.mode() === 'DECODED'"
+                [class.border-t]="store.mode() !== 'ENCODED'"
+                [class.pt-2]="store.mode() !== 'ENCODED'"
+                [class.mt-2]="store.mode() !== 'ENCODED'"
+                [class.border-orange-500]="store.mode() === 'DECODED'"
+                [class.border-green-500]="store.mode() !== 'DECODED'"
+                class="text-xs flex justify-between items-center"
+              >
+                {{ track.customTitle }}
+                @if (store.mode() === "ENCODED") {
                   <button
-                    class="mb-1 ml-4 mr-1 text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 p-1"
+                    class="shrink-0 ml-4 mr-1 text-center font-bold text-green-500 ring-green-500 focus:ring-green-500 hover:ring-green-500 tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
                     [class.bg-neutral-700]="
                       expanded && expandedTrackId === track.id
                     "
                     (click)="toggleExpanded(track.id)"
                   >
                     <img
-                      src="assets/icons/icons8-edit-24.png"
+                      src="assets/icons/icons8-play-24.png"
                       width="12"
                       height="12"
                     />
                   </button>
                 }
-              </div>
-              <p>
-                {{ track.channelTitle }}
               </p>
             }
-            <p
-              [class.italic]="store.mode() === 'DECODED'"
-              [class.text-neutral-300]="store.mode() === 'DECODED'"
-              [class.border-t]="store.mode() !== 'ENCODED'"
-              [class.pt-2]="store.mode() !== 'ENCODED'"
-              [class.mt-2]="store.mode() !== 'ENCODED'"
-              [class.border-orange-500]="store.mode() === 'DECODED'"
-              [class.border-green-500]="store.mode() !== 'DECODED'"
-              class="text-xs"
-            >
-              {{ track.customTitle }}
-            </p>
           </div>
         </div>
         @if (
