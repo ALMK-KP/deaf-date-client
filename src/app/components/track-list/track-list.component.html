@@ -20,7 +20,7 @@
       <li class="rounded-sm p-2 bg-neutral-600">
         <div class="flex gap-2" (click)="toggleExpanded(track.id)">
           <p>{{ i + 1 }}.</p>
-          @if (track.thumbnail) {
+          @if (track.thumbnail && store.mode() !== "ENCODED") {
             <a
               [href]="track.ytLink"
               target="_blank"
