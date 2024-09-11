@@ -43,7 +43,12 @@ export const GlobalStore = signalStore(
     async addTrackToPlaylist(track: any) {
       patchState(store, { isLoading: true });
       const tracks: any = await tracksService.saveTrackToPlaylist(track);
-      patchState(store, { tracks: tracks.data, isLoading: false });
+      const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY);
+      if (!playlistId) {
+        patchState(store, { isLoading: false });
+        return;
+      }
+      patchState(store, { tracks: tracks.data, playlistId, isLoading: false });
     },
     async loadTracks(knowledgeLevel: 'ENCODED' | 'FULL'): Promise<void> {
       patchState(store, { isLoading: true });
