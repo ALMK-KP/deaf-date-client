@@ -53,7 +53,7 @@
               <div class="flex justify-between items-start">
                 <h3>{{ track.title }}</h3>
                 <button
-                  class="shrink-0 mb-1 ml-4 mr-1 text-center font-bold tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
+                  class="shrink-0 mb-1 ml-4 text-center font-bold tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
                   [class.ring-green-500]="store.mode() !== 'DECODED'"
                   [class.ring-orange-500]="store.mode() === 'DECODED'"
                   [class.text-green-500]="store.mode() !== 'DECODED'"
@@ -98,7 +98,7 @@
                 {{ track.customTitle }}
                 @if (store.mode() === "ENCODED") {
                   <button
-                    class="shrink-0 ml-auto mr-1 text-center font-bold text-green-500 ring-green-500 focus:ring-green-500 hover:ring-green-500 tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
+                    class="shrink-0 ml-auto text-center font-bold text-green-500 ring-green-500 focus:ring-green-500 hover:ring-green-500 tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
                     [class.bg-neutral-700]="
                       expanded && expandedTrackId === track.id
                     "
