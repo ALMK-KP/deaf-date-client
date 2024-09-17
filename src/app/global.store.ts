@@ -70,5 +70,13 @@ export const GlobalStore = signalStore(
         patchState(store, { tracks: [], playlistId: '', isLoading: false });
       }
     },
+    async reorderTracks(playlistId: string, reorderedTracks: any) {
+      patchState(store, { isLoading: true });
+      const tracks: any = await tracksService.reorderTracks(
+        playlistId,
+        reorderedTracks,
+      );
+      patchState(store, { tracks: tracks.data, isLoading: false });
+    },
   })),
 );

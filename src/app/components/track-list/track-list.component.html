@@ -13,18 +13,37 @@
     </div>
   }
   <ul
+    cdkDropList
     class="pt-2 text-white text-sm gap-2 flex flex-col"
     [class.mt-8]="store.mode() !== 'CREATION'"
+    (cdkDropListDropped)="drop($event)"
   >
     @for (track of store.tracks(); track track.id; let i = $index) {
-      <li class="rounded-sm p-2 bg-neutral-600">
+      <li
+        cdkDrag
+        [cdkDragDisabled]="store.mode() !== 'CREATION'"
+        class="p-2 bg-neutral-600 text-sm"
+      >
+        <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
         <div class="flex gap-2">
+          @if (store.mode() === "CREATION") {
+            <button
+              cdkDragHandle
+              class="shrink-0 text-center text-green-500 font-bold tracking-widest outline-none self-center -ml-1.5"
+            >
+              <img
+                src="assets/icons/icons8-drag-reorder-24.png"
+                width="16"
+                height="16"
+              />
+            </button>
+          }
           <p>{{ i + 1 }}.</p>
           @if (track.thumbnail && store.mode() !== "ENCODED") {
             <a
               [href]="track.ytLink"
               target="_blank"
-              class="block flex-shrink-0"
+              class="block flex-shrink-0 self-start"
             >
               <img [src]="track.thumbnail" alt="" width="50" height="40" />
             </a>
@@ -65,7 +84,7 @@
                 {{ track.channelTitle }}
               </p>
             }
-            @if (track.customTitle || store.mode() === 'ENCODED') {
+            @if (track.customTitle || store.mode() === "ENCODED") {
               <p
                 [class.italic]="store.mode() === 'DECODED'"
                 [class.text-neutral-300]="store.mode() === 'DECODED'"

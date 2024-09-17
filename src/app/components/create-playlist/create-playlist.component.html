@@ -2,6 +2,7 @@
   <app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
   <app-track-list
     (customTitleUpdated)="store.updateTrack($event.trackId, $event.newCustomTitle)"
+    (tracksReordered)="store.reorderTracks($event.playlistId, $event.reorderedTracks)"
     (playlistRemoved)="store.removePlaylist()"
   />
   @if (store.tracks().length) {

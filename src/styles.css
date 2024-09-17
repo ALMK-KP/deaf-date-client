@@ -11,7 +11,11 @@ body:has(.prevent-body-scroll) {
   overflow: hidden;
 }
 
-/* HTML: <div class="loader"></div> */
+li {
+  text-decoration: none;
+  list-style: none;
+}
+
 .loader {
   width: 25px;
   aspect-ratio: 1;

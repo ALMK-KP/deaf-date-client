@@ -57,6 +57,14 @@ export class TracksService {
     );
   }
 
+  reorderTracks(id: string, reorderedTracks: any): Promise<any> {
+    return lastValueFrom(
+      this.httpClient.put<any>(`${environment.BE_URL}/playlist/${id}`, {
+        reorderedTracks,
+      }),
+    );
+  }
+
   private mappedResults(items: any) {
     return items.map((song: Item) => ({
       link: 'https://www.youtube.com/watch?v=' + song.id.videoId,
