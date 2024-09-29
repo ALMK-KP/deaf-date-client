@@ -1,0 +1,38 @@
+@if (isLink) {
+  <a
+    class="basic"
+    [class]="{
+      'text-button': !icon,
+      'icon-button': icon,
+      small: size === 'small',
+      'no-border': !border,
+      'color-green': color === 'green',
+      'color-orange': color === 'orange'
+    }"
+    [href]="href"
+  >
+    {{ message }}
+  </a>
+} @else {
+  <button
+    class="basic"
+    [class]="{
+      'text-button': !icon,
+      'icon-button': icon,
+      small: size === 'small',
+      'no-border': !border,
+      'color-green': color === 'green',
+      'color-orange': color === 'orange'
+    }"
+  >
+    @if (icon) {
+      <img
+        [ngSrc]="'assets/icons/icons8-' + icon + '.png'"
+        [width]="imgSize[size]"
+        [height]="imgSize[size]"
+      />
+    } @else {
+      {{ message }}
+    }
+  </button>
+}

@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-create-playlist',
@@ -15,6 +16,7 @@ import { GlobalStore } from '../../global.store';
     TrackListComponent,
     RouterLink,
     CdkCopyToClipboard,
+    ButtonComponent,
   ],
   templateUrl: './create-playlist.component.html',
   styles: `

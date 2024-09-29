@@ -1,16 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-custom-description-input',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './custom-description-input.component.html',
 })
 export class CustomDescriptionInputComponent implements OnInit {

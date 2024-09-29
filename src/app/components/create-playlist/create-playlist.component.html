@@ -1,24 +1,26 @@
 <div class="pt-4 flex-grow flex flex-col">
   <app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
   <app-track-list
-    (customTitleUpdated)="store.updateTrack($event.trackId, $event.newCustomTitle)"
-    (tracksReordered)="store.reorderTracks($event.playlistId, $event.reorderedTracks)"
+    (customTitleUpdated)="
+      store.updateTrack($event.trackId, $event.newCustomTitle)
+    "
+    (tracksReordered)="
+      store.reorderTracks($event.playlistId, $event.reorderedTracks)
+    "
     (playlistRemoved)="store.removePlaylist()"
   />
+  <div class="mb-24"></div>
   @if (store.tracks().length) {
     <div class="flex gap-2 mt-auto">
-      <a
+      <app-button
+        message="open as deaf date"
         [routerLink]="['/encoded/' + store.playlistId()]"
-        class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 text-nowrap w-full p-2 mb-2"
-      >
-        open as deaf date
-      </a>
-      <button
-        class="text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none active:bg-green-500 active:text-neutral-700 focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 text-nowrap p-2 mb-2 flex-grow-0"
+      ></app-button>
+      <app-button
+        message="copy link"
+        [isGrowing]="false"
         [cdkCopyToClipboard]="getLink()"
-      >
-        copy link
-      </button>
+      ></app-button>
     </div>
   }
 </div>

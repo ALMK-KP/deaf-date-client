@@ -1,5 +1,5 @@
 <div
-  class="flex mt-4 bg-neutral-600 ring-2 ring-green-500 text-white text-sm focus:ring-4 focus:ring-green-500 w-full"
+  class="flex items-center mt-4 bg-neutral-600 ring-2 ring-green-500 text-white text-sm focus:ring-4 focus:ring-green-500 w-full"
 >
   <textarea
     class="outline-none bg-neutral-600 flex-grow p-2 min-h-14"
@@ -18,11 +18,10 @@
     </button>
   }
   @if (customDescription.value !== initialValue) {
-    <button
-      class="my-1 mx-2"
+    <app-button
+      icon="save-50"
+      [border]="false"
       (click)="updateTrackCustomTitle(customDescription.value || '')"
-    >
-      <img src="assets/icons/icons8-save-50.png" width="24" height="24" />
-    </button>
+    ></app-button>
   }
 </div>

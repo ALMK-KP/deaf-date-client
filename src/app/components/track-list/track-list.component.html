@@ -4,12 +4,10 @@
       <h2 class="text-lg font-semibold text-green-500 tracking-widest">
         Your current playlist
       </h2>
-      <button
-        class="my-1 mx-2 text-center font-bold text-green-500 tracking-widest ring-2 ring-green-500 outline-none focus:ring-4 focus:ring-green-500 hover:ring-4 hover:ring-green-500 p-1"
+      <app-button
+        icon="remove-48"
         (click)="openConfirmationDialog()"
-      >
-        <img src="assets/icons/icons8-remove-48.png" width="24" height="24" />
-      </button>
+      ></app-button>
     </div>
   }
   <ul
@@ -52,40 +50,29 @@
             @if (store.mode() !== "ENCODED") {
               <div class="flex justify-between items-start">
                 <h3>{{ track.title }}</h3>
-                <button
-                  class="shrink-0 mb-1 ml-4 text-center font-bold tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
-                  [class.ring-green-500]="store.mode() !== 'DECODED'"
-                  [class.ring-orange-500]="store.mode() === 'DECODED'"
-                  [class.text-green-500]="store.mode() !== 'DECODED'"
-                  [class.text-orange-500]="store.mode() === 'DECODED'"
-                  [class.focus:ring-green-500]="store.mode() !== 'DECODED'"
-                  [class.focus:ring-orange-500]="store.mode() === 'DECODED'"
-                  [class.hover:ring-green-500]="store.mode() !== 'DECODED'"
-                  [class.hover:ring-orange-500]="store.mode() === 'DECODED'"
+                <app-button
+                  size="small"
+                  class="ml-2"
+                  [color]="store.mode() === 'DECODED' ? 'orange' : 'green'"
+                  [icon]="
+                    store.mode() === 'CREATION'
+                      ? 'edit-24'
+                      : store.mode() === 'DECODED'
+                        ? 'play-24-orange'
+                        : 'play-24'
+                  "
                   [class.bg-neutral-700]="
                     expanded && expandedTrackId === track.id
                   "
                   (click)="toggleExpanded(track.id)"
-                >
-                  <img
-                    [src]="
-                      store.mode() === 'CREATION'
-                        ? 'assets/icons/icons8-edit-24.png'
-                        : store.mode() === 'DECODED'
-                          ? 'assets/icons/icons8-play-24-orange.png'
-                          : 'assets/icons/icons8-play-24.png'
-                    "
-                    width="12"
-                    height="12"
-                  />
-                </button>
+                ></app-button>
               </div>
               <p>
                 {{ track.channelTitle }}
               </p>
             }
             @if (track.customTitle || store.mode() === "ENCODED") {
-              <p
+              <div
                 [class.italic]="store.mode() === 'DECODED'"
                 [class.text-neutral-300]="store.mode() === 'DECODED'"
                 [class.border-t]="store.mode() !== 'ENCODED'"
@@ -95,23 +82,19 @@
                 [class.border-green-500]="store.mode() !== 'DECODED'"
                 class="text-xs flex justify-between items-center"
               >
-                {{ track.customTitle }}
+                <p>{{ track.customTitle }}</p>
                 @if (store.mode() === "ENCODED") {
-                  <button
-                    class="shrink-0 ml-auto text-center font-bold text-green-500 ring-green-500 focus:ring-green-500 hover:ring-green-500 tracking-widest ring-2 outline-none focus:ring-4 hover:ring-4 p-1"
+                  <app-button
+                    class="ml-2 justify-self-end"
+                    size="small"
+                    icon="play-24"
                     [class.bg-neutral-700]="
                       expanded && expandedTrackId === track.id
                     "
                     (click)="toggleExpanded(track.id)"
-                  >
-                    <img
-                      src="assets/icons/icons8-play-24.png"
-                      width="12"
-                      height="12"
-                    />
-                  </button>
+                  ></app-button>
                 }
-              </p>
+              </div>
             }
           </div>
         </div>
@@ -165,6 +148,7 @@
 >
   .. ... .. ...
 </p>
+
 @if (isConfirmationDialogOpened) {
   <app-dialog
     (emitDialogClicked)="removePlaylist($event)"

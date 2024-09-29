@@ -10,6 +10,7 @@ import {
   CdkDropList,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-track-list',
@@ -21,6 +22,7 @@ import {
     CdkDrag,
     CdkDragHandle,
     CdkDragPlaceholder,
+    ButtonComponent,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',

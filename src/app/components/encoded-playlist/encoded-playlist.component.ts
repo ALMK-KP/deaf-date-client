@@ -4,11 +4,12 @@ import { TrackListComponent } from '../track-list/track-list.component';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-encoded-playlist',
   standalone: true,
-  imports: [TrackListComponent, RouterLink, DialogComponent],
+  imports: [TrackListComponent, RouterLink, DialogComponent, ButtonComponent],
   templateUrl: './encoded-playlist.component.html',
   styles: `
     :host {
