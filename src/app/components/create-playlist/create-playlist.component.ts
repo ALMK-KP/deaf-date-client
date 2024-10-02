@@ -4,9 +4,10 @@ import { SearchForTrackComponent } from '../search-for-track/search-for-track.co
 import { TrackListComponent } from '../track-list/track-list.component';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-playlist',
@@ -15,7 +16,6 @@ import { ButtonComponent } from '../button/button.component';
     SearchForTrackComponent,
     TrackListComponent,
     RouterLink,
-    CdkCopyToClipboard,
     ButtonComponent,
   ],
   templateUrl: './create-playlist.component.html',
@@ -30,7 +30,10 @@ import { ButtonComponent } from '../button/button.component';
 export class CreatePlaylistComponent {
   readonly store = inject(GlobalStore);
 
-  constructor() {
+  constructor(
+    private toastr: ToastrService,
+    private clipboard: Clipboard,
+  ) {
     this.store.updateMode('CREATION');
     const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
     if (playlistId) {
@@ -39,9 +42,22 @@ export class CreatePlaylistComponent {
     (async function (store) {
       await store.loadTracks('FULL');
     })(this.store);
+
+    this.toastr.success('', 'Toastr fun!', {
+      closeButton: true,
+      progressBar: true,
+      timeOut: 0,
+      positionClass: 'toast-bottom-center'
+    });
   }
 
-  getLink() {
-    return `${environment.BASE_URL}/encoded/${this.store.playlistId()}`;
+  copyLink() {
+    this.toastr.success('', 'Toastr fun!', {
+      closeButton: true,
+      progressBar: true,
+    });
+    this.clipboard.copy(
+      `${environment.BASE_URL}/encoded/${this.store.playlistId()}`,
+    );
   }
 }

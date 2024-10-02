@@ -19,7 +19,7 @@
       <app-button
         message="copy link"
         [isGrowing]="false"
-        [cdkCopyToClipboard]="getLink()"
+        (click)="copyLink()"
       ></app-button>
     </div>
   }
