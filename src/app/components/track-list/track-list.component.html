@@ -10,129 +10,149 @@
       ></app-button>
     </div>
   }
-  <ul
-    cdkDropList
-    class="pt-2 text-white text-sm gap-2 flex flex-col"
-    [class.mt-8]="store.mode() !== 'CREATION'"
-    (cdkDropListDropped)="drop($event)"
-  >
-    @for (track of store.tracks(); track track.id; let i = $index) {
-      <li
-        cdkDrag
-        [cdkDragDisabled]="store.mode() !== 'CREATION'"
-        class="p-2 bg-neutral-600 text-sm"
-      >
-        <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
-        <div class="flex gap-2">
-          @if (store.mode() === "CREATION") {
-            <button
-              cdkDragHandle
-              class="shrink-0 self-start h-[37.5px] text-center text-green-500 font-bold tracking-widest outline-none -ml-1.5"
-            >
-              <img
-                src="assets/icons/icons8-drag-reorder-24.png"
-                width="16"
-                height="16"
-              />
-            </button>
-          }
-          <div class="self-start h-[37.5px] flex items-center"><p>{{ i + 1 }}.</p></div>
-          @if (track.thumbnail && store.mode() !== "ENCODED") {
-            <a
-              [href]="track.ytLink"
-              target="_blank"
-              class="block flex-shrink-0 self-start"
-            >
-              <img [src]="track.thumbnail" alt="" width="50" height="40" />
-            </a>
-          }
-          <div class="w-full">
-            @if (store.mode() !== "ENCODED") {
-              <div class="flex justify-between items-start">
-                <h3>{{ track.title }}</h3>
-                <app-button
-                  size="small"
-                  class="ml-2"
-                  [color]="store.mode() === 'DECODED' ? 'orange' : 'green'"
-                  [icon]="
-                    store.mode() === 'CREATION'
-                      ? 'edit-24'
-                      : store.mode() === 'DECODED'
-                        ? 'play-24-orange'
-                        : 'play-24'
-                  "
-                  [class.bg-neutral-700]="
-                    expanded && expandedTrackId === track.id
-                  "
-                  (click)="toggleExpanded(track.id)"
-                ></app-button>
-              </div>
-              <p>
-                {{ track.channelTitle }}
-              </p>
-            }
-            @if (
-              track.customTitle &&
-              (store.mode() === "ENCODED" ||
-                (store.mode() === "CREATION" &&
-                  expandedTrackId !== track.id))
-            ) {
-              <div
-                [class.italic]="store.mode() === 'DECODED'"
-                [class.text-neutral-300]="store.mode() === 'DECODED'"
-                [class.border-t]="store.mode() !== 'ENCODED'"
-                [class.pt-2]="store.mode() !== 'ENCODED'"
-                [class.mt-2]="store.mode() !== 'ENCODED'"
-                [class.border-orange-500]="store.mode() === 'DECODED'"
-                [class.border-green-500]="store.mode() !== 'DECODED'"
-                class="text-xs flex justify-between items-center"
+  <div cdkDropListGroup>
+    <ul
+      cdkDropList
+      class="pt-2 text-white text-sm gap-2 flex flex-col"
+      [cdkDropListData]="store.tracks()"
+      [class.mt-8]="store.mode() !== 'CREATION'"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (track of store.tracks(); track track.id; let i = $index) {
+        <li
+          cdkDrag
+          class="p-2 bg-neutral-600 text-sm"
+          [cdkDragDisabled]="store.mode() !== 'CREATION'"
+          (cdkDragStarted)="toggleDragging(true)"
+        >
+          <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
+          <div class="flex gap-2">
+            @if (store.mode() === "CREATION") {
+              <button
+                cdkDragHandle
+                class="shrink-0 self-start h-[37.5px] text-center text-green-500 font-bold tracking-widest outline-none -ml-1.5"
               >
-                <p>{{ track.customTitle }}</p>
-                @if (store.mode() === "ENCODED") {
+                <img
+                  src="assets/icons/icons8-drag-reorder-24.png"
+                  width="16"
+                  height="16"
+                />
+              </button>
+            }
+            <div class="self-start h-[37.5px] flex items-center">
+              <p>{{ i + 1 }}.</p>
+            </div>
+            @if (track.thumbnail && store.mode() !== "ENCODED") {
+              <a
+                [href]="track.ytLink"
+                target="_blank"
+                class="block flex-shrink-0 self-start"
+              >
+                <img [src]="track.thumbnail" alt="" width="50" height="40" />
+              </a>
+            }
+            <div class="w-full">
+              @if (store.mode() !== "ENCODED") {
+                <div class="flex justify-between items-start">
+                  <h3>{{ track.title }}</h3>
                   <app-button
-                    class="ml-2 justify-self-end"
                     size="small"
-                    icon="play-24"
+                    class="ml-2"
+                    [color]="store.mode() === 'DECODED' ? 'orange' : 'green'"
+                    [icon]="
+                      store.mode() === 'CREATION'
+                        ? 'edit-24'
+                        : store.mode() === 'DECODED'
+                          ? 'play-24-orange'
+                          : 'play-24'
+                    "
                     [class.bg-neutral-700]="
                       expanded && expandedTrackId === track.id
                     "
                     (click)="toggleExpanded(track.id)"
                   ></app-button>
-                }
-              </div>
-            }
+                </div>
+                <p>
+                  {{ track.channelTitle }}
+                </p>
+              }
+              @if (
+                track.customTitle &&
+                (store.mode() === "ENCODED" ||
+                  (store.mode() === "CREATION" && expandedTrackId !== track.id))
+              ) {
+                <div
+                  [class.italic]="store.mode() === 'DECODED'"
+                  [class.text-neutral-300]="store.mode() === 'DECODED'"
+                  [class.border-t]="store.mode() !== 'ENCODED'"
+                  [class.pt-2]="store.mode() !== 'ENCODED'"
+                  [class.mt-2]="store.mode() !== 'ENCODED'"
+                  [class.border-orange-500]="store.mode() === 'DECODED'"
+                  [class.border-green-500]="store.mode() !== 'DECODED'"
+                  class="text-xs flex justify-between items-center"
+                >
+                  <p>{{ track.customTitle }}</p>
+                  @if (store.mode() === "ENCODED") {
+                    <app-button
+                      class="ml-2 justify-self-end"
+                      size="small"
+                      icon="play-24"
+                      [class.bg-neutral-700]="
+                        expanded && expandedTrackId === track.id
+                      "
+                      (click)="toggleExpanded(track.id)"
+                    ></app-button>
+                  }
+                </div>
+              }
+            </div>
           </div>
-        </div>
-        @if (
-          expanded &&
-          track.id === expandedTrackId &&
-          store.mode() === "CREATION"
-        ) {
-          <app-custom-description-input
-            [initialValue]="track.customTitle"
-            [trackId]="track.id"
-            (customTitleUpdated)="updateCustomTitle($event)"
-          />
-        }
+          @if (
+            expanded &&
+            track.id === expandedTrackId &&
+            store.mode() === "CREATION"
+          ) {
+            <app-custom-description-input
+              [initialValue]="track.customTitle"
+              [trackId]="track.id"
+              (customTitleUpdated)="updateCustomTitle($event)"
+            />
+          }
 
-        @if (
-          expanded &&
-          track.id === expandedTrackId &&
-          store.mode() !== "CREATION"
-        ) {
-          <audio
-            controls
-            class="mt-2 mx-auto"
-            autoplay
-            controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
-          >
-            <source [src]="track.audio" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        }
-      </li>
-    }
-  </ul>
+          @if (
+            expanded &&
+            track.id === expandedTrackId &&
+            store.mode() !== "CREATION"
+          ) {
+            <audio
+              controls
+              class="mt-2 mx-auto"
+              autoplay
+              controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
+            >
+              <source [src]="track.audio" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          }
+        </li>
+      }
+    </ul>
+    <div
+      class="bottom-0 h-16 flex justify-center w-[calc(100vw-12px)] mx-auto left-0 right-0"
+      [class.hidden]="!dragging"
+      [class.fixed]="dragging"
+    >
+      <div
+        cdkDropList
+        class="flex items-center justify-center font-bold bg-caution-tape mx-auto max-w-[500px] w-full border-red-400 border-2 h-full"
+        [cdkDropListData]="[]"
+        (cdkDropListEntered)="test($event)"
+        (cdkDropListDropped)="removeTrack($event)"
+      >
+        <p class="py-0.5 bg-red-400 w-full text-center">remove</p>
+      </div>
+    </div>
+  </div>
 } @else {
   @if (store.isLoading()) {
     <div class="grow flex items-center justify-center">

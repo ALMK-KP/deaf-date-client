@@ -5,9 +5,11 @@ import { GlobalStore } from '../../global.store';
 import {
   CdkDrag,
   CdkDragDrop,
+  CdkDragEnter,
   CdkDragHandle,
   CdkDragPlaceholder,
   CdkDropList,
+  CdkDropListGroup,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { ButtonComponent } from '../button/button.component';
@@ -23,6 +25,7 @@ import { ButtonComponent } from '../button/button.component';
     CdkDragHandle,
     CdkDragPlaceholder,
     ButtonComponent,
+    CdkDropListGroup,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
@@ -33,6 +36,7 @@ export class TrackListComponent {
   @Output() tracksReordered = new EventEmitter();
   readonly store = inject(GlobalStore);
   expanded = false;
+  dragging = false;
   expandedTrackId: number | null = null;
   isConfirmationDialogOpened = false;
 
@@ -75,5 +79,18 @@ export class TrackListComponent {
       playlistId: this.store.playlistId(),
       reorderedTracks: this.store.tracks(),
     });
+    this.dragging = false;
+  }
+
+  removeTrack($event: CdkDragDrop<any, any>) {
+    console.log($event);
+  }
+
+  toggleDragging(value: boolean) {
+    this.dragging = value;
+  }
+
+  test($event: CdkDragEnter) {
+    console.log($event);
   }
 }

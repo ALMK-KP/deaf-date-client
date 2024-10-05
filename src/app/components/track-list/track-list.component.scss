@@ -7,9 +7,10 @@
 
 .cdk-drag-preview {
   box-sizing: border-box;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-  0 8px 10px 1px rgba(0, 0, 0, 0.14),
-  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cdk-drag-animating {
@@ -17,7 +18,7 @@
 }
 
 .drag-custom-placeholder {
-  background: #3A3A3A;
+  background: #3a3a3a;
   min-height: 60px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
@@ -28,4 +29,27 @@
 
 .cdk-drag-animating {
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: 0px 0;
+  }
+  100% {
+    background-position: 100em 0;
+  }
+}
+.bg-caution-tape {
+  animation-duration: 50s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: repeating-linear-gradient(
+    -42deg,
+    #fecaca,
+    #fecaca 14px,
+    #f87171 15px,
+    #f87171 30px
+  );
 }
