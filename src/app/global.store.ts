@@ -3,17 +3,18 @@ import { TracksService } from './services/tracks.service';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { PLAYLIST_ID_LS_KEY } from './utils/constants';
+import {ViewModeEnum} from "./utils/enums";
 
 interface GlobalState {
   isLoading: boolean;
-  mode: 'ENCODED' | 'DECODED' | 'CREATION';
+  mode: ViewModeEnum;
   tracks: any[];
   playlistId: string;
 }
 
 const initialState: GlobalState = {
   isLoading: true,
-  mode: 'ENCODED',
+  mode: ViewModeEnum.ENCODED,
   tracks: [],
   playlistId: '',
 };
@@ -23,7 +24,7 @@ export const GlobalStore = signalStore(
   withState(initialState),
   withDevtools('global'),
   withMethods((store, tracksService = inject(TracksService)) => ({
-    updateMode(mode: 'ENCODED' | 'DECODED' | 'CREATION') {
+    updateMode(mode: ViewModeEnum) {
       patchState(store, { mode });
     },
     updatePlaylistId(playlistId: string) {

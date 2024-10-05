@@ -3,6 +3,7 @@ import { TrackListComponent } from '../track-list/track-list.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
+import { ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-decoded-playlist',
@@ -19,12 +20,13 @@ import { ButtonComponent } from '../button/button.component';
 })
 export class DecodedPlaylistComponent implements OnInit {
   readonly store = inject(GlobalStore);
+  viewModeEnum = ViewModeEnum;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.store.updateMode('DECODED');
+    this.store.updateMode(this.viewModeEnum.DECODED);
   }
 
   async ngOnInit() {

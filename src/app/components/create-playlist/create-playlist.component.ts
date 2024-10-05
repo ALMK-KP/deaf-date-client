@@ -8,6 +8,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
 import { ToastrService } from 'ngx-toastr';
+import { ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-create-playlist',
@@ -29,12 +30,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreatePlaylistComponent {
   readonly store = inject(GlobalStore);
+  viewModeEnum = ViewModeEnum;
 
   constructor(
     private toastr: ToastrService,
     private clipboard: Clipboard,
   ) {
-    this.store.updateMode('CREATION');
+    this.store.updateMode(this.viewModeEnum.CREATION);
     const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
     if (playlistId) {
       this.store.updatePlaylistId(playlistId);

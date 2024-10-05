@@ -13,6 +13,7 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { ButtonComponent } from '../button/button.component';
+import { ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-track-list',
@@ -39,6 +40,7 @@ export class TrackListComponent {
   dragging = false;
   expandedTrackId: number | null = null;
   isConfirmationDialogOpened = false;
+  viewModeEnum = ViewModeEnum;
 
   toggleExpanded(trackId: number) {
     if (trackId !== this.expandedTrackId && this.expanded) {
@@ -92,5 +94,9 @@ export class TrackListComponent {
 
   test($event: CdkDragEnter) {
     console.log($event);
+  }
+
+  isMode(mode: ViewModeEnum) {
+    return this.store.mode() === mode;
   }
 }

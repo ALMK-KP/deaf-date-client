@@ -1,5 +1,5 @@
 @if (store.tracks().length) {
-  @if (store.mode() === "CREATION") {
+  @if (isMode(viewModeEnum.CREATION)) {
     <div class="flex gap-2 justify-between items-center pt-8">
       <h2 class="text-lg font-semibold text-green-500 tracking-widest">
         Your current playlist
@@ -15,19 +15,19 @@
       cdkDropList
       class="pt-2 text-white text-sm gap-2 flex flex-col"
       [cdkDropListData]="store.tracks()"
-      [class.mt-8]="store.mode() !== 'CREATION'"
+      [class.mt-8]="!isMode(viewModeEnum.CREATION)"
       (cdkDropListDropped)="drop($event)"
     >
       @for (track of store.tracks(); track track.id; let i = $index) {
         <li
           cdkDrag
           class="p-2 bg-neutral-600 text-sm"
-          [cdkDragDisabled]="store.mode() !== 'CREATION'"
+          [cdkDragDisabled]="!isMode(viewModeEnum.CREATION)"
           (cdkDragStarted)="toggleDragging(true)"
         >
           <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
           <div class="flex gap-2">
-            @if (store.mode() === "CREATION") {
+            @if (isMode(viewModeEnum.CREATION)) {
               <button
                 cdkDragHandle
                 class="shrink-0 self-start h-[37.5px] text-center text-green-500 font-bold tracking-widest outline-none -ml-1.5"
@@ -42,7 +42,7 @@
             <div class="self-start h-[37.5px] flex items-center">
               <p>{{ i + 1 }}.</p>
             </div>
-            @if (track.thumbnail && store.mode() !== "ENCODED") {
+            @if (track.thumbnail && !isMode(viewModeEnum.ENCODED)) {
               <a
                 [href]="track.ytLink"
                 target="_blank"
@@ -52,17 +52,17 @@
               </a>
             }
             <div class="w-full">
-              @if (store.mode() !== "ENCODED") {
+              @if (!isMode(viewModeEnum.ENCODED)) {
                 <div class="flex justify-between items-start">
                   <h3>{{ track.title }}</h3>
                   <app-button
                     size="small"
                     class="ml-2"
-                    [color]="store.mode() === 'DECODED' ? 'orange' : 'green'"
+                    [color]="isMode(viewModeEnum.DECODED) ? 'orange' : 'green'"
                     [icon]="
-                      store.mode() === 'CREATION'
+                      isMode(viewModeEnum.CREATION)
                         ? 'edit-24'
-                        : store.mode() === 'DECODED'
+                        : isMode(viewModeEnum.DECODED)
                           ? 'play-24-orange'
                           : 'play-24'
                     "
@@ -78,21 +78,22 @@
               }
               @if (
                 track.customTitle &&
-                (store.mode() === "ENCODED" ||
-                  (store.mode() === "CREATION" && expandedTrackId !== track.id))
+                (isMode(viewModeEnum.ENCODED) ||
+                  (isMode(viewModeEnum.CREATION) &&
+                    expandedTrackId !== track.id))
               ) {
                 <div
-                  [class.italic]="store.mode() === 'DECODED'"
-                  [class.text-neutral-300]="store.mode() === 'DECODED'"
-                  [class.border-t]="store.mode() !== 'ENCODED'"
-                  [class.pt-2]="store.mode() !== 'ENCODED'"
-                  [class.mt-2]="store.mode() !== 'ENCODED'"
-                  [class.border-orange-500]="store.mode() === 'DECODED'"
-                  [class.border-green-500]="store.mode() !== 'DECODED'"
+                  [class.italic]="isMode(viewModeEnum.DECODED)"
+                  [class.text-neutral-300]="isMode(viewModeEnum.DECODED)"
+                  [class.border-t]="!isMode(viewModeEnum.ENCODED)"
+                  [class.pt-2]="!isMode(viewModeEnum.ENCODED)"
+                  [class.mt-2]="!isMode(viewModeEnum.ENCODED)"
+                  [class.border-orange-500]="isMode(viewModeEnum.DECODED)"
+                  [class.border-green-500]="!isMode(viewModeEnum.DECODED)"
                   class="text-xs flex justify-between items-center"
                 >
                   <p>{{ track.customTitle }}</p>
-                  @if (store.mode() === "ENCODED") {
+                  @if (isMode(viewModeEnum.ENCODED)) {
                     <app-button
                       class="ml-2 justify-self-end"
                       size="small"
@@ -110,7 +111,7 @@
           @if (
             expanded &&
             track.id === expandedTrackId &&
-            store.mode() === "CREATION"
+            isMode(viewModeEnum.CREATION)
           ) {
             <app-custom-description-input
               [initialValue]="track.customTitle"
@@ -122,7 +123,7 @@
           @if (
             expanded &&
             track.id === expandedTrackId &&
-            store.mode() !== "CREATION"
+            !isMode(viewModeEnum.CREATION)
           ) {
             <audio
               controls
@@ -160,7 +161,7 @@
         <div class="loader"></div>
       </div>
     </div>
-  } @else if (store.mode() === "CREATION") {
+  } @else if (isMode(viewModeEnum.CREATION)) {
     <p class="text-center italic pt-24 pb-20">No tracks added yet</p>
   } @else {
     <p class="text-center italic pt-24 pb-20">Playlist doesn't exist</p>
@@ -168,8 +169,8 @@
 }
 <p
   class="text-center tracking-widest p-4"
-  [class.text-orange-500]="store.mode() === 'DECODED'"
-  [class.text-green-500]="store.mode() !== 'DECODED'"
+  [class.text-orange-500]="isMode(viewModeEnum.DECODED)"
+  [class.text-green-500]="!isMode(viewModeEnum.DECODED)"
 >
   .. ... .. ...
 </p>

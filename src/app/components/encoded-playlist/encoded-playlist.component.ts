@@ -5,6 +5,7 @@ import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
+import { ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-encoded-playlist',
@@ -23,12 +24,13 @@ export class EncodedPlaylistComponent implements OnInit {
   readonly store = inject(GlobalStore);
   isCreatorOfCurrentPlaylist = false;
   isConfirmationDialogOpened = false;
+  viewModeEnum = ViewModeEnum;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.store.updateMode('ENCODED');
+    this.store.updateMode(this.viewModeEnum.ENCODED);
   }
 
   async ngOnInit() {
