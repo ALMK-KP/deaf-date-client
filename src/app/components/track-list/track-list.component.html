@@ -27,7 +27,7 @@
           @if (store.mode() === "CREATION") {
             <button
               cdkDragHandle
-              class="shrink-0 text-center text-green-500 font-bold tracking-widest outline-none self-center -ml-1.5"
+              class="shrink-0 self-start h-[37.5px] text-center text-green-500 font-bold tracking-widest outline-none -ml-1.5"
             >
               <img
                 src="assets/icons/icons8-drag-reorder-24.png"
@@ -36,7 +36,7 @@
               />
             </button>
           }
-          <p class="self-center">{{ i + 1 }}.</p>
+          <div class="self-start h-[37.5px] flex items-center"><p>{{ i + 1 }}.</p></div>
           @if (track.thumbnail && store.mode() !== "ENCODED") {
             <a
               [href]="track.ytLink"
