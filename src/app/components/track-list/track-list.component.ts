@@ -43,6 +43,10 @@ export class TrackListComponent {
       this.expanded = !this.expanded;
     }
     this.expandedTrackId = trackId;
+    if (!this.expanded) {
+      this.expandedTrackId = null;
+      return;
+    }
   }
 
   updateCustomTitle(event: any) {

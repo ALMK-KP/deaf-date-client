@@ -71,7 +71,12 @@
                 {{ track.channelTitle }}
               </p>
             }
-            @if (track.customTitle || store.mode() === "ENCODED") {
+            @if (
+              track.customTitle &&
+              (store.mode() === "ENCODED" ||
+                (store.mode() === "CREATION" &&
+                  expandedTrackId !== track.id))
+            ) {
               <div
                 [class.italic]="store.mode() === 'DECODED'"
                 [class.text-neutral-300]="store.mode() === 'DECODED'"
