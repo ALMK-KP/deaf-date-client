@@ -42,22 +42,17 @@ export class CreatePlaylistComponent {
     (async function (store) {
       await store.loadTracks('FULL');
     })(this.store);
-
-    this.toastr.success('', 'Toastr fun!', {
-      closeButton: true,
-      progressBar: true,
-      timeOut: 0,
-      positionClass: 'toast-bottom-center'
-    });
   }
 
   copyLink() {
-    this.toastr.success('', 'Toastr fun!', {
-      closeButton: true,
-      progressBar: true,
-    });
     this.clipboard.copy(
       `${environment.BASE_URL}/encoded/${this.store.playlistId()}`,
     );
+    this.toastr.success('', 'Link copied', {
+      closeButton: true,
+      progressBar: true,
+      timeOut: 4000,
+      positionClass: 'toast-bottom-center',
+    });
   }
 }
