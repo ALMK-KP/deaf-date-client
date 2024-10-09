@@ -139,9 +139,9 @@
       }
     </ul>
     <div
-      class="bottom-0 h-16 flex justify-center w-[calc(100vw-12px)] mx-auto left-0 right-0"
-      [class.hidden]="!dragging"
-      [class.fixed]="dragging"
+      class="fixed bottom-0 h-16 flex justify-center w-[calc(100vw-12px)] mx-auto left-0 right-0"
+      [class.invisible]="!dragging"
+      [class.visible]="dragging"
     >
       <div
         cdkDropList
