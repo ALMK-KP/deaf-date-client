@@ -147,8 +147,7 @@
         cdkDropList
         class="flex items-center justify-center font-bold bg-caution-tape mx-auto max-w-[500px] w-full border-red-400 border-2 h-full"
         [cdkDropListData]="[]"
-        (cdkDropListEntered)="test($event)"
-        (cdkDropListDropped)="removeTrack($event)"
+        (cdkDropListDropped)="openConfirmationDialog($event)"
       >
         <p class="py-0.5 bg-red-400 w-full text-center">remove</p>
       </div>
@@ -177,7 +176,11 @@
 
 @if (isConfirmationDialogOpened) {
   <app-dialog
-    (emitDialogClicked)="removePlaylist($event)"
-    message="Are you sure you want to delete current playlist?"
+    (emitDialogClicked)="removePlaylistOrTrack($event)"
+    [message]="
+      selectedTrackId
+        ? 'Are you sure you want to delete this track?'
+        : 'Are you sure you want to delete current playlist?'
+    "
   />
 }

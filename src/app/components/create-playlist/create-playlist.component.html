@@ -8,6 +8,7 @@
       store.reorderTracks($event.playlistId, $event.reorderedTracks)
     "
     (playlistRemoved)="store.removePlaylist()"
+    (trackRemoved)="store.removeTrack($event)"
   />
   <div class="mb-24"></div>
   @if (store.tracks().length) {

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom, map, Observable, of, tap } from 'rxjs';
+import { lastValueFrom, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PLAYLIST_ID_LS_KEY } from '../utils/constants';
 
@@ -62,6 +62,12 @@ export class TracksService {
       this.httpClient.put<any>(`${environment.BE_URL}/playlist/${id}`, {
         reorderedTracks,
       }),
+    );
+  }
+
+  removeTrack(id: number): Promise<any> {
+    return lastValueFrom(
+      this.httpClient.delete<any>(`${environment.BE_URL}/tracks/${id}`),
     );
   }
 

@@ -1,11 +1,10 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
 import {
   CdkDrag,
   CdkDragDrop,
-  CdkDragEnter,
   CdkDragHandle,
   CdkDragPlaceholder,
   CdkDropList,
@@ -34,6 +33,7 @@ import { ViewModeEnum } from '../../utils/enums';
 export class TrackListComponent {
   @Output() customTitleUpdated = new EventEmitter();
   @Output() playlistRemoved = new EventEmitter();
+  @Output() trackRemoved = new EventEmitter();
   @Output() tracksReordered = new EventEmitter();
   readonly store = inject(GlobalStore);
   expanded = false;
@@ -41,6 +41,7 @@ export class TrackListComponent {
   expandedTrackId: number | null = null;
   isConfirmationDialogOpened = false;
   viewModeEnum = ViewModeEnum;
+  selectedTrackId: number | null = null;
 
   toggleExpanded(trackId: number) {
     if (trackId !== this.expandedTrackId && this.expanded) {
@@ -60,15 +61,24 @@ export class TrackListComponent {
     this.expanded = false;
   }
 
-  openConfirmationDialog() {
+  openConfirmationDialog(dropEvent?: CdkDragDrop<any, any>) {
+    this.dragging = false;
     this.isConfirmationDialogOpened = true;
+    if (dropEvent) {
+      this.selectedTrackId = this.store.tracks()[dropEvent.previousIndex].id;
+    }
   }
 
-  removePlaylist(confirmed: any) {
+  removePlaylistOrTrack(confirmed: boolean) {
     this.isConfirmationDialogOpened = false;
-    if (confirmed) {
-      this.playlistRemoved.emit();
+    if (!confirmed) {
+      return;
     }
+    if (this.selectedTrackId) {
+      this.trackRemoved.emit(this.selectedTrackId);
+      return;
+    }
+    this.playlistRemoved.emit();
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -84,16 +94,8 @@ export class TrackListComponent {
     this.dragging = false;
   }
 
-  removeTrack($event: CdkDragDrop<any, any>) {
-    console.log($event);
-  }
-
   toggleDragging(value: boolean) {
     this.dragging = value;
-  }
-
-  test($event: CdkDragEnter) {
-    console.log($event);
   }
 
   isMode(mode: ViewModeEnum) {

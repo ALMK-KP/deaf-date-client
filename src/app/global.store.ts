@@ -3,7 +3,7 @@ import { TracksService } from './services/tracks.service';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { PLAYLIST_ID_LS_KEY } from './utils/constants';
-import {ViewModeEnum} from "./utils/enums";
+import { ViewModeEnum } from './utils/enums';
 
 interface GlobalState {
   isLoading: boolean;
@@ -69,6 +69,17 @@ export const GlobalStore = signalStore(
         localStorage.removeItem(PLAYLIST_ID_LS_KEY);
         await tracksService.removePlaylist(store.playlistId());
         patchState(store, { tracks: [], playlistId: '', isLoading: false });
+      }
+    },
+    async removeTrack(trackId: number) {
+      if (store.playlistId()) {
+        patchState(store, { isLoading: true });
+        const { data: tracks }: any = await tracksService.removeTrack(trackId);
+        const playlistId = tracks.length ? store.playlistId() : '';
+        patchState(store, { tracks, playlistId, isLoading: false });
+        if (!playlistId) {
+          localStorage.removeItem(PLAYLIST_ID_LS_KEY);
+        }
       }
     },
     async reorderTracks(playlistId: string, reorderedTracks: any) {
