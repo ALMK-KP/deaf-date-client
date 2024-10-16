@@ -12,15 +12,14 @@
     }
     <ul>
       <!--ITEM IN AUTOCOMPLETE-->
-      @for (track of searchResults; track track.id) {
+      @for (track of searchResults; track track.ytId) {
         <li
           class="flex last-of-type:border-0 border-b border-green-500 py-2 gap-2 hover:bg-neutral-500"
           (click)="addTrackToPlaylist(track)"
         >
-          <img [src]="track.thumbnails.default.url" alt="" width="80" />
+          <img [src]="track.thumbnails?.default?.url" alt="" width="80" />
           <div>
             <h2>{{ track.title }}</h2>
-            <p>{{ track.channelTitle }}</p>
           </div>
         </li>
       }

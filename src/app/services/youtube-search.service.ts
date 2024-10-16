@@ -1,20 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-interface Item {
-  id: { videoId: string };
-  snippet: {
-    channelTitle: string;
-    title: string;
-    thumbnails: any;
-  };
-}
-
-interface YTData {
-  items: Item[];
-}
+import {
+  SearchedYouTubeTrack,
+  YouTubeData,
+  YouTubeItem,
+} from '../utils/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +14,14 @@ interface YTData {
 export class YoutubeSearchService {
   private readonly httpClient = inject(HttpClient);
 
-  searchYouTubeData(q: string): Observable<any[]> {
+  searchYouTubeData(query: string): Observable<Array<SearchedYouTubeTrack>> {
     return this.httpClient
-      .get<YTData>('https://www.googleapis.com/youtube/v3/search', {
+      .get<YouTubeData>('https://www.googleapis.com/youtube/v3/search', {
         params: {
           part: 'snippet',
           type: 'video',
           key: environment.YT_API_KEY,
-          q,
+          q: query,
         },
       })
       .pipe(
@@ -52,13 +44,14 @@ export class YoutubeSearchService {
     // ]);
   }
 
-  private mappedResults(items: any) {
-    return items.map((song: Item) => ({
-      ytId: song.id.videoId,
-      ytLink: 'https://www.youtube.com/watch?v=' + song.id.videoId,
-      channelTitle: song.snippet.channelTitle,
-      title: song.snippet.title,
-      thumbnails: song.snippet.thumbnails,
+  private mappedResults(
+    items: Array<YouTubeItem>,
+  ): Array<SearchedYouTubeTrack> {
+    return items.map((item: YouTubeItem) => ({
+      ytId: item.id.videoId,
+      ytLink: 'https://www.youtube.com/watch?v=' + item.id.videoId,
+      title: item.snippet.title,
+      thumbnails: item.snippet.thumbnails,
     }));
   }
 }

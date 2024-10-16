@@ -2,7 +2,8 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { SearchForTrackAutocompleteComponent } from './search-for-track-autocomplete/search-for-track-autocomplete.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, filter, switchMap, tap } from 'rxjs';
-import {YoutubeSearchService} from "../../services/youtube-search.service";
+import { YoutubeSearchService } from '../../services/youtube-search.service';
+import { SearchedYouTubeTrack } from '../../utils/interfaces';
 
 @Component({
   selector: 'app-search-for-track',
@@ -13,7 +14,7 @@ import {YoutubeSearchService} from "../../services/youtube-search.service";
 export class SearchForTrackComponent {
   @Output() addTrack = new EventEmitter();
   private readonly ytData = inject(YoutubeSearchService);
-  searchResults: any;
+  searchResults: Array<SearchedYouTubeTrack>;
   loading = false;
   searchQuery = new FormControl<string>('');
   autocompleteOpened = false;
@@ -46,8 +47,8 @@ export class SearchForTrackComponent {
     this.searchResults = [];
   }
 
-  emitAddTrack($event: any) {
+  emitAddTrack(track: SearchedYouTubeTrack) {
     this.autocompleteOpened = false;
-    this.addTrack.emit($event);
+    this.addTrack.emit(track);
   }
 }

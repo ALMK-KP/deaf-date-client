@@ -3,3 +3,8 @@ export enum ViewModeEnum {
   ENCODED,
   DECODED,
 }
+
+export enum KnowledgeLevelEnum {
+  ENCODED,
+  FULL,
+}

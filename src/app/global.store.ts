@@ -3,12 +3,13 @@ import { TracksService } from './services/tracks.service';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { PLAYLIST_ID_LS_KEY } from './utils/constants';
-import { ViewModeEnum } from './utils/enums';
+import { KnowledgeLevelEnum, ViewModeEnum } from './utils/enums';
+import { Track, Response } from './utils/interfaces';
 
 interface GlobalState {
   isLoading: boolean;
   mode: ViewModeEnum;
-  tracks: any[];
+  tracks: Array<Track>;
   playlistId: string;
 }
 
@@ -35,15 +36,16 @@ export const GlobalStore = signalStore(
     },
     async updateTrack(trackId: number, customTitle: string) {
       patchState(store, { isLoading: true });
-      const tracks: any = await tracksService.updateCustomTitle(
+      const tracks: Response<Track> = await tracksService.updateCustomTitle(
         trackId,
         customTitle,
       );
       patchState(store, { tracks: tracks.data, isLoading: false });
     },
-    async addTrackToPlaylist(track: any) {
+    async addTrackToPlaylist(track: Track) {
       patchState(store, { isLoading: true });
-      const tracks: any = await tracksService.saveTrackToPlaylist(track);
+      const tracks: Response<Track> =
+        await tracksService.saveTrackToPlaylist(track);
       const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY);
       if (!playlistId) {
         patchState(store, { isLoading: false });
@@ -51,15 +53,14 @@ export const GlobalStore = signalStore(
       }
       patchState(store, { tracks: tracks.data, playlistId, isLoading: false });
     },
-    async loadTracks(knowledgeLevel: 'ENCODED' | 'FULL'): Promise<void> {
+    async loadTracks(knowledgeLevel: KnowledgeLevelEnum): Promise<void> {
       patchState(store, { isLoading: true });
       if (!store.playlistId()) {
         patchState(store, { tracks: [], isLoading: false });
       } else {
-        const tracks: any = await tracksService.getPlaylist(
-          store.playlistId(),
-          knowledgeLevel,
-        );
+        const tracks: Response<Track> =
+          await tracksService.getPlaylist(store.playlistId(), knowledgeLevel);
+        console.log(tracks);
         patchState(store, { tracks: tracks.data, isLoading: false });
       }
     },
@@ -74,7 +75,8 @@ export const GlobalStore = signalStore(
     async removeTrack(trackId: number) {
       if (store.playlistId()) {
         patchState(store, { isLoading: true });
-        const { data: tracks }: any = await tracksService.removeTrack(trackId);
+        const { data: tracks }: Response<Track> =
+          await tracksService.removeTrack(trackId);
         const playlistId = tracks.length ? store.playlistId() : '';
         patchState(store, { tracks, playlistId, isLoading: false });
         if (!playlistId) {
@@ -82,9 +84,9 @@ export const GlobalStore = signalStore(
         }
       }
     },
-    async reorderTracks(playlistId: string, reorderedTracks: any) {
+    async reorderTracks(playlistId: string, reorderedTracks: Array<Track>) {
       patchState(store, { isLoading: true });
-      const tracks: any = await tracksService.reorderTracks(
+      const tracks: Response<Track> = await tracksService.reorderTracks(
         playlistId,
         reorderedTracks,
       );

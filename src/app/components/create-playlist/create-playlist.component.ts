@@ -8,7 +8,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
 import { ToastrService } from 'ngx-toastr';
-import { ViewModeEnum } from '../../utils/enums';
+import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-create-playlist',
@@ -42,7 +42,7 @@ export class CreatePlaylistComponent {
       this.store.updatePlaylistId(playlistId);
     }
     (async function (store) {
-      await store.loadTracks('FULL');
+      await store.loadTracks(KnowledgeLevelEnum.FULL);
     })(this.store);
   }
 

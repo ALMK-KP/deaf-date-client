@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SearchedYouTubeTrack } from '../../../utils/interfaces';
 
 @Component({
   selector: 'app-search-for-track-autocomplete',
@@ -7,16 +8,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './search-for-track-autocomplete.component.html',
 })
 export class SearchForTrackAutocompleteComponent {
-  @Input() searchResults: any[] = [];
+  @Input() searchResults: Array<SearchedYouTubeTrack> = [];
   @Input() loading = false;
-  @Output() addTrack = new EventEmitter();
+  @Output() addTrack: EventEmitter<SearchedYouTubeTrack> = new EventEmitter();
 
-  addTrackToPlaylist(track: any) {
-    console.log('AUTOCOMPLETE');
+  addTrackToPlaylist(track: SearchedYouTubeTrack) {
     this.addTrack.emit({
       ytId: track.ytId,
       ytLink: track.ytLink,
-      thumbnail: track.thumbnails.default.url,
+      thumbnail: track.thumbnails?.default?.url,
       title: track.title,
     });
   }

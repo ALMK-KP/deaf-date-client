@@ -5,7 +5,7 @@ import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
-import { ViewModeEnum } from '../../utils/enums';
+import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-encoded-playlist',
@@ -37,7 +37,7 @@ export class EncodedPlaylistComponent implements OnInit {
     const playlistId = this.route.snapshot.paramMap.get('id');
     if (playlistId) {
       this.store.updatePlaylistId(playlistId);
-      await this.store.loadTracks('ENCODED');
+      await this.store.loadTracks(KnowledgeLevelEnum.ENCODED);
 
       this.isCreatorOfCurrentPlaylist =
         localStorage.getItem(PLAYLIST_ID_LS_KEY) === playlistId;

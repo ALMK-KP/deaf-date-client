@@ -13,6 +13,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { ButtonComponent } from '../button/button.component';
 import { ViewModeEnum } from '../../utils/enums';
+import { Track } from '../../utils/interfaces';
 
 @Component({
   selector: 'app-track-list',
@@ -56,8 +57,8 @@ export class TrackListComponent {
     }
   }
 
-  updateCustomTitle(event: any) {
-    this.customTitleUpdated.emit(event);
+  updateCustomTitle(text: string) {
+    this.customTitleUpdated.emit(text);
     this.expanded = false;
   }
 
@@ -81,7 +82,7 @@ export class TrackListComponent {
     this.playlistRemoved.emit();
   }
 
-  drop(event: CdkDragDrop<any[]>) {
+  drop(event: CdkDragDrop<Array<Track>>) {
     moveItemInArray(
       this.store.tracks(),
       event.previousIndex,

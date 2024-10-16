@@ -3,7 +3,7 @@ import { TrackListComponent } from '../track-list/track-list.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
-import { ViewModeEnum } from '../../utils/enums';
+import {KnowledgeLevelEnum, ViewModeEnum} from '../../utils/enums';
 
 @Component({
   selector: 'app-decoded-playlist',
@@ -33,7 +33,7 @@ export class DecodedPlaylistComponent implements OnInit {
     const playlistId = this.route.snapshot.paramMap.get('id');
     if (playlistId) {
       this.store.updatePlaylistId(playlistId);
-      await this.store.loadTracks('FULL');
+      await this.store.loadTracks(KnowledgeLevelEnum.FULL);
     }
   }
 
