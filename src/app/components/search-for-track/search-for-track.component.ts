@@ -1,4 +1,10 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Output,
+} from '@angular/core';
 import { SearchForTrackAutocompleteComponent } from './search-for-track-autocomplete/search-for-track-autocomplete.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, filter, switchMap, tap } from 'rxjs';
@@ -10,6 +16,7 @@ import { SearchedYouTubeTrack } from '../../utils/interfaces';
   standalone: true,
   imports: [SearchForTrackAutocompleteComponent, ReactiveFormsModule],
   templateUrl: './search-for-track.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchForTrackComponent {
   @Output() addTrack = new EventEmitter();

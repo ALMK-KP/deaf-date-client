@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { SearchedYouTubeTrack } from '../../../utils/interfaces';
 
 @Component({
@@ -6,6 +12,7 @@ import { SearchedYouTubeTrack } from '../../../utils/interfaces';
   standalone: true,
   imports: [],
   templateUrl: './search-for-track-autocomplete.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchForTrackAutocompleteComponent {
   @Input() searchResults: Array<SearchedYouTubeTrack> = [];

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -11,6 +11,7 @@ import { NgOptimizedImage } from '@angular/common';
   },
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
   @Input() color: 'green' | 'orange' = 'green';

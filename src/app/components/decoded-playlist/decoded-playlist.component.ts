@@ -1,9 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { TrackListComponent } from '../track-list/track-list.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GlobalStore } from '../../global.store';
 import { ButtonComponent } from '../button/button.component';
-import {KnowledgeLevelEnum, ViewModeEnum} from '../../utils/enums';
+import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
 
 @Component({
   selector: 'app-decoded-playlist',
@@ -17,6 +22,7 @@ import {KnowledgeLevelEnum, ViewModeEnum} from '../../utils/enums';
       flex-grow: 1;
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DecodedPlaylistComponent implements OnInit {
   readonly store = inject(GlobalStore);

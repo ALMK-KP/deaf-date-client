@@ -1,4 +1,10 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Output,
+} from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
@@ -30,6 +36,7 @@ import { Track } from '../../utils/interfaces';
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackListComponent {
   @Output() customTitleUpdated = new EventEmitter();

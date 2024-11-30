@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../button/button.component';
 
@@ -7,6 +14,7 @@ import { ButtonComponent } from '../button/button.component';
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './custom-description-input.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomDescriptionInputComponent implements OnInit {
   @Input() initialValue = '';

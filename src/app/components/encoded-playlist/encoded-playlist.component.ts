@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TrackListComponent } from '../track-list/track-list.component';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
@@ -19,6 +24,7 @@ import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
       flex-grow: 1;
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EncodedPlaylistComponent implements OnInit {
   readonly store = inject(GlobalStore);

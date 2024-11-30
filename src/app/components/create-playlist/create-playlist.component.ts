@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { SearchForTrackComponent } from '../search-for-track/search-for-track.component';
 import { TrackListComponent } from '../track-list/track-list.component';
@@ -27,6 +27,7 @@ import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
       flex-grow: 1;
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePlaylistComponent {
   readonly store = inject(GlobalStore);

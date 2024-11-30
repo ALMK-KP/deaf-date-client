@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { SearchForTrackComponent } from './components/search-for-track/search-for-track.component';
 import { TrackListComponent } from './components/track-list/track-list.component';
@@ -8,6 +8,7 @@ import { TrackListComponent } from './components/track-list/track-list.component
   standalone: true,
   imports: [RouterOutlet, SearchForTrackComponent, TrackListComponent],
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   orangeMode = false;
