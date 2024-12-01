@@ -117,21 +117,23 @@
             />
           }
 
-          @if (
-            expanded &&
-            track.id === expandedTrackId &&
-            !isMode(viewModeEnum.CREATION)
-          ) {
+<!--          @if (-->
+<!--            expanded &&-->
+<!--            !isMode(viewModeEnum.CREATION)-->
+<!--          ) {-->
             <audio
+              #audio
               controls
               class="mt-2 mx-auto"
-              autoplay
               controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
+              [id]="track.id"
+              (pause)="handleOnPause(audio)"
+              (play)="handleOnPlay(audio)"
             >
               <source [src]="track.audio" type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
-          }
+<!--          }-->
         </li>
       }
     </ul>

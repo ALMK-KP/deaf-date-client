@@ -1,9 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   inject,
   Output,
+  viewChild,
+  viewChildren,
 } from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -20,6 +23,8 @@ import {
 import { ButtonComponent } from '../button/button.component';
 import { ViewModeEnum } from '../../utils/enums';
 import { Track } from '../../utils/interfaces';
+import { io } from 'socket.io-client';
+import { WebsocketsService } from '../../services/websockets.service';
 
 @Component({
   selector: 'app-track-list',
@@ -44,21 +49,43 @@ export class TrackListComponent {
   @Output() trackRemoved = new EventEmitter();
   @Output() tracksReordered = new EventEmitter();
   readonly store = inject(GlobalStore);
-  expanded = false;
+  expanded = true;
   dragging = false;
   expandedTrackId: number | null = null;
   isConfirmationDialogOpened = false;
   viewModeEnum = ViewModeEnum;
   selectedTrackId: number | null = null;
+  audioRefs = viewChildren<ElementRef>('audio');
+
+  websocketsService = inject(WebsocketsService);
+
+  constructor() {
+    this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
+      const trackIdElement = this.audioRefs()
+        .map((sd) => sd.nativeElement)
+        .find((ref) => ref.id === val.trackId);
+      console.log(trackIdElement);
+      if (!trackIdElement) return;
+
+      if (val.isPlayling) {
+        trackIdElement.play();
+        return;
+      }
+
+      trackIdElement.pause();
+    });
+  }
 
   toggleExpanded(trackId: number) {
-    if (trackId !== this.expandedTrackId && this.expanded) {
-      this.expanded = true;
-    } else {
-      this.expanded = !this.expanded;
-    }
+    // if (trackId !== this.expandedTrackId && this.expanded) {
+    //   this.expanded = true;
+    // } else {
+    //   this.expanded = !this.expanded;
+    // }
+    console.log('toggle play');
     this.expandedTrackId = trackId;
     if (!this.expanded) {
+      this.websocketsService.emitTogglePlay(false);
       this.expandedTrackId = null;
       return;
     }
@@ -66,7 +93,7 @@ export class TrackListComponent {
 
   updateCustomTitle(text: string) {
     this.customTitleUpdated.emit(text);
-    this.expanded = false;
+    // this.expanded = false;
   }
 
   openConfirmationDialog(dropEvent?: CdkDragDrop<any, any>) {
@@ -108,5 +135,16 @@ export class TrackListComponent {
 
   isMode(mode: ViewModeEnum) {
     return this.store.mode() === mode;
+  }
+
+  handleOnPause(el: HTMLAudioElement) {
+    this.websocketsService.emitTogglePlay({
+      trackId: el.id,
+      isPlayling: false,
+    });
+  }
+
+  handleOnPlay(el: HTMLAudioElement) {
+    this.websocketsService.emitTogglePlay({ trackId: el.id, isPlayling: true });
   }
 }

@@ -1,7 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { SearchForTrackComponent } from './components/search-for-track/search-for-track.component';
 import { TrackListComponent } from './components/track-list/track-list.component';
+import { WebsocketsService } from './services/websockets.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +19,20 @@ import { TrackListComponent } from './components/track-list/track-list.component
 })
 export class AppComponent implements OnInit {
   orangeMode = false;
+  connectedUsers: number;
 
-  constructor(private router: Router) {}
+  websocketsService = inject(WebsocketsService);
+
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+  ) {
+    this.websocketsService.connectedUsersChange$.subscribe((val: any) => {
+      this.connectedUsers = val - 1;
+      this.cdr.markForCheck();
+      console.log(val);
+    });
+  }
 
   ngOnInit() {
     this.router.events.subscribe(() => {
