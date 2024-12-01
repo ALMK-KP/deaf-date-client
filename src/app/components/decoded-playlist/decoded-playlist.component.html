@@ -1,10 +1,13 @@
-<div class="flex-grow flex flex-col">
+<div class="flex-grow flex flex-col mb-2">
   <app-track-list />
-  <app-button
+
+  <button
+    size="s"
+    tuiButton
+    appearance="outline-grayscale"
     class="mt-auto"
-    color="orange"
-    message="create your own playlist"
-    [isGrowing]="false"
     (click)="goToCreationMode()"
-  ></app-button>
+  >
+    create your own playlist
+  </button>
 </div>

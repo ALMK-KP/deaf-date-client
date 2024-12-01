@@ -6,9 +6,9 @@ import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
-import { ButtonComponent } from '../button/button.component';
 import { ToastrService } from 'ngx-toastr';
 import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
+import {TuiButton} from "@taiga-ui/core";
 
 @Component({
   selector: 'app-create-playlist',
@@ -17,7 +17,7 @@ import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
     SearchForTrackComponent,
     TrackListComponent,
     RouterLink,
-    ButtonComponent,
+    TuiButton,
   ],
   templateUrl: './create-playlist.component.html',
   styles: `

@@ -18,10 +18,8 @@
     </button>
   }
   @if (customDescription.value !== initialValue) {
-    <app-button
-      icon="save-50"
-      [border]="false"
+    <button
       (click)="updateTrackCustomTitle(customDescription.value || '')"
-    ></app-button>
+    ></button>
   }
 </div>

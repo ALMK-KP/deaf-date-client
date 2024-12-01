@@ -1,22 +1,31 @@
 <div class="pt-4 flex-grow flex flex-col">
   <app-track-list />
-  <div class="flex gap-2 mt-auto">
+  <div class="flex gap-2 mt-auto mb-2">
     @if (isCreatorOfCurrentPlaylist) {
-      <app-button
+      <button
+        size="s"
+        tuiButton
+        appearance="outline-grayscale"
+        class="grow"
         routerLink="/"
-        [message]="
+      >
+        {{
           isCreatorOfCurrentPlaylist
-            ? 'back to creation'
-            : 'create your own playlist'
-        "
-        [isLink]="true"
-      ></app-button>
+            ? "back to creation"
+            : "create your own playlist"
+        }}
+      </button>
     }
     @if (store.tracks().length) {
-      <app-button
-        message="reveal"
+      <button
+        size="s"
+        tuiButton
+        appearance="outline-grayscale"
+        class="grow"
         (click)="openConfirmationDialog()"
-      ></app-button>
+      >
+        reveal
+      </button>
     }
   </div>
   @if (isConfirmationDialogOpened) {

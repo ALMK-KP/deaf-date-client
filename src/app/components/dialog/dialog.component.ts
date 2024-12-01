@@ -6,12 +6,12 @@ import {
   Output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ButtonComponent } from '../button/button.component';
+import {TuiButton} from "@taiga-ui/core";
 
 @Component({
   selector: 'app-dialog',
   standalone: true,
-  imports: [RouterLink, ButtonComponent],
+  imports: [RouterLink, TuiButton],
   templateUrl: './dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

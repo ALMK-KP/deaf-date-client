@@ -5,15 +5,25 @@
     class="prevent-body-scroll mt-2 bg-neutral-700 ring-2 ring-green-500 text-white text-sm px-2 w-[300px] flex-grow-0"
   >
     <p class="text-center font-bold my-6">{{ message }}</p>
-    <div class="flex gap-2">
-      <app-button
-        message="yes"
+    <div class="flex gap-2 mb-2">
+      <button
+        size="s"
+        tuiButton
+        appearance="outline-grayscale"
+        class="grow"
         (click)="emitDialogClicked.emit(true)"
-      ></app-button>
-      <app-button
-        message="no"
+      >
+        yes
+      </button>
+      <button
+        size="s"
+        tuiButton
+        appearance="outline-grayscale"
+        class="grow"
         (click)="emitDialogClicked.emit(false)"
-      ></app-button>
+      >
+        no
+      </button>
     </div>
   </div>
 </div>

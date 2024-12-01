@@ -12,16 +12,24 @@
   />
   <div class="mb-24"></div>
   @if (store.tracks().length) {
-    <div class="flex gap-2 mt-auto">
-      <app-button
-        message="open as deaf date"
+    <div class="flex gap-2 mt-auto mb-2">
+      <button
+        size="s"
+        tuiButton
+        appearance="outline-grayscale"
+        class="grow"
         [routerLink]="['/encoded/' + store.playlistId()]"
-      ></app-button>
-      <app-button
-        message="copy link"
-        [isGrowing]="false"
+      >
+        open as deaf date
+      </button>
+      <button
+        size="s"
+        tuiButton
+        appearance="outline-grayscale"
         (click)="copyLink()"
-      ></app-button>
+      >
+        copy link
+      </button>
     </div>
   }
 </div>

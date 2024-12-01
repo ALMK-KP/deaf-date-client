@@ -7,12 +7,11 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-custom-description-input',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ButtonComponent],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './custom-description-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

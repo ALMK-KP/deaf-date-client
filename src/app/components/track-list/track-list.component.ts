@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -20,11 +21,13 @@ import {
   CdkDropListGroup,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { ButtonComponent } from '../button/button.component';
 import { ViewModeEnum } from '../../utils/enums';
 import { Track } from '../../utils/interfaces';
-import { io } from 'socket.io-client';
 import { WebsocketsService } from '../../services/websockets.service';
+import { NgOptimizedImage } from '@angular/common';
+import {TuiButton, TuiIcon, TuiIconPipe} from '@taiga-ui/core';
+import { TuiHovered } from '@taiga-ui/cdk';
+import { PlayerComponent } from '../player/player.component';
 
 @Component({
   selector: 'app-track-list',
@@ -36,8 +39,13 @@ import { WebsocketsService } from '../../services/websockets.service';
     CdkDrag,
     CdkDragHandle,
     CdkDragPlaceholder,
-    ButtonComponent,
     CdkDropListGroup,
+    NgOptimizedImage,
+    TuiIcon,
+    TuiIconPipe,
+    TuiHovered,
+    PlayerComponent,
+    TuiButton,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
@@ -55,11 +63,14 @@ export class TrackListComponent {
   isConfirmationDialogOpened = false;
   viewModeEnum = ViewModeEnum;
   selectedTrackId: number | null = null;
+  selectedToPlayTrackId: number;
+  selectedTrackSrc: string;
+  hoveredId: number | null;
   audioRefs = viewChildren<ElementRef>('audio');
 
   websocketsService = inject(WebsocketsService);
 
-  constructor() {
+  constructor(private readonly cdr: ChangeDetectorRef) {
     this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
       const trackIdElement = this.audioRefs()
         .map((sd) => sd.nativeElement)
@@ -146,5 +157,18 @@ export class TrackListComponent {
 
   handleOnPlay(el: HTMLAudioElement) {
     this.websocketsService.emitTogglePlay({ trackId: el.id, isPlayling: true });
+  }
+
+  onHovered(hovered: boolean, track: Track) {
+    this.hoveredId = hovered ? track.id : null;
+  }
+
+  selectTrack(track: any | HTMLDivElement) {
+    this.selectedToPlayTrackId = track.id;
+    this.selectedTrackSrc = track.audio;
+    console.log(this.selectedToPlayTrackId);
+    console.log(this.selectedTrackSrc);
+    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
 }

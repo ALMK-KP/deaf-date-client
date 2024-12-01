@@ -1,21 +1,23 @@
-<div class="max-w-[500px] mx-auto">
-  <h1
-    class="p-4 text-xl font-semibold tracking-widest text-center border-b"
-    [class.text-green-500]="!orangeMode"
-    [class.border-green-500]="!orangeMode"
-    [class.text-orange-500]="orangeMode"
-    [class.border-orange-500]="orangeMode"
-  >
-    deafdate
-  </h1>
-  <main class="px-2 flex flex-col" style="min-height: calc(100vh - 61px)">
-    <router-outlet></router-outlet>
-  </main>
-  @if (connectedUsers) {
-    <div
-      class="bg-green-700 rounded-full w-12 h-12 absolute top-0 left-0 flex justify-center items-center text-neutral-300 font-bold text-2xl"
+<tui-root tuiTheme="dark">
+  <div class="max-w-[500px] mx-auto">
+    <h1
+      class="p-4 text-xl font-semibold tracking-widest text-center border-b"
+      [class.text-green-500]="!orangeMode"
+      [class.border-green-500]="!orangeMode"
+      [class.text-orange-500]="orangeMode"
+      [class.border-orange-500]="orangeMode"
     >
-      +{{ connectedUsers }}
-    </div>
-  }
-</div>
+      deafdate
+    </h1>
+    <main class="px-2 flex flex-col" style="min-height: calc(100vh - 61px)">
+      <router-outlet></router-outlet>
+    </main>
+    @if (connectedUsers) {
+      <div
+        class="bg-green-700 rounded-full w-12 h-12 absolute top-0 left-0 flex justify-center items-center text-neutral-300 font-bold text-2xl"
+      >
+        +{{ connectedUsers }}
+      </div>
+    }
+  </div>
+</tui-root>

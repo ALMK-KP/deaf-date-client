@@ -1,3 +1,4 @@
+import { TuiRoot } from '@taiga-ui/core';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,7 +14,7 @@ import { WebsocketsService } from './services/websockets.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SearchForTrackComponent, TrackListComponent],
+  imports: [RouterOutlet, SearchForTrackComponent, TrackListComponent, TuiRoot],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -9,13 +9,18 @@ import { TrackListComponent } from '../track-list/track-list.component';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
-import { ButtonComponent } from '../button/button.component';
 import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
+import {TuiButton} from "@taiga-ui/core";
 
 @Component({
   selector: 'app-encoded-playlist',
   standalone: true,
-  imports: [TrackListComponent, RouterLink, DialogComponent, ButtonComponent],
+  imports: [
+    TrackListComponent,
+    RouterLink,
+    DialogComponent,
+    TuiButton,
+  ],
   templateUrl: './encoded-playlist.component.html',
   styles: `
     :host {
