@@ -6,6 +6,7 @@ import {
   EventEmitter,
   inject,
   Output,
+  TemplateRef,
   viewChild,
   viewChildren,
 } from '@angular/core';
@@ -25,9 +26,23 @@ import { ViewModeEnum } from '../../utils/enums';
 import { Track } from '../../utils/interfaces';
 import { WebsocketsService } from '../../services/websockets.service';
 import { NgOptimizedImage } from '@angular/common';
-import {TuiButton, TuiIcon, TuiIconPipe} from '@taiga-ui/core';
+import {
+  TuiButton,
+  TuiDataListComponent,
+  TuiDropdownDirective,
+  TuiDropdownOpen,
+  TuiDropdownPositionSided,
+  TuiIcon,
+  TuiIconPipe,
+  TuiOptGroup,
+} from '@taiga-ui/core';
 import { TuiHovered } from '@taiga-ui/cdk';
 import { PlayerComponent } from '../player/player.component';
+import {
+  TuiSheetDialog,
+  TuiSheetDialogOptions,
+  TuiSheetDialogService,
+} from '@taiga-ui/addon-mobile';
 
 @Component({
   selector: 'app-track-list',
@@ -46,6 +61,12 @@ import { PlayerComponent } from '../player/player.component';
     TuiHovered,
     PlayerComponent,
     TuiButton,
+    TuiSheetDialog,
+    TuiDataListComponent,
+    TuiDropdownDirective,
+    TuiDropdownPositionSided,
+    TuiDropdownOpen,
+    TuiOptGroup,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
@@ -66,11 +87,20 @@ export class TrackListComponent {
   selectedToPlayTrackId: number;
   selectedTrackSrc: string;
   hoveredId: number | null;
+  open: boolean;
+  openContext: boolean;
   audioRefs = viewChildren<ElementRef>('audio');
+  sheetRef = viewChild('sheetTest', { read: TemplateRef });
+  areYouSure: boolean;
 
   websocketsService = inject(WebsocketsService);
 
-  constructor(private readonly cdr: ChangeDetectorRef) {
+  options: Partial<TuiSheetDialogOptions<Track>>;
+
+  constructor(
+    private readonly cdr: ChangeDetectorRef,
+    private readonly tuiSheetDialogService: TuiSheetDialogService,
+  ) {
     this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
       const trackIdElement = this.audioRefs()
         .map((sd) => sd.nativeElement)
@@ -127,6 +157,12 @@ export class TrackListComponent {
     this.playlistRemoved.emit();
   }
 
+  removeTrack(observer: any, id: any) {
+    this.areYouSure = false;
+    this.trackRemoved.emit(id);
+    observer.complete();
+  }
+
   drop(event: CdkDragDrop<Array<Track>>) {
     moveItemInArray(
       this.store.tracks(),
@@ -170,5 +206,13 @@ export class TrackListComponent {
     console.log(this.selectedTrackSrc);
     this.cdr.markForCheck();
     this.cdr.detectChanges();
+  }
+
+  openContextMenu(track: Track) {
+    this.options = {
+      offset: 48,
+      data: track,
+    };
+    this.open = true;
   }
 }
