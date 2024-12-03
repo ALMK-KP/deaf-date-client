@@ -1,7 +1,7 @@
 @if (store.tracks().length) {
   @if (isMode(viewModeEnum.CREATION)) {
     <div class="flex gap-2 items-center pt-8">
-      <h2 class="text-lg font-semibold text-green-500 tracking-widest">
+      <h2 class="text-lg font-semibold text-green-500 tracking-wider">
         Your current playlist
       </h2>
       <button
@@ -132,20 +132,6 @@
         </li>
       }
     </ul>
-    <div
-      class="fixed bottom-0 h-16 flex justify-center w-[calc(100vw-12px)] mx-auto left-0 right-0"
-      [class.invisible]="!dragging"
-      [class.visible]="dragging"
-    >
-      <div
-        cdkDropList
-        class="flex items-center justify-center font-bold bg-caution-tape mx-auto max-w-[500px] w-full border-red-400 border-2 h-full"
-        [cdkDropListData]="[]"
-        (cdkDropListDropped)="openConfirmationDialog($event)"
-      >
-        <p class="py-0.5 bg-red-400 w-full text-center">remove</p>
-      </div>
-    </div>
   </div>
 } @else {
   @if (store.isLoading()) {
@@ -194,18 +180,20 @@
   [tuiSheetDialogOptions]="options"
   [(tuiSheetDialog)]="open"
 >
-  <div class="flex gap-3 border-b-emerald-800 border-b pb-4 mb-4">
-    <div
-      class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
-    >
-      <div class="stretchy-wrapper">
-        <div>
-          <img [src]="track.thumbnail" />
+  @if (track) {
+    <div class="flex gap-3 border-b-emerald-800 border-b pb-4 mb-4">
+      <div
+        class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+      >
+        <div class="stretchy-wrapper">
+          <div>
+            <img [src]="track.thumbnail" />
+          </div>
         </div>
       </div>
+      <p class="text-sm">{{ track.title }}</p>
     </div>
-    <p class="text-sm">{{ track.title }}</p>
-  </div>
+  }
 
   @if (!areYouSure) {
     <button
@@ -231,7 +219,11 @@
 
   @if (areYouSure) {
     <p class="text-center text-sm mt-5">
-      Are you sure you want to delete this track from the playlist?
+      {{
+        track
+          ? "Are you sure you want to delete this track from the playlist?"
+          : "Are you sure you want to delete this playlist?"
+      }}
     </p>
     <div class="flex gap-2 mt-4">
       <button

@@ -51,7 +51,7 @@ export class YoutubeSearchService {
       ytId: item.id.videoId,
       ytLink: 'https://www.youtube.com/watch?v=' + item.id.videoId,
       title: item.snippet.title,
-      thumbnails: item.snippet.thumbnails,
+      thumbnail: item.snippet.thumbnails.default.url,
     }));
   }
 }

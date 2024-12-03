@@ -95,7 +95,7 @@ export class TrackListComponent {
 
   websocketsService = inject(WebsocketsService);
 
-  options: Partial<TuiSheetDialogOptions<Track>>;
+  options: Partial<TuiSheetDialogOptions<Track | null>>;
 
   constructor(
     private readonly cdr: ChangeDetectorRef,
@@ -137,12 +137,13 @@ export class TrackListComponent {
     // this.expanded = false;
   }
 
-  openConfirmationDialog(dropEvent?: CdkDragDrop<any, any>) {
-    this.dragging = false;
-    this.isConfirmationDialogOpened = true;
-    if (dropEvent) {
-      this.selectedTrackId = this.store.tracks()[dropEvent.previousIndex].id;
-    }
+  openConfirmationDialog() {
+    this.options = {
+      offset: 48,
+      data: null,
+    };
+    this.open = true;
+    this.areYouSure = true;
   }
 
   removePlaylistOrTrack(confirmed: boolean) {

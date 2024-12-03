@@ -8,7 +8,12 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
 import { ToastrService } from 'ngx-toastr';
 import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
-import {TuiButton} from "@taiga-ui/core";
+import { TuiButton, TuiHint, TuiTextfield } from '@taiga-ui/core';
+import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import {
+  TuiDataListWrapperComponent,
+  TuiFilterByInputPipe,
+} from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-create-playlist',
@@ -18,6 +23,12 @@ import {TuiButton} from "@taiga-ui/core";
     TrackListComponent,
     RouterLink,
     TuiButton,
+    TuiHint,
+    TuiInputModule,
+    TuiTextfield,
+    TuiTextfieldControllerModule,
+    TuiDataListWrapperComponent,
+    TuiFilterByInputPipe,
   ],
   templateUrl: './create-playlist.component.html',
   styles: `

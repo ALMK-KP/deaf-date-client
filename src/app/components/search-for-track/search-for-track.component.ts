@@ -1,32 +1,53 @@
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
-  inject,
   Output,
 } from '@angular/core';
-import { SearchForTrackAutocompleteComponent } from './search-for-track-autocomplete/search-for-track-autocomplete.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TuiAmountPipe, TuiInputCard } from '@taiga-ui/addon-commerce';
+import { TuiLet } from '@taiga-ui/cdk';
+import { TuiDataList, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
+import { TuiAvatar, TuiDataListWrapper } from '@taiga-ui/kit';
+import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { debounceTime, filter, switchMap, tap } from 'rxjs';
-import { YoutubeSearchService } from '../../services/youtube-search.service';
 import { SearchedYouTubeTrack } from '../../utils/interfaces';
+import { YoutubeSearchService } from '../../services/youtube-search.service';
 
 @Component({
-  selector: 'app-search-for-track',
   standalone: true,
-  imports: [SearchForTrackAutocompleteComponent, ReactiveFormsModule],
+  selector: 'app-search-for-track',
+  imports: [
+    AsyncPipe,
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    TuiAmountPipe,
+    TuiAvatar,
+    TuiDataList,
+    TuiDataListWrapper,
+    TuiInitialsPipe,
+    TuiInputCard,
+    TuiInputModule,
+    TuiLet,
+    TuiTextfield,
+    TuiTextfieldControllerModule,
+  ],
   templateUrl: './search-for-track.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchForTrackComponent {
   @Output() addTrack = new EventEmitter();
-  private readonly ytData = inject(YoutubeSearchService);
-  searchResults: Array<SearchedYouTubeTrack>;
-  loading = false;
+  searchResults: Array<SearchedYouTubeTrack> = [];
   searchQuery = new FormControl<string>('');
-  autocompleteOpened = false;
+  loading: boolean;
 
-  constructor() {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private ytData: YoutubeSearchService,
+  ) {
     this.searchQuery.valueChanges
       .pipe(
         debounceTime(800),
@@ -34,7 +55,7 @@ export class SearchForTrackComponent {
         filter((val: string) => val.length > 3),
         tap(() => {
           this.loading = true;
-          this.autocompleteOpened = true;
+          this.cdr.detectChanges();
         }),
         switchMap((val: string) => this.ytData.searchYouTubeData(val)),
       )
@@ -42,20 +63,12 @@ export class SearchForTrackComponent {
         console.log(value);
         this.loading = false;
         this.searchResults = value;
+        this.cdr.detectChanges();
       });
   }
 
-  toggleAutocomplete(value: boolean) {
-    this.autocompleteOpened = value;
-  }
-
-  clearSearchQuery() {
-    this.searchQuery.setValue('');
-    this.searchResults = [];
-  }
-
   emitAddTrack(track: SearchedYouTubeTrack) {
-    this.autocompleteOpened = false;
+    this.searchQuery.setValue('');
     this.addTrack.emit(track);
   }
 }
