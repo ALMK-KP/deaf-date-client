@@ -14,6 +14,7 @@
       ></button>
     </div>
   }
+
   <div cdkDropListGroup>
     <ul
       cdkDropList
@@ -25,7 +26,7 @@
       @for (track of store.tracks(); track track.id; let i = $index) {
         <li
           cdkDrag
-          class="p-2 rounded-lg text-sm"
+          class="py-2 pl-2 rounded-lg text-sm"
           [cdkDragDisabled]="!isMode(viewModeEnum.CREATION)"
           (cdkDragStarted)="toggleDragging(true)"
         >
@@ -47,7 +48,9 @@
               class="flex gap-3 w-full"
               (tuiHoveredChange)="onHovered($event, track)"
             >
-              <div class="self-start h-[37.5px] flex items-center ml-2 w-6">
+              <div
+                class="self-start h-[37.5px] flex items-center shrink-0 ml-2 w-4"
+              >
                 @if (
                   hoveredId === track.id && selectedToPlayTrackId !== track.id
                 ) {
@@ -82,10 +85,12 @@
                   </div>
                 </a>
               }
-              <div class="w-full">
+              <div class="max-w-[364px] grow">
                 @if (!isMode(viewModeEnum.ENCODED)) {
                   <div class="flex justify-between items-start">
-                    <h3>{{ track.title }}</h3>
+                    <h3 tuiFade class="text-nowrap">
+                      {{ track.title }}
+                    </h3>
                     <button
                       appearance="action-grayscale"
                       iconStart="@tui.ellipsis-vertical"
@@ -96,39 +101,13 @@
                     ></button>
                   </div>
                 }
-                @if (
-                  track.customTitle &&
-                  (isMode(viewModeEnum.ENCODED) ||
-                    (isMode(viewModeEnum.CREATION) &&
-                      expandedTrackId !== track.id))
-                ) {
-                  <div
-                    [class.italic]="isMode(viewModeEnum.DECODED)"
-                    [class.text-neutral-300]="isMode(viewModeEnum.DECODED)"
-                    [class.border-t]="!isMode(viewModeEnum.ENCODED)"
-                    [class.pt-2]="!isMode(viewModeEnum.ENCODED)"
-                    [class.mt-2]="!isMode(viewModeEnum.ENCODED)"
-                    [class.border-orange-500]="isMode(viewModeEnum.DECODED)"
-                    [class.border-green-500]="!isMode(viewModeEnum.DECODED)"
-                    class="text-xs flex justify-between items-center"
-                  >
-                    <p>{{ track.customTitle }}</p>
-                  </div>
-                }
+
+                <p tuiFade class="text-xs text-nowrap text-neutral-500 max-w-[332px]">
+                  {{ track.customTitle }}
+                </p>
               </div>
             </div>
           </div>
-          @if (
-            expanded &&
-            track.id === expandedTrackId &&
-            isMode(viewModeEnum.CREATION)
-          ) {
-            <app-custom-description-input
-              [initialValue]="track.customTitle"
-              [trackId]="track.id"
-              (customTitleUpdated)="updateCustomTitle($event)"
-            />
-          }
         </li>
       }
     </ul>
