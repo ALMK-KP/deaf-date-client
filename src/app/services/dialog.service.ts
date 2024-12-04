@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ConfirmDialogActionEnum } from '../utils/enums';
-import { ConfirmDialogData } from '../utils/interfaces';
+import { ConfirmDialogData, Track } from '../utils/interfaces';
 import { TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
 
 @Injectable({
@@ -10,6 +10,9 @@ import { TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
 export class DialogService {
   confirmDialogOptions$ = new Subject<
     Partial<TuiSheetDialogOptions<ConfirmDialogData>>
+  >();
+  trackContextMenuDialogOptions$ = new Subject<
+    Partial<TuiSheetDialogOptions<any>>
   >();
   confirmDialogAction$ = new Subject<ConfirmDialogActionEnum>();
 
@@ -20,7 +23,13 @@ export class DialogService {
   ) {
     this.confirmDialogOptions$.next({
       label,
-      data: { confirmBtnLabel, actionType, isOpened: true },
+      data: { confirmBtnLabel, actionType },
+    });
+  }
+
+  openTrackContextMenuDialog(track: Track) {
+    this.trackContextMenuDialogOptions$.next({
+      data: track,
     });
   }
 }

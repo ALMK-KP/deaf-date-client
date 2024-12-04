@@ -54,5 +54,4 @@ export interface YouTubeData {
 export interface ConfirmDialogData {
   confirmBtnLabel: string;
   actionType: ConfirmDialogActionEnum;
-  isOpened: boolean;
 }

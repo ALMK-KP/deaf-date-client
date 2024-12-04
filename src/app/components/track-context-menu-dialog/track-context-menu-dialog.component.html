@@ -1,0 +1,66 @@
+@if (isOpened) {
+  <ng-template
+    let-observer
+    let-data="data"
+    [tuiSheetDialogOptions]="options"
+    [(tuiSheetDialog)]="isOpened"
+    (tuiSheetDialogChange)="dialogClosed()"
+  >
+    @if (!isConfirmationMode) {
+      <button appearance="secondary" size="s" tuiButton class="w-full mb-2">
+        {{ data.customTitle ? "Edit Custom Title" : "Add Custom Title" }}
+      </button>
+
+      <button
+        appearance="secondary-destructive"
+        size="s"
+        tuiButton
+        class="w-full"
+        (click)="isConfirmationMode = true"
+      >
+        Remove
+      </button>
+    }
+
+    @if (isConfirmationMode) {
+      <p class="text-center text-sm mt-1">
+        Are you sure you want to delete this track from the playlist?
+      </p>
+      <div class="flex gap-2 mt-4">
+        <button
+          size="s"
+          tuiButton
+          appearance="outline-destructive"
+          class="grow"
+          (click)="store.removeTrack(data.id); observer.complete()"
+        >
+          Remove
+        </button>
+        <button
+          size="s"
+          tuiButton
+          appearance="outline-grayscale"
+          class="grow"
+          (click)="isConfirmationMode = false"
+        >
+          Cancel
+        </button>
+      </div>
+    }
+  </ng-template>
+}
+
+<ng-template #labelRef [polymorpheus]="options" let-track="data">
+  <div class="flex gap-3 border-b-emerald-800 border-b pb-4">
+    <div
+      class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+    >
+      <div class="stretchy-wrapper">
+        <div>
+          <img [src]="track?.thumbnail" />
+        </div>
+      </div>
+    </div>
+    <p class="text-sm">{{ track?.title }}</p>
+  </div>
+</ng-template>

@@ -6,8 +6,6 @@ import {
   EventEmitter,
   inject,
   Output,
-  TemplateRef,
-  viewChild,
   viewChildren,
 } from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
@@ -37,9 +35,10 @@ import {
 } from '@taiga-ui/core';
 import { TuiHovered } from '@taiga-ui/cdk';
 import { PlayerComponent } from '../player/player.component';
-import { TuiSheetDialog, TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
+import { TuiSheetDialog } from '@taiga-ui/addon-mobile';
 import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
 import { DialogService } from '../../services/dialog.service';
+import { TrackContextMenuDialogComponent } from '../track-context-menu-dialog/track-context-menu-dialog.component';
 
 @Component({
   selector: 'app-track-list',
@@ -64,6 +63,7 @@ import { DialogService } from '../../services/dialog.service';
     TuiDropdownOpen,
     TuiOptGroup,
     PolymorpheusTemplate,
+    TrackContextMenuDialogComponent,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
@@ -72,30 +72,19 @@ import { DialogService } from '../../services/dialog.service';
 export class TrackListComponent {
   @Output() customTitleUpdated = new EventEmitter();
   @Output() playlistRemoved = new EventEmitter();
-  @Output() trackRemoved = new EventEmitter();
   @Output() tracksReordered = new EventEmitter();
   readonly store = inject(GlobalStore);
   expanded = true;
   dragging = false;
   expandedTrackId: number | null = null;
-  isConfirmationDialogOpened = false;
   viewModeEnum = ViewModeEnum;
-  selectedTrackId: number | null = null;
   selectedToPlayTrackId: number;
   selectedTrackSrc: string;
   hoveredId: number | null;
   open: boolean;
-  openContext: boolean;
   audioRefs = viewChildren<ElementRef>('audio');
-  sheetRef = viewChild('sheetTest', { read: TemplateRef });
-  areYouSure: boolean;
 
   websocketsService = inject(WebsocketsService);
-
-  options: Partial<TuiSheetDialogOptions<Track | null>>;
-
-  trackSheetLabelRef = viewChild('trackSheetLabel', { read: TemplateRef });
-  sheetContentRef = viewChild('sheetContent', { read: TemplateRef });
 
   constructor(
     private readonly cdr: ChangeDetectorRef,
@@ -124,13 +113,6 @@ export class TrackListComponent {
 
   updateCustomTitle(text: string) {
     this.customTitleUpdated.emit(text);
-    // this.expanded = false;
-  }
-
-  removeTrack(observer: any, id: any) {
-    this.areYouSure = false;
-    this.trackRemoved.emit(id);
-    observer.complete();
   }
 
   drop(event: CdkDragDrop<Array<Track>>) {
@@ -184,5 +166,9 @@ export class TrackListComponent {
       'Delete',
       ConfirmDialogActionEnum.DELETE_PLAYLIST,
     );
+  }
+
+  openTrackContextMenuDialog(track: Track) {
+    this.dialogHelper.openTrackContextMenuDialog(track);
   }
 }

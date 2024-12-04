@@ -92,6 +92,7 @@
                       size="xs"
                       tuiIconButton
                       [style.border-radius.%]="100"
+                      (click)="openTrackContextMenuDialog(track)"
                     ></button>
                   </div>
                 }
@@ -162,60 +163,4 @@
   />
 }
 
-<ng-template #trackSheetLabel [polymorpheus]="options" let-track="data">
-  <div class="flex gap-3 border-b-emerald-800 border-b pb-4 mb-4">
-    <div
-      class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
-    >
-      <div class="stretchy-wrapper">
-        <div>
-          <img [src]="track?.thumbnail" />
-        </div>
-      </div>
-    </div>
-    <p class="text-sm">{{ track?.title }}</p>
-  </div>
-</ng-template>
-
-<ng-template #sheetContent>
-  @if (!areYouSure) {
-    <button appearance="secondary" size="s" tuiButton class="w-full mb-2">
-      {{
-        store.tracks()[0].customTitle ? "Edit Custom Title" : "Add Custom Title"
-      }}
-    </button>
-
-    <button
-      appearance="secondary-destructive"
-      size="s"
-      tuiButton
-      class="w-full"
-    >
-      Remove
-    </button>
-  }
-</ng-template>
-
-<ng-template #areYouSureRef>
-  <p class="text-center text-sm mt-5">
-    {{
-      store.tracks()[0]
-        ? "Are you sure you want to delete this track from the playlist?"
-        : "Are you sure you want to delete this playlist?"
-    }}
-  </p>
-  <div class="flex gap-2 mt-4">
-    <button size="s" tuiButton appearance="outline-destructive" class="grow">
-      Remove
-    </button>
-    <button
-      size="s"
-      tuiButton
-      appearance="outline-grayscale"
-      class="grow"
-      (click)="areYouSure = false"
-    >
-      Cancel
-    </button>
-  </div>
-</ng-template>
+<app-track-context-menu-dialog />
