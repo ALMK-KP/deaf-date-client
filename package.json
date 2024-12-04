@@ -33,6 +33,7 @@
     "@taiga-ui/kit": "^4.17.0",
     "@taiga-ui/layout": "^4.17.0",
     "@taiga-ui/legacy": "^4.17.0",
+    "@taiga-ui/polymorpheus": "^4.7.4",
     "firebase": "^10.13.1",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

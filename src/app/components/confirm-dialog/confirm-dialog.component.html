@@ -1,0 +1,30 @@
+@if (isOpened) {
+  <ng-template
+    let-observer
+    let-data="data"
+    [tuiSheetDialogOptions]="options"
+    [(tuiSheetDialog)]="isOpened"
+  >
+    <div class="flex gap-2 mt-4">
+      <button
+        size="s"
+        tuiButton
+        class="grow"
+        appearance="secondary-destructive"
+        (click)="confirmAction(); observer.complete()"
+      >
+        {{ options.data?.confirmBtnLabel }}
+      </button>
+
+      <button
+        size="s"
+        tuiButton
+        class="grow"
+        appearance="outline-grayscale"
+        (click)="observer.complete()"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+}

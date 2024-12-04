@@ -10,11 +10,18 @@ import { Router, RouterOutlet } from '@angular/router';
 import { SearchForTrackComponent } from './components/search-for-track/search-for-track.component';
 import { TrackListComponent } from './components/track-list/track-list.component';
 import { WebsocketsService } from './services/websockets.service';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SearchForTrackComponent, TrackListComponent, TuiRoot],
+  imports: [
+    RouterOutlet,
+    SearchForTrackComponent,
+    TrackListComponent,
+    TuiRoot,
+    ConfirmDialogComponent,
+  ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -11,7 +11,6 @@ import {
   viewChildren,
 } from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
-import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
 import {
   CdkDrag,
@@ -22,7 +21,7 @@ import {
   CdkDropListGroup,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { ViewModeEnum } from '../../utils/enums';
+import { ConfirmDialogActionEnum, ViewModeEnum } from '../../utils/enums';
 import { Track } from '../../utils/interfaces';
 import { WebsocketsService } from '../../services/websockets.service';
 import { NgOptimizedImage } from '@angular/common';
@@ -38,18 +37,15 @@ import {
 } from '@taiga-ui/core';
 import { TuiHovered } from '@taiga-ui/cdk';
 import { PlayerComponent } from '../player/player.component';
-import {
-  TuiSheetDialog,
-  TuiSheetDialogOptions,
-  TuiSheetDialogService,
-} from '@taiga-ui/addon-mobile';
+import { TuiSheetDialog, TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
+import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-track-list',
   standalone: true,
   imports: [
     CustomDescriptionInputComponent,
-    DialogComponent,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,
@@ -67,6 +63,7 @@ import {
     TuiDropdownPositionSided,
     TuiDropdownOpen,
     TuiOptGroup,
+    PolymorpheusTemplate,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
@@ -97,15 +94,17 @@ export class TrackListComponent {
 
   options: Partial<TuiSheetDialogOptions<Track | null>>;
 
+  trackSheetLabelRef = viewChild('trackSheetLabel', { read: TemplateRef });
+  sheetContentRef = viewChild('sheetContent', { read: TemplateRef });
+
   constructor(
     private readonly cdr: ChangeDetectorRef,
-    private readonly tuiSheetDialogService: TuiSheetDialogService,
+    private readonly dialogHelper: DialogService,
   ) {
     this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
       const trackIdElement = this.audioRefs()
         .map((sd) => sd.nativeElement)
         .find((ref) => ref.id === val.trackId);
-      console.log(trackIdElement);
       if (!trackIdElement) return;
 
       if (val.isPlayling) {
@@ -115,47 +114,17 @@ export class TrackListComponent {
 
       trackIdElement.pause();
     });
-  }
 
-  toggleExpanded(trackId: number) {
-    // if (trackId !== this.expandedTrackId && this.expanded) {
-    //   this.expanded = true;
-    // } else {
-    //   this.expanded = !this.expanded;
-    // }
-    console.log('toggle play');
-    this.expandedTrackId = trackId;
-    if (!this.expanded) {
-      this.websocketsService.emitTogglePlay(false);
-      this.expandedTrackId = null;
-      return;
-    }
+    this.dialogHelper.confirmDialogAction$.subscribe((actionType) => {
+      if (actionType === ConfirmDialogActionEnum.DELETE_PLAYLIST) {
+        this.playlistRemoved.emit();
+      }
+    });
   }
 
   updateCustomTitle(text: string) {
     this.customTitleUpdated.emit(text);
     // this.expanded = false;
-  }
-
-  openConfirmationDialog() {
-    this.options = {
-      offset: 48,
-      data: null,
-    };
-    this.open = true;
-    this.areYouSure = true;
-  }
-
-  removePlaylistOrTrack(confirmed: boolean) {
-    this.isConfirmationDialogOpened = false;
-    if (!confirmed) {
-      return;
-    }
-    if (this.selectedTrackId) {
-      this.trackRemoved.emit(this.selectedTrackId);
-      return;
-    }
-    this.playlistRemoved.emit();
   }
 
   removeTrack(observer: any, id: any) {
@@ -209,11 +178,11 @@ export class TrackListComponent {
     this.cdr.detectChanges();
   }
 
-  openContextMenu(track: Track) {
-    this.options = {
-      offset: 48,
-      data: track,
-    };
-    this.open = true;
+  openConfirmDialog() {
+    this.dialogHelper.openConfirmDialog(
+      'Delete playlist?',
+      'Delete',
+      ConfirmDialogActionEnum.DELETE_PLAYLIST,
+    );
   }
 }

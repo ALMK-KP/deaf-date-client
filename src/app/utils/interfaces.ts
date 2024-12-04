@@ -1,3 +1,5 @@
+import { ConfirmDialogActionEnum } from './enums';
+
 export interface Track {
   id: number;
   audio: string;
@@ -47,4 +49,10 @@ export interface YouTubeItem {
 
 export interface YouTubeData {
   items: Array<YouTubeItem>;
+}
+
+export interface ConfirmDialogData {
+  confirmBtnLabel: string;
+  actionType: ConfirmDialogActionEnum;
+  isOpened: boolean;
 }

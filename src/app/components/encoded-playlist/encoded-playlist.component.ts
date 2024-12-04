@@ -7,20 +7,19 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TrackListComponent } from '../track-list/track-list.component';
 import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
-import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalStore } from '../../global.store';
-import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
-import {TuiButton} from "@taiga-ui/core";
+import {
+  ConfirmDialogActionEnum,
+  KnowledgeLevelEnum,
+  ViewModeEnum,
+} from '../../utils/enums';
+import { TuiButton } from '@taiga-ui/core';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-encoded-playlist',
   standalone: true,
-  imports: [
-    TrackListComponent,
-    RouterLink,
-    DialogComponent,
-    TuiButton,
-  ],
+  imports: [TrackListComponent, RouterLink, TuiButton],
   templateUrl: './encoded-playlist.component.html',
   styles: `
     :host {
@@ -34,14 +33,20 @@ import {TuiButton} from "@taiga-ui/core";
 export class EncodedPlaylistComponent implements OnInit {
   readonly store = inject(GlobalStore);
   isCreatorOfCurrentPlaylist = false;
-  isConfirmationDialogOpened = false;
   viewModeEnum = ViewModeEnum;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private dialogHelper: DialogService,
   ) {
     this.store.updateMode(this.viewModeEnum.ENCODED);
+
+    this.dialogHelper.confirmDialogAction$.subscribe((actionType) => {
+      if (actionType === ConfirmDialogActionEnum.REVEAL_PLAYLIST) {
+        this.router.navigateByUrl(`decoded/${this.store.playlistId()}`);
+      }
+    });
   }
 
   async ngOnInit() {
@@ -55,14 +60,11 @@ export class EncodedPlaylistComponent implements OnInit {
     }
   }
 
-  openConfirmationDialog() {
-    this.isConfirmationDialogOpened = true;
-  }
-
-  handleDialogClick(confirmed: boolean) {
-    this.isConfirmationDialogOpened = false;
-    if (confirmed) {
-      this.router.navigateByUrl(`decoded/${this.store.playlistId()}`);
-    }
+  openConfirmDialog() {
+    this.dialogHelper.openConfirmDialog(
+      'Reveal playlist?',
+      'Reveal',
+      ConfirmDialogActionEnum.REVEAL_PLAYLIST,
+    );
   }
 }

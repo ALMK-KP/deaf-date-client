@@ -22,13 +22,10 @@
         tuiButton
         appearance="outline-grayscale"
         class="grow"
-        (click)="openConfirmationDialog()"
+        (click)="openConfirmDialog()"
       >
         reveal
       </button>
     }
   </div>
-  @if (isConfirmationDialogOpened) {
-    <app-dialog (emitDialogClicked)="handleDialogClick($event)" />
-  }
 </div>
