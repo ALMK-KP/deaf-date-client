@@ -1,31 +1,34 @@
-<tui-input [formControl]="searchQuery" tuiTextfieldSize="s">
+<tui-input
+  [formControl]="searchQuery"
+  tuiTextfieldSize="s"
+  tuiTextfieldIconLeft="@tui.search"
+  [tuiTextfieldCleaner]="true"
+>
   Search for YouTube track
   <input tuiTextfieldLegacy />
 
-  @if (searchResults.length || loading) {
-    <tui-data-list *tuiDataList>
-      <button
-        *ngFor="let result of searchResults"
-        tuiOption
-        [value]="result.toString()"
-        (click)="emitAddTrack(result)"
-      >
-        @if (loading) {
-          ...LOADING...
-        }
-        <div class="flex gap-3">
-          <div
-            class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
-          >
-            <div class="stretchy-wrapper">
-              <div>
-                <img [src]="result.thumbnail" />
-              </div>
+  <tui-data-list *tuiDataList>
+    @if (loading) {
+      <div class="loader-thin mx-auto my-1"></div>
+    }
+    <button
+      *ngFor="let result of searchResults"
+      tuiOption
+      [value]="result.toString()"
+      (click)="emitAddTrack(result)"
+    >
+      <div class="flex gap-3">
+        <div
+          class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+        >
+          <div class="stretchy-wrapper">
+            <div>
+              <img [src]="result.thumbnail" />
             </div>
           </div>
-          <p class="text-sm">{{ result.title }}</p>
         </div>
-      </button>
-    </tui-data-list>
-  }
+        <p class="text-sm">{{ result.title }}</p>
+      </div>
+    </button>
+  </tui-data-list>
 </tui-input>
