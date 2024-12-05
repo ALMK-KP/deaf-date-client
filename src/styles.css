@@ -40,18 +40,33 @@ li {
 .loader-thin {
   width: 60px;
   aspect-ratio: 4;
-  --_g: no-repeat radial-gradient(circle closest-side,#22c55e 90%,#0000);
+  --_g: no-repeat radial-gradient(circle closest-side, #22c55e 90%, #0000);
   background:
-    var(--_g) 0%   50%,
-    var(--_g) 50%  50%,
+    var(--_g) 0% 50%,
+    var(--_g) 50% 50%,
     var(--_g) 100% 50%;
-  background-size: calc(100%/3) 100%;
+  background-size: calc(100% / 3) 100%;
   animation: l7 1s infinite linear;
 }
 @keyframes l7 {
-  33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
-  50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
-  66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
+  33% {
+    background-size:
+      calc(100% / 3) 0%,
+      calc(100% / 3) 100%,
+      calc(100% / 3) 100%;
+  }
+  50% {
+    background-size:
+      calc(100% / 3) 100%,
+      calc(100% / 3) 0%,
+      calc(100% / 3) 100%;
+  }
+  66% {
+    background-size:
+      calc(100% / 3) 100%,
+      calc(100% / 3) 100%,
+      calc(100% / 3) 0%;
+  }
 }
 
 .track-playing {
@@ -130,5 +145,22 @@ li {
     background-size:
       120% 120%,
       120% 120%;
+  }
+}
+
+tui-input-inline.custom-title-control-override {
+  white-space: break-spaces;
+  @apply text-sm font-medium text-neutral-300;
+
+  .t-before,
+  input {
+    white-space: break-spaces;
+    -webkit-text-fill-color: forestgreen;
+    @apply text-sm font-medium text-neutral-300;
+  }
+
+  input {
+    white-space: break-spaces;
+    -webkit-text-fill-color: forestgreen;
   }
 }
