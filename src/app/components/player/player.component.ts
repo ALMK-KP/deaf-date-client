@@ -40,6 +40,6 @@ export class PlayerComponent implements OnInit, OnChanges {
   }
 
   handleOnPlay(audio: HTMLAudioElement) {
-    this.play.emit(audio);
+    this.play.emit(audio.id);
   }
 }

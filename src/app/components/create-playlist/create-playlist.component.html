@@ -1,4 +1,4 @@
-<div class="pt-4 flex-grow flex flex-col">
+<div class="pt-4">
   <app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
   <app-track-list
     (customTitleUpdated)="
@@ -9,9 +9,8 @@
     "
     (playlistRemoved)="store.removePlaylist()"
   />
-  <div class="mb-24"></div>
   @if (store.tracks().length) {
-    <div class="flex gap-2 mt-auto mb-2">
+    <div class="flex gap-2 mb-2">
       <button
         size="s"
         tuiButton

@@ -6,6 +6,7 @@ import {
   EventEmitter,
   inject,
   Output,
+  viewChild,
   viewChildren,
 } from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
@@ -39,7 +40,7 @@ import { TuiSheetDialog } from '@taiga-ui/addon-mobile';
 import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
 import { DialogService } from '../../services/dialog.service';
 import { TrackContextMenuDialogComponent } from '../track-context-menu-dialog/track-context-menu-dialog.component';
-import {TuiFade} from "@taiga-ui/kit";
+import { TuiFade } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-track-list',
@@ -76,15 +77,14 @@ export class TrackListComponent {
   @Output() playlistRemoved = new EventEmitter();
   @Output() tracksReordered = new EventEmitter();
   readonly store = inject(GlobalStore);
-  expanded = true;
+  isPlaying = false;
   dragging = false;
-  expandedTrackId: number | null = null;
   viewModeEnum = ViewModeEnum;
   selectedToPlayTrackId: number;
   selectedTrackSrc: string;
   hoveredId: number | null;
   open: boolean;
-  audioRefs = viewChildren<ElementRef>('audio');
+  playerComponent = viewChild(PlayerComponent);
 
   websocketsService = inject(WebsocketsService);
 
@@ -93,17 +93,17 @@ export class TrackListComponent {
     private readonly dialogHelper: DialogService,
   ) {
     this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
-      const trackIdElement = this.audioRefs()
-        .map((sd) => sd.nativeElement)
-        .find((ref) => ref.id === val.trackId);
-      if (!trackIdElement) return;
-
-      if (val.isPlayling) {
-        trackIdElement.play();
-        return;
-      }
-
-      trackIdElement.pause();
+      // const trackIdElement = this.audioRefs()
+      //   .map((sd) => sd.nativeElement)
+      //   .find((ref) => ref.id === val.trackId);
+      // if (!trackIdElement) return;
+      //
+      // if (val.isPlaying) {
+      //   trackIdElement.play();
+      //   return;
+      // }
+      //
+      // trackIdElement.pause();
     });
 
     this.dialogHelper.confirmDialogAction$.subscribe((actionType) => {
@@ -139,14 +139,19 @@ export class TrackListComponent {
   }
 
   handleOnPause(el: HTMLAudioElement) {
+    this.isPlaying = false;
     this.websocketsService.emitTogglePlay({
       trackId: el.id,
-      isPlayling: false,
+      isPlaying: false,
     });
   }
 
-  handleOnPlay(el: HTMLAudioElement) {
-    this.websocketsService.emitTogglePlay({ trackId: el.id, isPlayling: true });
+  handleOnPlay(trackId: number) {
+    this.isPlaying = true;
+    this.websocketsService.emitTogglePlay({
+      trackId: trackId,
+      isPlaying: true,
+    });
   }
 
   onHovered(hovered: boolean, track: Track) {
@@ -154,12 +159,15 @@ export class TrackListComponent {
   }
 
   selectTrack(track: any | HTMLDivElement) {
+    if (track.id === this.selectedToPlayTrackId) {
+      this.handleOnPlay(track.id);
+      console.log(this.playerComponent())
+      this.playerComponent()?.audioRef()?.nativeElement.play();
+      return;
+    }
     this.selectedToPlayTrackId = track.id;
     this.selectedTrackSrc = track.audio;
-    console.log(this.selectedToPlayTrackId);
-    console.log(this.selectedTrackSrc);
     this.cdr.markForCheck();
-    this.cdr.detectChanges();
   }
 
   openConfirmDialog() {

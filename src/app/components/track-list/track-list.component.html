@@ -48,27 +48,33 @@
               class="flex gap-3 w-full"
               (tuiHoveredChange)="onHovered($event, track)"
             >
-              <div
-                class="self-start h-[37.5px] flex items-center shrink-0 ml-2 w-4"
-              >
+              <div class="self-start h-[37.5px] flex items-center shrink-0 w-4">
                 @if (
-                  hoveredId === track.id && selectedToPlayTrackId !== track.id
+                  hoveredId === track.id &&
+                  (!isPlaying ||
+                    (isPlaying && selectedToPlayTrackId !== track.id))
                 ) {
                   <tui-icon
                     icon="@tui.play-filled"
                     class="hover:cursor-pointer"
                     [style.height.px]="16"
                     [style.width.px]="16"
-                    [style.color]="'var(--tui-text-primary)'"
+                    [class.text-green-500]="selectedToPlayTrackId === track.id"
                     (click)="selectTrack(track)"
                   />
                 }
                 @if (
-                  hoveredId !== track.id && selectedToPlayTrackId !== track.id
+                  hoveredId !== track.id &&
+                  (selectedToPlayTrackId !== track.id ||
+                    (selectedToPlayTrackId === track.id && !isPlaying))
                 ) {
-                  <p>{{ i + 1 }}.</p>
+                  <p
+                    [class.text-green-500]="selectedToPlayTrackId === track.id"
+                  >
+                    {{ i + 1 }}.
+                  </p>
                 }
-                @if (selectedToPlayTrackId === track.id) {
+                @if (selectedToPlayTrackId === track.id && isPlaying) {
                   <div class="track-playing"></div>
                 }
               </div>
@@ -88,7 +94,13 @@
               <div class="max-w-[364px] grow">
                 @if (!isMode(viewModeEnum.ENCODED)) {
                   <div class="flex justify-between items-start">
-                    <h3 tuiFade class="text-nowrap">
+                    <h3
+                      tuiFade
+                      class="text-nowrap"
+                      [class.text-green-500]="
+                        selectedToPlayTrackId === track.id
+                      "
+                    >
                       {{ track.title }}
                     </h3>
                     <button
@@ -102,7 +114,10 @@
                   </div>
                 }
 
-                <p tuiFade class="text-xs text-nowrap text-neutral-500 max-w-[332px]">
+                <p
+                  tuiFade
+                  class="text-xs text-nowrap text-neutral-400 max-w-[332px]"
+                >
                   {{ track.customTitle }}
                 </p>
               </div>
