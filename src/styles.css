@@ -168,3 +168,7 @@ tui-input-inline.custom-title-control-override {
 input {
   font-size: 16px !important;
 }
+
+.t-cleaner {
+  border-width: 0 !important;
+}
