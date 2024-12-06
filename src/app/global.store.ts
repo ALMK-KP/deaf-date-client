@@ -8,6 +8,7 @@ import { Track, Response } from './utils/interfaces';
 
 interface GlobalState {
   isLoading: boolean;
+  isAddingTrackLoading: boolean;
   mode: ViewModeEnum;
   tracks: Array<Track>;
   playlistId: string;
@@ -15,6 +16,7 @@ interface GlobalState {
 
 const initialState: GlobalState = {
   isLoading: true,
+  isAddingTrackLoading: false,
   mode: ViewModeEnum.ENCODED,
   tracks: [],
   playlistId: '',
@@ -43,23 +45,30 @@ export const GlobalStore = signalStore(
       patchState(store, { tracks: tracks.data, isLoading: false });
     },
     async addTrackToPlaylist(track: Track) {
-      patchState(store, { isLoading: true });
+      patchState(store, { isLoading: true, isAddingTrackLoading: true });
       const tracks: Response<Track> =
         await tracksService.saveTrackToPlaylist(track);
       const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY);
       if (!playlistId) {
-        patchState(store, { isLoading: false });
+        patchState(store, { isLoading: false, isAddingTrackLoading: false });
         return;
       }
-      patchState(store, { tracks: tracks.data, playlistId, isLoading: false });
+      patchState(store, {
+        tracks: tracks.data,
+        playlistId,
+        isLoading: false,
+        isAddingTrackLoading: false,
+      });
     },
     async loadTracks(knowledgeLevel: KnowledgeLevelEnum): Promise<void> {
       patchState(store, { isLoading: true });
       if (!store.playlistId()) {
         patchState(store, { tracks: [], isLoading: false });
       } else {
-        const tracks: Response<Track> =
-          await tracksService.getPlaylist(store.playlistId(), knowledgeLevel);
+        const tracks: Response<Track> = await tracksService.getPlaylist(
+          store.playlistId(),
+          knowledgeLevel,
+        );
         console.log(tracks);
         patchState(store, { tracks: tracks.data, isLoading: false });
       }

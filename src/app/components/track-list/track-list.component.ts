@@ -40,7 +40,7 @@ import { TuiSheetDialog } from '@taiga-ui/addon-mobile';
 import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
 import { DialogService } from '../../services/dialog.service';
 import { TrackContextMenuDialogComponent } from '../track-context-menu-dialog/track-context-menu-dialog.component';
-import { TuiFade } from '@taiga-ui/kit';
+import { TuiFade, TuiSkeleton } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-track-list',
@@ -67,6 +67,7 @@ import { TuiFade } from '@taiga-ui/kit';
     PolymorpheusTemplate,
     TrackContextMenuDialogComponent,
     TuiFade,
+    TuiSkeleton,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
