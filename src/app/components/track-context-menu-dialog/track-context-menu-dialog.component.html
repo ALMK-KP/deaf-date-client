@@ -51,48 +51,24 @@
 }
 
 <ng-template #labelRef [polymorpheus]="options" let-track="data">
-  <div class="flex gap-3 border-b-emerald-800 border-b pb-4">
-    <div
-      class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
-    >
-      <div class="stretchy-wrapper">
-        <div>
-          <img [src]="track?.thumbnail" />
+  <div class="border-b-emerald-800 border-b">
+    <div class="flex gap-3">
+      <div
+        class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+      >
+        <div class="stretchy-wrapper">
+          <div>
+            <img [src]="track?.thumbnail" />
+          </div>
         </div>
       </div>
-    </div>
-    <div>
       <p class="text-sm">{{ track?.title }}</p>
-      @if (track.customTitle) {
-        @if (isEditingMode) {
-          <tui-input-inline class="custom-title-control-override">
-            <!--            <span class="text-sm font-medium text-neutral-400 mr-1">{{-->
-            <!--              track.customTitle-->
-            <!--            }}</span>-->
-
-            <!--              (blur)="onBlur()"-->
-            <input
-              tuiAutoFocus
-              (keydown.enter.prevent)="isEditingMode = !isEditingMode"
-              [(ngModel)]="track.customTitle"
-            />
-          </tui-input-inline>
-        }
-        @if (!isEditingMode) {
-          <span class="text-sm font-medium text-neutral-400 mr-1">{{
-            track.customTitle
-          }}</span>
-          <button
-            appearance="icon"
-            iconStart="@tui.pencil"
-            size="xs"
-            tuiIconButton
-            (click)="isEditingMode = !isEditingMode"
-          >
-            Edit heading
-          </button>
-        }
-      }
+    </div>
+    <div class="relative left-0 -top-[19px]">
+      <app-textarea-edit-inline
+        [entryValue]="track.customTitle"
+        (valueChangedEmitter)="store.updateTrack(track.id, $event)"
+      />
     </div>
   </div>
 </ng-template>

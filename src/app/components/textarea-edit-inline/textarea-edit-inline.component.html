@@ -1,0 +1,36 @@
+@if (isEditingMode) {
+  <form action="#0">
+    <div class="grow-wrap">
+      <textarea
+        name="text"
+        id="text"
+        maxlength="200"
+        rows="1"
+        autofocus
+        [spellcheck]="false"
+        [(ngModel)]="tempEntryValue"
+        (blur)="onBlur()"
+        onInput="this.parentNode.dataset.replicatedValue = this.value"
+        onFocus="this.parentNode.dataset.replicatedValue = this.value"
+      ></textarea>
+    </div>
+  </form>
+}
+@if (!isEditingMode) {
+  <p
+    class="bg-transparent indent-[52px] py-[0.1rem] text-sm font-medium text-neutral-400"
+    [class.italic]="noCustomTitle"
+    [class.text-thin]="noCustomTitle"
+  >
+    {{ tempEntryValue }}
+    <button
+      appearance="icon"
+      iconStart="@tui.pencil"
+      size="xs"
+      tuiIconButton
+      (click)="isEditingMode = !isEditingMode"
+    >
+      Edit heading
+    </button>
+  </p>
+}

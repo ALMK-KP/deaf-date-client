@@ -7,7 +7,6 @@ import {
   Output,
   viewChild,
 } from '@angular/core';
-import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 import { GlobalStore } from '../../global.store';
 import {
   CdkDrag,
@@ -45,7 +44,6 @@ import { AttachToDirective } from '../../directives/attachTo.directive';
   selector: 'app-track-list',
   standalone: true,
   imports: [
-    CustomDescriptionInputComponent,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,
@@ -112,10 +110,6 @@ export class TrackListComponent {
         this.playlistRemoved.emit();
       }
     });
-  }
-
-  updateCustomTitle(text: string) {
-    this.customTitleUpdated.emit(text);
   }
 
   drop(event: CdkDragDrop<Array<Track>>) {
