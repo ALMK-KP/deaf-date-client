@@ -1,15 +1,22 @@
 @if (isOpened) {
   <ng-template
     let-observer
-    let-data="data"
+    let-track="data"
     [tuiSheetDialogOptions]="options"
     [(tuiSheetDialog)]="isOpened"
     (tuiSheetDialogChange)="dialogClosed()"
   >
     @if (!isConfirmationMode) {
-      <button appearance="secondary" size="s" tuiButton class="w-full mb-2">
-        {{ data.customTitle ? "Edit Custom Title" : "Add Custom Title" }}
-      </button>
+      <a
+        [href]="track.ytLink"
+        target="_blank"
+        appearance="secondary"
+        size="s"
+        tuiButton
+        class="w-full mb-2"
+      >
+        Open in YouTube
+      </a>
 
       <button
         appearance="secondary-destructive"
@@ -32,7 +39,7 @@
           tuiButton
           appearance="outline-destructive"
           class="grow"
-          (click)="store.removeTrack(data.id); observer.complete()"
+          (click)="store.removeTrack(track.id); observer.complete()"
         >
           Remove
         </button>

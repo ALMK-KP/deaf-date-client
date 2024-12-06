@@ -79,9 +79,7 @@
                 }
               </div>
               @if (track.thumbnail && !isMode(viewModeEnum.ENCODED)) {
-                <a
-                  [href]="track.ytLink"
-                  target="_blank"
+                <div
                   class="block flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
                 >
                   <div class="stretchy-wrapper">
@@ -89,7 +87,7 @@
                       <img [src]="track.thumbnail" />
                     </div>
                   </div>
-                </a>
+                </div>
               }
               <div class="max-w-[364px] grow">
                 @if (!isMode(viewModeEnum.ENCODED)) {
