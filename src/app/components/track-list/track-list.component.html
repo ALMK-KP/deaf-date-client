@@ -159,6 +159,7 @@
 
 @if (selectedToPlayTrackId) {
   <app-player
+    *appAttachTo="'playerContainer'"
     [trackId]="selectedToPlayTrackId"
     [trackSrc]="selectedTrackSrc"
     (pause)="handleOnPause($event)"

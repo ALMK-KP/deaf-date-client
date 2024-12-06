@@ -2,12 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   inject,
   Output,
   viewChild,
-  viewChildren,
 } from '@angular/core';
 import { CustomDescriptionInputComponent } from '../custom-description-input/custom-description-input.component';
 import { GlobalStore } from '../../global.store';
@@ -41,6 +39,7 @@ import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
 import { DialogService } from '../../services/dialog.service';
 import { TrackContextMenuDialogComponent } from '../track-context-menu-dialog/track-context-menu-dialog.component';
 import { TuiFade, TuiSkeleton } from '@taiga-ui/kit';
+import { AttachToDirective } from '../../directives/attachTo.directive';
 
 @Component({
   selector: 'app-track-list',
@@ -68,6 +67,7 @@ import { TuiFade, TuiSkeleton } from '@taiga-ui/kit';
     TrackContextMenuDialogComponent,
     TuiFade,
     TuiSkeleton,
+    AttachToDirective,
   ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
@@ -145,6 +145,7 @@ export class TrackListComponent {
       trackId: el.id,
       isPlaying: false,
     });
+    this.cdr.markForCheck();
   }
 
   handleOnPlay(trackId: number) {
@@ -153,6 +154,7 @@ export class TrackListComponent {
       trackId: trackId,
       isPlaying: true,
     });
+    this.cdr.markForCheck();
   }
 
   onHovered(hovered: boolean, track: Track) {
@@ -162,7 +164,6 @@ export class TrackListComponent {
   selectTrack(track: any | HTMLDivElement) {
     if (track.id === this.selectedToPlayTrackId) {
       this.handleOnPlay(track.id);
-      console.log(this.playerComponent())
       this.playerComponent()?.audioRef()?.nativeElement.play();
       return;
     }

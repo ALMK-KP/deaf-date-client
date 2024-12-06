@@ -11,6 +11,7 @@ import { SearchForTrackComponent } from './components/search-for-track/search-fo
 import { TrackListComponent } from './components/track-list/track-list.component';
 import { WebsocketsService } from './services/websockets.service';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { TargetDirective } from './directives/target.directive';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     TrackListComponent,
     TuiRoot,
     ConfirmDialogComponent,
+    TargetDirective,
   ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
