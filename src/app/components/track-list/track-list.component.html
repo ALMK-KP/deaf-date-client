@@ -1,8 +1,8 @@
 @if (store.tracks().length) {
   @if (isMode(viewModeEnum.CREATION)) {
     <div class="flex gap-2 items-center pt-8">
-      <h2 class="text-lg font-semibold text-green-500 tracking-wider">
-        Your current playlist
+      <h2 class="text-lg font-normal text-green-500 tracking-wider">
+        Your playlist
       </h2>
       <button
         appearance="action-grayscale"
@@ -147,13 +147,6 @@
     <p class="text-center italic pt-24 pb-20">Playlist doesn't exist</p>
   }
 }
-<p
-  class="text-center tracking-widest p-4"
-  [class.text-orange-500]="isMode(viewModeEnum.DECODED)"
-  [class.text-green-500]="!isMode(viewModeEnum.DECODED)"
->
-  .. ... .. ...
-</p>
 
 @if (selectedToPlayTrackId) {
   <app-player

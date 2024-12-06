@@ -172,3 +172,7 @@ input {
 .t-cleaner {
   border-width: 0 !important;
 }
+
+tui-dropdown {
+  inline-size: calc(100% - 8px) !important;
+}
