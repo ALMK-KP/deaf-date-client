@@ -50,20 +50,19 @@ export class SearchForTrackComponent {
   ) {
     this.searchQuery.valueChanges
       .pipe(
-        debounceTime(800),
+        debounceTime(400),
         filter((val): val is string => val !== null),
         filter((val: string) => val.length > 3),
         tap(() => {
           this.loading = true;
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         }),
         switchMap((val: string) => this.ytData.searchYouTubeData(val)),
       )
       .subscribe((value) => {
-        console.log(value);
         this.loading = false;
         this.searchResults = value;
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       });
   }
 

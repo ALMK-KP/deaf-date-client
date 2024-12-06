@@ -6,30 +6,40 @@
   [tuiTextfieldLabelOutside]="true"
 >
   Search for YouTube track
-  <input tuiTextfieldLegacy />
+  <input tuiTextfieldLegacy autocomplete="off" />
 
-  <tui-data-list *tuiDataList>
-    @if (loading) {
-      <div class="loader-thin mx-auto my-1"></div>
-    }
-    <button
-      *ngFor="let result of searchResults"
-      tuiOption
-      [value]="result.toString()"
-      (click)="emitAddTrack(result)"
+  @if ((searchQuery.value?.length || 0) > 3) {
+    <tui-data-list
+      *tuiDataList
+      tuiTextfieldSize="l"
+      [emptyContent]="noOptionLoaderRef"
     >
-      <div class="flex gap-3">
-        <div
-          class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
-        >
-          <div class="stretchy-wrapper">
-            <div>
-              <img [src]="result.thumbnail" />
+      @if (loading && searchResults.length) {
+        <div class="loader-thin mx-auto my-1"></div>
+      }
+      <button
+        *ngFor="let result of searchResults"
+        tuiOption
+        [value]="result.toString()"
+        (click)="emitAddTrack(result)"
+      >
+        <div class="flex gap-3">
+          <div
+            class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+          >
+            <div class="stretchy-wrapper">
+              <div>
+                <img [src]="result.thumbnail" />
+              </div>
             </div>
           </div>
+          <p class="text-sm">{{ result.title }}</p>
         </div>
-        <p class="text-sm">{{ result.title }}</p>
-      </div>
-    </button>
-  </tui-data-list>
+      </button>
+    </tui-data-list>
+  }
 </tui-input>
+
+<ng-template #noOptionLoaderRef>
+  <div class="loader-thin mx-auto my-1"></div>
+</ng-template>
