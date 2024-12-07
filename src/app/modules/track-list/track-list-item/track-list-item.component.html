@@ -13,7 +13,7 @@
     @if (isMode(viewModeEnum.CREATION) && !store.isMobile()) {
       <button
         cdkDragHandle
-        class="shrink-0 self-start h-[37.5px] text-center text-green-500 font-bold tracking-widest outline-none -ml-1.5"
+        class="shrink-0 self-start h-[37.5px] text-center text-teal-500 font-bold tracking-widest outline-none -ml-1.5"
         [class.invisible]="hoveredId !== track.id"
         [class.visible]="hoveredId === track.id"
       >
@@ -36,7 +36,7 @@
             class="hover:cursor-pointer"
             [style.height.px]="16"
             [style.width.px]="16"
-            [class.text-green-500]="player.selectedTrack()?.id === track.id"
+            [class.text-teal-500]="player.selectedTrack()?.id === track.id"
             (click)="player.selectTrack(track)"
           />
         }
@@ -45,7 +45,7 @@
           (player.selectedTrack()?.id !== track.id ||
             (player.selectedTrack()?.id === track.id && !player.isPlaying()))
         ) {
-          <p [class.text-green-500]="player.selectedTrack()?.id === track.id">
+          <p [class.text-teal-500]="player.selectedTrack()?.id === track.id">
             {{ orderId + 1 }}.
           </p>
         }
@@ -74,7 +74,7 @@
             <h3
               tuiFade
               class="text-nowrap"
-              [class.text-green-500]="player.selectedTrack()?.id === track.id"
+              [class.text-teal-500]="player.selectedTrack()?.id === track.id"
             >
               {{ track.title }}
             </h3>

@@ -143,7 +143,7 @@ button.toast-close-button {
   pointer-events: auto;
 }
 .toast-success {
-  @apply bg-green-500 bg-opacity-40;
+  @apply bg-teal-500 bg-opacity-40;
 }
 .toast-error {
   background-color: #bd362f;
