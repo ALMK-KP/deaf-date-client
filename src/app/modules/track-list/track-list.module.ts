@@ -6,7 +6,7 @@ import { TrackListItemComponent } from './track-list-item/track-list-item.compon
 import { TrackContextMenuDialogComponent } from './track-context-menu-dialog/track-context-menu-dialog.component';
 import { TuiFade, TuiSkeleton } from '@taiga-ui/kit';
 import {
-  CdkDrag,
+  CdkDrag, CdkDragHandle,
   CdkDragPlaceholder,
   CdkDropList,
   CdkDropListGroup,
@@ -46,6 +46,7 @@ import { PlayerState } from './player.state';
     CdkDragPlaceholder,
     FormsModule,
     TuiFade,
+    CdkDragHandle,
   ],
   providers: [PlayerState],
   exports: [TrackListComponent, TextareaEditInlineComponent],

@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -8,18 +7,13 @@ import {
 } from '@angular/core';
 import { GlobalStore } from '../../global.store';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import {
-  ConfirmDialogActionEnum,
-  ViewModeEnum,
-} from '../../shared/utils/enums';
+import { ViewModeEnum } from '../../shared/utils/enums';
 import { Track } from '../../shared/utils/interfaces';
 import { WebsocketsService } from '../../shared/services/websockets.service';
-import { DialogService } from '../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-track-list',
   templateUrl: './track-list.component.html',
-  styleUrl: './track-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackListComponent {
@@ -32,10 +26,7 @@ export class TrackListComponent {
 
   websocketsService = inject(WebsocketsService);
 
-  constructor(
-    private readonly cdr: ChangeDetectorRef,
-    private readonly dialogHelper: DialogService,
-  ) {
+  constructor() {
     this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
       console.log(val);
     });
@@ -52,10 +43,6 @@ export class TrackListComponent {
       reorderedTracks: this.store.tracks(),
     });
     this.dragging = false;
-  }
-
-  toggleDragging(value: boolean) {
-    this.dragging = value;
   }
 
   isMode(mode: ViewModeEnum) {
