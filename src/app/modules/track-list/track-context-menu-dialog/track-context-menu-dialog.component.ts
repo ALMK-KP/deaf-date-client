@@ -8,24 +8,14 @@ import {
   TemplateRef,
   viewChild,
 } from '@angular/core';
-import { TuiSheetDialog, TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
-import { DialogService } from '../../services/dialog.service';
-import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
-import { TuiButton } from '@taiga-ui/core';
-import { GlobalStore } from '../../global.store';
-import { TextareaEditInlineComponent } from '../textarea-edit-inline/textarea-edit-inline.component';
+import { TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
+import { DialogService } from '../../../shared/services/dialog.service';
+import { GlobalStore } from '../../../global.store';
 
 @Component({
   selector: 'app-track-context-menu-dialog',
-  standalone: true,
   templateUrl: './track-context-menu-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    TuiSheetDialog,
-    PolymorpheusTemplate,
-    TuiButton,
-    TextareaEditInlineComponent,
-  ],
 })
 export class TrackContextMenuDialogComponent {
   options: Partial<TuiSheetDialogOptions<any>>;

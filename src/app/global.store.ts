@@ -1,10 +1,10 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { TracksService } from './services/tracks.service';
+import { TracksService } from './shared/services/tracks.service';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { PLAYLIST_ID_LS_KEY } from './utils/constants';
-import { KnowledgeLevelEnum, ViewModeEnum } from './utils/enums';
-import { Track, Response } from './utils/interfaces';
+import { PLAYLIST_ID_LS_KEY } from './shared/utils/constants';
+import { KnowledgeLevelEnum, ViewModeEnum } from './shared/utils/enums';
+import { Track, Response } from './shared/utils/interfaces';
 
 interface GlobalState {
   isLoading: boolean;

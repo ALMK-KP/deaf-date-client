@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { PLAYLIST_ID_LS_KEY } from '../utils/constants';
 import { KnowledgeLevelEnum } from '../utils/enums';
 import { Track, Response } from '../utils/interfaces';

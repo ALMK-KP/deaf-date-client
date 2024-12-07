@@ -4,22 +4,18 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TrackListComponent } from '../track-list/track-list.component';
-import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
-import { GlobalStore } from '../../global.store';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PLAYLIST_ID_LS_KEY } from '../../../shared/utils/constants';
+import { GlobalStore } from '../../../global.store';
 import {
   ConfirmDialogActionEnum,
   KnowledgeLevelEnum,
   ViewModeEnum,
-} from '../../utils/enums';
-import { TuiButton } from '@taiga-ui/core';
-import { DialogService } from '../../services/dialog.service';
+} from '../../../shared/utils/enums';
+import { DialogService } from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-encoded-playlist',
-  standalone: true,
-  imports: [TrackListComponent, RouterLink, TuiButton],
   templateUrl: './encoded-playlist.component.html',
   styles: `
     :host {

@@ -1,4 +1,3 @@
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,35 +5,13 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TuiAmountPipe, TuiInputCard } from '@taiga-ui/addon-commerce';
-import { TuiLet } from '@taiga-ui/cdk';
-import { TuiDataList, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
-import { TuiAvatar, TuiDataListWrapper } from '@taiga-ui/kit';
-import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { FormControl } from '@angular/forms';
 import { debounceTime, filter, switchMap, tap } from 'rxjs';
-import { SearchedYouTubeTrack } from '../../utils/interfaces';
-import { YoutubeSearchService } from '../../services/youtube-search.service';
+import { SearchedYouTubeTrack } from '../../../shared/utils/interfaces';
+import { YoutubeSearchService } from '../../../shared/services/youtube-search.service';
 
 @Component({
-  standalone: true,
   selector: 'app-search-for-track',
-  imports: [
-    AsyncPipe,
-    NgForOf,
-    NgIf,
-    ReactiveFormsModule,
-    TuiAmountPipe,
-    TuiAvatar,
-    TuiDataList,
-    TuiDataListWrapper,
-    TuiInitialsPipe,
-    TuiInputCard,
-    TuiInputModule,
-    TuiLet,
-    TuiTextfield,
-    TuiTextfieldControllerModule,
-  ],
   templateUrl: './search-for-track.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

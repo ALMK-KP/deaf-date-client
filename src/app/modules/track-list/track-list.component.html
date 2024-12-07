@@ -1,0 +1,74 @@
+@if (store.tracks().length) {
+  @if (isMode(viewModeEnum.CREATION)) {
+    <div class="flex gap-2 items-center pt-8">
+      <h2 class="text-lg font-normal text-green-500 tracking-wider">
+        Your playlist
+      </h2>
+      <button
+        tuiIconButton
+        size="s"
+        iconStart="@tui.trash-2"
+        appearance="action-grayscale"
+        [style.border-radius.%]="100"
+        (click)="openConfirmDialog()"
+      ></button>
+    </div>
+  }
+
+  <div cdkDropListGroup>
+    <ul
+      cdkDropList
+      class="pt-2 text-white text-sm gap-2 flex flex-col"
+      [cdkDropListData]="store.tracks()"
+      [class.mt-8]="!isMode(viewModeEnum.CREATION)"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (track of store.tracks(); track track.id; let i = $index) {
+        <app-track-list-item
+          [track]="track"
+          [orderId]="i"
+          (trackSelected)="selectTrack($event)"
+          (handleOnPauseEmitter)="handleOnPause($event)"
+          (handleOnPlayEmitter)="handleOnPlay($event)"
+        />
+      }
+      @if (store.isAddingTrackLoading()) {
+        <li class="flex py-2 px-9 gap-3">
+          <div
+            class="flex-shrink-0 w-[40px] h-[40px] rounded-lg ml-[22px]"
+            [tuiSkeleton]="true"
+          ></div>
+          <div class="rounded-lg grow" [tuiSkeleton]="true"></div>
+        </li>
+      }
+    </ul>
+  </div>
+}
+
+@if (!store.tracks().length && store.isLoading()) {
+  <div class="grow flex items-center justify-center mt-8">
+    <div class="loader-thin"></div>
+  </div>
+}
+
+@if (!store.tracks().length && !store.isLoading()) {
+  <p class="text-center italic pt-24 pb-20">
+    {{
+      isMode(viewModeEnum.CREATION)
+        ? "No tracks added yet"
+        : "Playlist doesn't exist"
+    }}
+  </p>
+}
+
+@if (selectedToPlayTrackId) {
+  <app-player
+    *appAttachTo="'playerContainer'"
+    [trackId]="selectedToPlayTrackId"
+    [trackSrc]="selectedTrackSrc"
+    (pause)="handleOnPause($event)"
+    (play)="handleOnPlay($event)"
+  />
+}
+
+<app-track-context-menu-dialog />

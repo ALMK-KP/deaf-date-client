@@ -7,22 +7,27 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { SearchForTrackComponent } from './components/search-for-track/search-for-track.component';
-import { TrackListComponent } from './components/track-list/track-list.component';
-import { WebsocketsService } from './services/websockets.service';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { TargetDirective } from './directives/target.directive';
+import { WebsocketsService } from './shared/services/websockets.service';
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
+import { TargetDirective } from './shared/directives/target.directive';
+import { TrackListModule } from './modules/track-list/track-list.module';
+import { CreatePlaylistModule } from './modules/create-playlist/create-playlist.module';
+import { ViewPlaylistModule } from './modules/view-playlist/view-playlist.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    // NG
     RouterOutlet,
-    SearchForTrackComponent,
-    TrackListComponent,
-    TuiRoot,
+    // Custom
+    TrackListModule,
+    ViewPlaylistModule,
+    CreatePlaylistModule,
     ConfirmDialogComponent,
     TargetDirective,
+    // Libs
+    TuiRoot,
   ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

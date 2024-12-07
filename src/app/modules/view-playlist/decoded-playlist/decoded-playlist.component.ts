@@ -4,16 +4,12 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { TrackListComponent } from '../track-list/track-list.component';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { GlobalStore } from '../../global.store';
-import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
-import { TuiButton } from '@taiga-ui/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GlobalStore } from '../../../global.store';
+import { KnowledgeLevelEnum, ViewModeEnum } from '../../../shared/utils/enums';
 
 @Component({
   selector: 'app-decoded-playlist',
-  standalone: true,
-  imports: [TrackListComponent, RouterLink, TuiButton],
   templateUrl: './decoded-playlist.component.html',
   styles: `
     :host {

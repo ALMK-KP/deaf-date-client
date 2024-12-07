@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { delay, map, Observable, of, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import {
   SearchedYouTubeTrack,
   YouTubeData,
@@ -28,7 +28,7 @@ export class YoutubeSearchService {
         tap((val) => console.log(val)),
         map((data) => this.mappedResults(data.items)),
       );
-    //
+
     // return of([
     //   {
     //     ytLink: 'https://www.youtube.com/watch?v=',
@@ -37,11 +37,23 @@ export class YoutubeSearchService {
     //     title: 'song.snippet.title',
     //     thumbnails: {
     //       default: {
+    //         width: 40,
+    //         height: 40,
+    //         url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP5Qd7cIWGWhNeP9AJ2VEHDEJRPVJToVa8ag&s',
+    //       },
+    //       high: {
+    //         width: 40,
+    //         height: 40,
+    //         url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP5Qd7cIWGWhNeP9AJ2VEHDEJRPVJToVa8ag&s',
+    //       },
+    //       medium: {
+    //         width: 40,
+    //         height: 40,
     //         url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP5Qd7cIWGWhNeP9AJ2VEHDEJRPVJToVa8ag&s',
     //       },
     //     },
     //   },
-    // ]);
+    // ]).pipe(delay(2000));
   }
 
   private mappedResults(

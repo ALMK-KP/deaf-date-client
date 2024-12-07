@@ -1,0 +1,90 @@
+<li
+  cdkDrag
+  class="py-2 pl-2 rounded-lg text-sm"
+  [cdkDragDisabled]="!isMode(viewModeEnum.CREATION)"
+  (cdkDragStarted)="toggleDragging(true)"
+>
+  <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
+  <div class="flex gap-3">
+    @if (isMode(viewModeEnum.CREATION)) {
+      <button
+        cdkDragHandle
+        class="shrink-0 self-start h-[37.5px] text-center text-green-500 font-bold tracking-widest outline-none -ml-1.5"
+      >
+        <img
+          src="../../../../assets/icons/icons8-drag-reorder-24.png"
+          width="16"
+          height="16"
+        />
+      </button>
+    }
+    <div
+      class="flex gap-3 w-full"
+      (tuiHoveredChange)="onHovered($event, track)"
+    >
+      <div class="self-start h-[37.5px] flex items-center shrink-0 w-4">
+        @if (
+          hoveredId === track.id &&
+          (!isPlaying || (isPlaying && selectedToPlayTrackId !== track.id))
+        ) {
+          <tui-icon
+            icon="@tui.play-filled"
+            class="hover:cursor-pointer"
+            [style.height.px]="16"
+            [style.width.px]="16"
+            [class.text-green-500]="selectedToPlayTrackId === track.id"
+            (click)="selectTrack()"
+          />
+        }
+        @if (
+          hoveredId !== track.id &&
+          (selectedToPlayTrackId !== track.id ||
+            (selectedToPlayTrackId === track.id && !isPlaying))
+        ) {
+          <p [class.text-green-500]="selectedToPlayTrackId === track.id">
+            {{ orderId + 1 }}.
+          </p>
+        }
+        @if (selectedToPlayTrackId === track.id && isPlaying) {
+          <div class="track-playing"></div>
+        }
+      </div>
+      @if (track.thumbnail && !isMode(viewModeEnum.ENCODED)) {
+        <div
+          class="block flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+        >
+          <div class="stretchy-wrapper">
+            <div>
+              <img [src]="track.thumbnail" />
+            </div>
+          </div>
+        </div>
+      }
+      <div class="max-w-[252px] grow">
+        @if (!isMode(viewModeEnum.ENCODED)) {
+          <div class="flex justify-between items-start">
+            <h3
+              tuiFade
+              class="text-nowrap"
+              [class.text-green-500]="selectedToPlayTrackId === track.id"
+            >
+              {{ track.title }}
+            </h3>
+            <button
+              appearance="action-grayscale"
+              iconStart="@tui.ellipsis-vertical"
+              size="xs"
+              tuiIconButton
+              [style.border-radius.%]="100"
+              (click)="openTrackContextMenuDialog(track)"
+            ></button>
+          </div>
+        }
+
+        <p tuiFade class="text-xs text-nowrap text-neutral-400 max-w-[332px]">
+          {{ track.customTitle }}
+        </p>
+      </div>
+    </div>
+  </div>
+</li>

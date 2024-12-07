@@ -1,35 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { PLAYLIST_ID_LS_KEY } from '../../utils/constants';
-import { SearchForTrackComponent } from '../search-for-track/search-for-track.component';
-import { TrackListComponent } from '../track-list/track-list.component';
-import { RouterLink } from '@angular/router';
+import { PLAYLIST_ID_LS_KEY } from '../../shared/utils/constants';
 import { environment } from '../../../environments/environment';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
 import { ToastrService } from 'ngx-toastr';
-import { KnowledgeLevelEnum, ViewModeEnum } from '../../utils/enums';
-import { TuiButton, TuiHint, TuiTextfield } from '@taiga-ui/core';
-import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
-import {
-  TuiDataListWrapperComponent,
-  TuiFilterByInputPipe,
-} from '@taiga-ui/kit';
+import { KnowledgeLevelEnum, ViewModeEnum } from '../../shared/utils/enums';
 
 @Component({
   selector: 'app-create-playlist',
-  standalone: true,
-  imports: [
-    SearchForTrackComponent,
-    TrackListComponent,
-    RouterLink,
-    TuiButton,
-    TuiHint,
-    TuiInputModule,
-    TuiTextfield,
-    TuiTextfieldControllerModule,
-    TuiDataListWrapperComponent,
-    TuiFilterByInputPipe,
-  ],
   templateUrl: './create-playlist.component.html',
   styles: `
     :host {

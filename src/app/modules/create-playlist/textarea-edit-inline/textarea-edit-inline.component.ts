@@ -6,14 +6,10 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { GlobalStore } from '../../global.store';
-import { TuiButton, TuiIcon, TuiIconPipe, TuiOptGroup } from '@taiga-ui/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GlobalStore } from '../../../global.store';
 
 @Component({
   selector: 'app-textarea-edit-inline',
-  standalone: true,
-  imports: [TuiIcon, TuiIconPipe, TuiButton, ReactiveFormsModule, FormsModule],
   templateUrl: './textarea-edit-inline.component.html',
   styleUrl: './textarea-edit-inline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

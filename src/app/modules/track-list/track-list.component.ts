@@ -8,71 +8,20 @@ import {
   viewChild,
 } from '@angular/core';
 import { GlobalStore } from '../../global.store';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDragHandle,
-  CdkDragPlaceholder,
-  CdkDropList,
-  CdkDropListGroup,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
-import { ConfirmDialogActionEnum, ViewModeEnum } from '../../utils/enums';
-import { Track } from '../../utils/interfaces';
-import { WebsocketsService } from '../../services/websockets.service';
-import { NgOptimizedImage } from '@angular/common';
-import {
-  TuiButton,
-  TuiDataListComponent,
-  TuiDropdownDirective,
-  TuiDropdownOpen,
-  TuiDropdownPositionSided,
-  TuiIcon,
-  TuiIconPipe,
-  TuiOptGroup,
-} from '@taiga-ui/core';
-import { TuiHovered } from '@taiga-ui/cdk';
-import { PlayerComponent } from '../player/player.component';
-import { TuiSheetDialog } from '@taiga-ui/addon-mobile';
-import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
-import { DialogService } from '../../services/dialog.service';
-import { TrackContextMenuDialogComponent } from '../track-context-menu-dialog/track-context-menu-dialog.component';
-import { TuiFade, TuiSkeleton } from '@taiga-ui/kit';
-import { AttachToDirective } from '../../directives/attachTo.directive';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ConfirmDialogActionEnum, ViewModeEnum } from '../../shared/utils/enums';
+import { Track } from '../../shared/utils/interfaces';
+import { WebsocketsService } from '../../shared/services/websockets.service';
+import { PlayerComponent } from './player/player.component';
+import { DialogService } from '../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-track-list',
-  standalone: true,
-  imports: [
-    CdkDropList,
-    CdkDrag,
-    CdkDragHandle,
-    CdkDragPlaceholder,
-    CdkDropListGroup,
-    NgOptimizedImage,
-    TuiIcon,
-    TuiIconPipe,
-    TuiHovered,
-    PlayerComponent,
-    TuiButton,
-    TuiSheetDialog,
-    TuiDataListComponent,
-    TuiDropdownDirective,
-    TuiDropdownPositionSided,
-    TuiDropdownOpen,
-    TuiOptGroup,
-    PolymorpheusTemplate,
-    TrackContextMenuDialogComponent,
-    TuiFade,
-    TuiSkeleton,
-    AttachToDirective,
-  ],
   templateUrl: './track-list.component.html',
   styleUrl: './track-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackListComponent {
-  @Output() customTitleUpdated = new EventEmitter();
   @Output() playlistRemoved = new EventEmitter();
   @Output() tracksReordered = new EventEmitter();
   readonly store = inject(GlobalStore);
@@ -92,17 +41,7 @@ export class TrackListComponent {
     private readonly dialogHelper: DialogService,
   ) {
     this.websocketsService.toggledPlayEvent$.subscribe((val: any) => {
-      // const trackIdElement = this.audioRefs()
-      //   .map((sd) => sd.nativeElement)
-      //   .find((ref) => ref.id === val.trackId);
-      // if (!trackIdElement) return;
-      //
-      // if (val.isPlaying) {
-      //   trackIdElement.play();
-      //   return;
-      // }
-      //
-      // trackIdElement.pause();
+      console.log(val);
     });
 
     this.dialogHelper.confirmDialogAction$.subscribe((actionType) => {
@@ -133,10 +72,10 @@ export class TrackListComponent {
     return this.store.mode() === mode;
   }
 
-  handleOnPause(el: HTMLAudioElement) {
+  handleOnPause(trackId: number) {
     this.isPlaying = false;
     this.websocketsService.emitTogglePlay({
-      trackId: el.id,
+      trackId: trackId,
       isPlaying: false,
     });
     this.cdr.markForCheck();
@@ -155,7 +94,7 @@ export class TrackListComponent {
     this.hoveredId = hovered ? track.id : null;
   }
 
-  selectTrack(track: any | HTMLDivElement) {
+  selectTrack(track: Track) {
     if (track.id === this.selectedToPlayTrackId) {
       this.handleOnPlay(track.id);
       this.playerComponent()?.audioRef()?.nativeElement.play();
@@ -172,9 +111,5 @@ export class TrackListComponent {
       'Delete',
       ConfirmDialogActionEnum.DELETE_PLAYLIST,
     );
-  }
-
-  openTrackContextMenuDialog(track: Track) {
-    this.dialogHelper.openTrackContextMenuDialog(track);
   }
 }
