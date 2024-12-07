@@ -1,10 +1,17 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { TracksService } from './shared/services/tracks.service';
 import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { PLAYLIST_ID_LS_KEY } from './shared/utils/constants';
 import { KnowledgeLevelEnum, ViewModeEnum } from './shared/utils/enums';
 import { Track, Response } from './shared/utils/interfaces';
+import { TUI_IS_MOBILE } from '@taiga-ui/cdk';
 
 interface GlobalState {
   isLoading: boolean;
@@ -12,6 +19,7 @@ interface GlobalState {
   mode: ViewModeEnum;
   tracks: Array<Track>;
   playlistId: string;
+  isMobile: boolean;
 }
 
 const initialState: GlobalState = {
@@ -20,6 +28,7 @@ const initialState: GlobalState = {
   mode: ViewModeEnum.ENCODED,
   tracks: [],
   playlistId: '',
+  isMobile: false,
 };
 
 export const GlobalStore = signalStore(
@@ -100,6 +109,11 @@ export const GlobalStore = signalStore(
         reorderedTracks,
       );
       patchState(store, { tracks: tracks.data, isLoading: false });
+    },
+  })),
+  withHooks((store, isMobile = inject(TUI_IS_MOBILE)) => ({
+    onInit() {
+      patchState(store, { isMobile });
     },
   })),
 );

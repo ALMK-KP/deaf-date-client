@@ -42,11 +42,20 @@ export class TrackListItemComponent {
     return this.store.mode() === mode;
   }
 
-  onHovered(hovered: boolean, track: Track) {
-    this.hoveredId = hovered ? track.id : null;
+  onDesktopHovered(hovered: boolean) {
+    if (this.store.isMobile()) return;
+
+    this.hoveredId = hovered ? this.track.id : null;
   }
 
-  openTrackContextMenuDialog(track: Track) {
-    this.dialogHelper.openTrackContextMenuDialog(track);
+  onMobileClicked() {
+    if (!this.store.isMobile()) return;
+
+    this.player.selectTrack(this.track);
+  }
+
+  openTrackContextMenuDialog(event: Event) {
+    event.stopPropagation();
+    this.dialogHelper.openTrackContextMenuDialog(this.track);
   }
 }
