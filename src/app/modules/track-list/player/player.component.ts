@@ -1,42 +1,39 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
+  inject,
   viewChild,
 } from '@angular/core';
+import { PlayerState } from '../player.state';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayerComponent implements OnInit, OnChanges {
-  @Input() trackId: number;
-  @Input() trackSrc: string;
-  @Output() play = new EventEmitter();
-  @Output() pause = new EventEmitter();
-
+export class PlayerComponent {
   audioRef = viewChild<ElementRef>('audio');
 
-  ngOnChanges() {
-    console.log(this.trackSrc);
-    this.audioRef()?.nativeElement.load();
-  }
+  readonly playerState = inject(PlayerState);
 
-  ngOnInit() {
-    console.log(this.trackSrc);
-  }
+  constructor() {
+    effect(() => {
+      if (!this.playerState.selectedTrack()) return;
 
-  handleOnPause(audio: HTMLAudioElement) {
-    this.pause.emit(audio);
-  }
+      this.audioRef()?.nativeElement.load();
+    });
 
-  handleOnPlay(audio: HTMLAudioElement) {
-    this.play.emit(audio.id);
+    effect(() => {
+      if (!this.playerState.selectedTrack()) return;
+
+      if (this.playerState.isPlaying()) {
+        this.audioRef()?.nativeElement.play();
+        return;
+      }
+
+      this.audioRef()?.nativeElement.pause();
+    });
   }
 }

@@ -4,7 +4,12 @@ import { environment } from '../../../environments/environment';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { GlobalStore } from '../../global.store';
 import { ToastrService } from 'ngx-toastr';
-import { KnowledgeLevelEnum, ViewModeEnum } from '../../shared/utils/enums';
+import {
+  ConfirmDialogActionEnum,
+  KnowledgeLevelEnum,
+  ViewModeEnum,
+} from '../../shared/utils/enums';
+import { DialogService } from '../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-create-playlist',
@@ -25,6 +30,7 @@ export class CreatePlaylistComponent {
   constructor(
     private toastr: ToastrService,
     private clipboard: Clipboard,
+    private dialogHelper: DialogService,
   ) {
     this.store.updateMode(this.viewModeEnum.CREATION);
     const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY) || null;
@@ -34,6 +40,20 @@ export class CreatePlaylistComponent {
     (async function (store) {
       await store.loadTracks(KnowledgeLevelEnum.FULL);
     })(this.store);
+
+    this.dialogHelper.confirmDialogAction$.subscribe((actionType) => {
+      if (actionType === ConfirmDialogActionEnum.DELETE_PLAYLIST) {
+        this.store.removePlaylist();
+      }
+    });
+  }
+
+  openConfirmDialog() {
+    this.dialogHelper.openConfirmDialog(
+      'Delete playlist?',
+      'Delete',
+      ConfirmDialogActionEnum.DELETE_PLAYLIST,
+    );
   }
 
   copyLink() {

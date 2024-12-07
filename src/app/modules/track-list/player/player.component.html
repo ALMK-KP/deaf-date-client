@@ -1,15 +1,17 @@
-<div class="fixed bottom-0 left-0 right-0 mt-24 z-50">
-  <audio
-    #audio
-    controls
-    autoplay
-    class="mt-2 mx-auto w-full bg-[#383838] max-w-[375px] rounded-t-3xl"
-    controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
-    [id]="trackId"
-    (pause)="handleOnPause(audio)"
-    (play)="handleOnPlay(audio)"
-  >
-    <source [src]="trackSrc" type="audio/mpeg" />
-    Your browser does not support the audio element.
-  </audio>
-</div>
+@if (playerState.selectedTrack()) {
+  <div class="fixed bottom-0 left-0 right-0 mt-24 z-50">
+    <audio
+      #audio
+      controls
+      autoplay
+      class="mt-2 mx-auto w-full bg-[#383838] max-w-[375px] rounded-t-3xl"
+      controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
+      [id]="playerState.selectedTrack()?.id"
+      (pause)="playerState.setIsPlaying(false)"
+      (play)="playerState.setIsPlaying(true)"
+    >
+      <source [src]="playerState.selectedTrack()?.audio" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+}

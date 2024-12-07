@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   inject,
   Input,
-  Output,
 } from '@angular/core';
 import { GlobalStore } from '../../../global.store';
 
@@ -13,6 +11,7 @@ import { ViewModeEnum } from '../../../shared/utils/enums';
 import { Track } from '../../../shared/utils/interfaces';
 
 import { DialogService } from '../../../shared/services/dialog.service';
+import { PlayerState } from '../player.state';
 
 @Component({
   selector: 'app-track-list-item',
@@ -23,17 +22,12 @@ import { DialogService } from '../../../shared/services/dialog.service';
 export class TrackListItemComponent {
   @Input() track: Track;
   @Input() orderId: number;
-  @Output() trackSelected = new EventEmitter();
-  @Output() handleOnPlayEmitter = new EventEmitter();
-  @Output() handleOnPauseEmitter = new EventEmitter();
-  readonly store = inject(GlobalStore);
-  isPlaying = false;
   dragging = false;
   viewModeEnum = ViewModeEnum;
-  selectedToPlayTrackId: number;
-  selectedTrackSrc: string;
   hoveredId: number | null;
-  open: boolean;
+
+  readonly store = inject(GlobalStore);
+  readonly player = inject(PlayerState);
 
   constructor(
     private readonly cdr: ChangeDetectorRef,
@@ -50,10 +44,6 @@ export class TrackListItemComponent {
 
   onHovered(hovered: boolean, track: Track) {
     this.hoveredId = hovered ? track.id : null;
-  }
-
-  selectTrack() {
-    this.trackSelected.emit(this.track);
   }
 
   openTrackContextMenuDialog(track: Track) {

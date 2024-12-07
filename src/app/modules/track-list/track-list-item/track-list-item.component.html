@@ -25,27 +25,28 @@
       <div class="self-start h-[37.5px] flex items-center shrink-0 w-4">
         @if (
           hoveredId === track.id &&
-          (!isPlaying || (isPlaying && selectedToPlayTrackId !== track.id))
+          (!player.isPlaying() ||
+            (player.isPlaying() && player.selectedTrack()?.id !== track.id))
         ) {
           <tui-icon
             icon="@tui.play-filled"
             class="hover:cursor-pointer"
             [style.height.px]="16"
             [style.width.px]="16"
-            [class.text-green-500]="selectedToPlayTrackId === track.id"
-            (click)="selectTrack()"
+            [class.text-green-500]="player.selectedTrack()?.id === track.id"
+            (click)="player.selectTrack(track)"
           />
         }
         @if (
           hoveredId !== track.id &&
-          (selectedToPlayTrackId !== track.id ||
-            (selectedToPlayTrackId === track.id && !isPlaying))
+          (player.selectedTrack()?.id !== track.id ||
+            (player.selectedTrack()?.id === track.id && !player.isPlaying()))
         ) {
-          <p [class.text-green-500]="selectedToPlayTrackId === track.id">
+          <p [class.text-green-500]="player.selectedTrack()?.id === track.id">
             {{ orderId + 1 }}.
           </p>
         }
-        @if (selectedToPlayTrackId === track.id && isPlaying) {
+        @if (player.selectedTrack()?.id === track.id && player.isPlaying()) {
           <div class="track-playing"></div>
         }
       </div>
@@ -66,7 +67,7 @@
             <h3
               tuiFade
               class="text-nowrap"
-              [class.text-green-500]="selectedToPlayTrackId === track.id"
+              [class.text-green-500]="player.selectedTrack()?.id === track.id"
             >
               {{ track.title }}
             </h3>

@@ -4,7 +4,7 @@ import { PlayerComponent } from './player/player.component';
 import { TrackListComponent } from './track-list.component';
 import { TrackListItemComponent } from './track-list-item/track-list-item.component';
 import { TrackContextMenuDialogComponent } from './track-context-menu-dialog/track-context-menu-dialog.component';
-import {TuiFade, TuiSkeleton} from '@taiga-ui/kit';
+import { TuiFade, TuiSkeleton } from '@taiga-ui/kit';
 import {
   CdkDrag,
   CdkDragPlaceholder,
@@ -17,7 +17,8 @@ import { PolymorpheusTemplate } from '@taiga-ui/polymorpheus';
 import { TextareaEditInlineComponent } from '../create-playlist/textarea-edit-inline/textarea-edit-inline.component';
 import { TuiSheetDialog } from '@taiga-ui/addon-mobile';
 import { TuiHovered } from '@taiga-ui/cdk';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import { PlayerState } from './player.state';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule,
     TuiFade,
   ],
+  providers: [PlayerState],
   exports: [TrackListComponent, TextareaEditInlineComponent],
 })
 export class TrackListModule {}

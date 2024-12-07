@@ -1,11 +1,28 @@
 <div class="pt-4">
   <app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
+
+  @if (store.tracks().length) {
+    <div class="flex gap-2 items-center pt-4">
+      <h2 class="text-lg font-normal text-green-500 tracking-wider">
+        Your playlist
+      </h2>
+      <button
+        tuiIconButton
+        size="s"
+        iconStart="@tui.trash-2"
+        appearance="action-grayscale"
+        [style.border-radius.%]="100"
+        (click)="openConfirmDialog()"
+      ></button>
+    </div>
+  }
+
   <app-track-list
     (tracksReordered)="
       store.reorderTracks($event.playlistId, $event.reorderedTracks)
     "
-    (playlistRemoved)="store.removePlaylist()"
   />
+
   @if (store.tracks().length) {
     <div class="flex gap-2 mb-2">
       <button
