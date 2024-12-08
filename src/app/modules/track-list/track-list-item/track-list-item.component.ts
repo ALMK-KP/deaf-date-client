@@ -58,4 +58,8 @@ export class TrackListItemComponent {
     event.stopPropagation();
     this.dialogHelper.openTrackContextMenuDialog(this.track);
   }
+
+  disableDefaultContextMenu(event: Event) {
+    event.preventDefault();
+  }
 }

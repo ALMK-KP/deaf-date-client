@@ -3,7 +3,8 @@
   class="py-2 pl-2 rounded-lg text-sm bg-[#222] hover:bg-[#3a3a3a]"
   [cdkDragDisabled]="!isMode(viewModeEnum.CREATION)"
   (cdkDragStarted)="toggleDragging(true)"
-  [cdkDragStartDelay]="store.isMobile() ? 2000 : 0"
+  [cdkDragStartDelay]="!store.isMobile() ? 2000 : 0"
+  (contextmenu)="disableDefaultContextMenu($event)"
 >
   <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
   <div

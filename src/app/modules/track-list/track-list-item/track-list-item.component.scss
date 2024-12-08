@@ -6,6 +6,10 @@ li:has(button[cdkDragHandle]:active) {
   background: #222;
 }
 
+li {
+  -webkit-touch-callout: none;
+}
+
 .cdk-drag-preview {
   box-sizing: border-box;
   overflow: hidden;
