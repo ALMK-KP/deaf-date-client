@@ -137,7 +137,6 @@ tui-input-inline.custom-title-control-override {
 
 input {
   font-size: 16px !important;
-  outline: #14b8a6 !important;
 }
 
 .t-cleaner {
@@ -152,4 +151,8 @@ tui-dropdown {
 .t-sheet {
   max-inline-size: 375px !important;
   margin: 0 auto;
+}
+
+[tuiWrapper][data-appearance="textfield"]:has(:focus-visible):after {
+  color: #14b8a6 !important;
 }
