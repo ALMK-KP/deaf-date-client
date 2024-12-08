@@ -1,5 +1,6 @@
 <tui-root tuiTheme="dark">
   <div class="max-w-[375px] mx-auto">
+    <div [style.height.rem]="scale"></div>
     <h1
       class="sticky top-0 z-30 text-xl font-semibold tracking-widest text-center bg-[var(--tui-background-base)]"
       [class.text-[#4ac99b]]="!orangeMode"
@@ -8,13 +9,12 @@
       [class.border-orange-500]="orangeMode"
       [style.fontSize.rem]="scale"
       [class.border-b]="scale < 0.8"
-      [class.py-4]="scale > 0.7"
       (tuiElasticSticky)="onElastic($event)"
     >
       deafdate
     </h1>
     <main
-      class="p-2 flex flex-col"
+      class="p-2 mt-4 flex flex-col"
       style="min-height: calc(100vh - (61px + 40px))"
     >
       <router-outlet></router-outlet>
