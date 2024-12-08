@@ -2,14 +2,14 @@
   <div class="max-w-[375px] mx-auto">
     <h1
       class="p-4 text-xl font-semibold tracking-widest text-center border-b"
-      [class.text-teal-500]="!orangeMode"
-      [class.border-teal-500]="!orangeMode"
+      [class.text-[#4ac99b]]="!orangeMode"
+      [class.border-[#4ac99b]]="!orangeMode"
       [class.text-orange-500]="orangeMode"
       [class.border-orange-500]="orangeMode"
     >
       deafdate
     </h1>
-    <main class="px-2 flex flex-col" style="min-height: calc(100vh - 61px)">
+    <main class="p-2 flex flex-col" style="min-height: calc(100vh - (61px + 40px))">
       <router-outlet></router-outlet>
     </main>
     @if (connectedUsers) {

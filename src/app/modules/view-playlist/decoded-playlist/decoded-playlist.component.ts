@@ -16,6 +16,7 @@ import { KnowledgeLevelEnum, ViewModeEnum } from '../../../shared/utils/enums';
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      height: 100%;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

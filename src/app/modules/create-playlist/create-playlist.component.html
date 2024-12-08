@@ -1,47 +1,45 @@
-<div class="pt-4">
-  <app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
+<app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
 
-  @if (store.tracks().length) {
-    <div class="flex gap-2 items-center pt-4">
-      <h2 class="text-lg font-normal text-teal-500 tracking-wider">
-        Your playlist
-      </h2>
-      <button
-        tuiIconButton
-        size="s"
-        iconStart="@tui.trash-2"
-        appearance="action-grayscale"
-        [style.border-radius.%]="100"
-        (click)="openConfirmDialog()"
-      ></button>
-    </div>
-  }
+@if (store.tracks().length) {
+  <div class="flex gap-2 items-center pt-4">
+    <h2 class="text-lg font-normal text-[#4ac99b] tracking-wider">
+      Your playlist
+    </h2>
+    <button
+      tuiIconButton
+      size="s"
+      iconStart="@tui.trash-2"
+      appearance="action-grayscale"
+      [style.border-radius.%]="100"
+      (click)="openConfirmDialog()"
+    ></button>
+  </div>
+}
 
-  <app-track-list
-    (tracksReordered)="
-      store.reorderTracks($event.playlistId, $event.reorderedTracks)
-    "
-  />
+<app-track-list
+  (tracksReordered)="
+    store.reorderTracks($event.playlistId, $event.reorderedTracks)
+  "
+/>
 
-  @if (store.tracks().length) {
-    <div class="flex gap-2 mb-2 mt-4">
-      <button
-        size="s"
-        tuiButton
-        appearance="outline-grayscale"
-        class="grow"
-        [routerLink]="['/encoded/' + store.playlistId()]"
-      >
-        open as deaf date
-      </button>
-      <button
-        size="s"
-        tuiButton
-        appearance="outline-grayscale"
-        (click)="copyLink()"
-      >
-        copy link
-      </button>
-    </div>
-  }
-</div>
+@if (store.tracks().length) {
+  <div class="flex gap-2 mb-2 mt-auto pt-4">
+    <button
+      size="s"
+      tuiButton
+      appearance="outline-grayscale"
+      class="grow"
+      [routerLink]="['/encoded/' + store.playlistId()]"
+    >
+      open as deaf date
+    </button>
+    <button
+      size="s"
+      tuiButton
+      appearance="outline-grayscale"
+      (click)="copyLink()"
+    >
+      copy link
+    </button>
+  </div>
+}

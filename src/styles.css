@@ -5,6 +5,7 @@
 @import "./styles/toastr.css";
 
 body {
+  --tui-text-action: #4ac99b !important;
   @apply bg-neutral-700 text-neutral-200;
 }
 
@@ -40,7 +41,7 @@ li {
 .loader-thin {
   width: 60px;
   aspect-ratio: 4;
-  --_g: no-repeat radial-gradient(circle closest-side, #14b8a6 90%, #0000);
+  --_g: no-repeat radial-gradient(circle closest-side, #4ac99b 90%, #0000);
   background:
     var(--_g) 0% 50%,
     var(--_g) 50% 50%,
@@ -72,7 +73,7 @@ li {
 .track-playing {
   width: 16px;
   aspect-ratio: 1;
-  --c: no-repeat linear-gradient(#14b8a6 0 0);
+  --c: no-repeat linear-gradient(#4ac99b 0 0);
   background:
     var(--c) 0% 100%,
     var(--c) 50% 100%,
@@ -151,8 +152,10 @@ tui-dropdown {
 .t-sheet {
   max-inline-size: 375px !important;
   margin: 0 auto;
+  z-index: 50;
+  position: relative;
 }
 
 [tuiWrapper][data-appearance="textfield"]:has(:focus-visible):after {
-  color: #14b8a6 !important;
+  color: #4ac99b !important;
 }
