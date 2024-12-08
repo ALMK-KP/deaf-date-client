@@ -1,10 +1,13 @@
 import { TuiRoot } from '@taiga-ui/core';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
   OnInit,
+  signal,
+  ViewChild,
 } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { WebsocketsService } from './shared/services/websockets.service';
@@ -13,6 +16,10 @@ import { TargetDirective } from './shared/directives/target.directive';
 import { TrackListModule } from './modules/track-list/track-list.module';
 import { CreatePlaylistModule } from './modules/create-playlist/create-playlist.module';
 import { ViewPlaylistModule } from './modules/view-playlist/view-playlist.module';
+import { TuiElasticSticky } from '@taiga-ui/addon-mobile';
+import { tuiClamp } from '@taiga-ui/cdk';
+import { distinctUntilChanged, map, Observable, startWith } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +35,8 @@ import { ViewPlaylistModule } from './modules/view-playlist/view-playlist.module
     TargetDirective,
     // Libs
     TuiRoot,
+    TuiElasticSticky,
+    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +44,7 @@ import { ViewPlaylistModule } from './modules/view-playlist/view-playlist.module
 export class AppComponent implements OnInit {
   orangeMode = false;
   connectedUsers: number;
+  scale = 1;
 
   websocketsService = inject(WebsocketsService);
 
@@ -47,6 +57,11 @@ export class AppComponent implements OnInit {
       this.cdr.markForCheck();
       console.log(val);
     });
+  }
+
+  onElastic(scale: number) {
+    this.scale = tuiClamp(scale, 0.7, 1);
+    this.cdr.detectChanges();
   }
 
   ngOnInit() {

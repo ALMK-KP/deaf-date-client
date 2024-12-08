@@ -6,13 +6,11 @@
   (cdkDragStarted)="toggleDragging(true)"
   [cdkDragStartDelay]="store.isMobile() ? 1000 : 0"
   (contextmenu)="disableDefaultContextMenu($event)"
+  (tuiHoveredChange)="onDesktopHovered($event)"
+  (click)="onMobileClicked()"
 >
   <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
-  <div
-    class="flex gap-3"
-    (tuiHoveredChange)="onDesktopHovered($event)"
-    (click)="onMobileClicked()"
-  >
+  <div class="flex gap-3">
     @if (isMode(viewModeEnum.CREATION) && !store.isMobile()) {
       <button
         cdkDragHandle

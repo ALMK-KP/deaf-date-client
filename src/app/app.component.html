@@ -1,15 +1,22 @@
 <tui-root tuiTheme="dark">
   <div class="max-w-[375px] mx-auto">
     <h1
-      class="p-4 text-xl font-semibold tracking-widest text-center border-b"
+      class="sticky top-0 z-30 text-xl font-semibold tracking-widest text-center bg-[var(--tui-background-base)]"
       [class.text-[#4ac99b]]="!orangeMode"
       [class.border-[#4ac99b]]="!orangeMode"
       [class.text-orange-500]="orangeMode"
       [class.border-orange-500]="orangeMode"
+      [style.fontSize.rem]="scale"
+      [class.border-b]="scale < 0.8"
+      [class.py-4]="scale > 0.7"
+      (tuiElasticSticky)="onElastic($event)"
     >
       deafdate
     </h1>
-    <main class="p-2 flex flex-col" style="min-height: calc(100vh - (61px + 40px))">
+    <main
+      class="p-2 flex flex-col"
+      style="min-height: calc(100vh - (61px + 40px))"
+    >
       <router-outlet></router-outlet>
     </main>
     @if (connectedUsers) {
@@ -23,3 +30,4 @@
 </tui-root>
 <app-confirm-dialog />
 <ng-container appTarget="playerContainer" />
+<div class="h-[40px]"></div>

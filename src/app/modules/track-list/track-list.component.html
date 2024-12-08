@@ -10,13 +10,7 @@
         <app-track-list-item [track]="track" [orderId]="i" />
       }
       @if (store.isAddingTrackLoading()) {
-        <li class="flex py-2 px-9 gap-3">
-          <div
-            class="flex-shrink-0 w-[40px] h-[40px] rounded-lg ml-[22px]"
-            [tuiSkeleton]="true"
-          ></div>
-          <div class="rounded-lg grow" [tuiSkeleton]="true"></div>
-        </li>
+        <li class="rounded-lg h-[40px] w-full" [tuiSkeleton]="true"></li>
       }
     </ul>
   </div>
