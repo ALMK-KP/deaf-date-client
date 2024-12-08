@@ -1,17 +1,31 @@
-@if (playerState.selectedTrack()) {
-  <div class="fixed bottom-0 left-0 right-0 mt-24 z-50">
+<div class="fixed bottom-0 left-0 right-0 mt-24">
+  <div class="tui-player">
     <audio
       #audio
-      controls
-      autoplay
-      class="mt-2 mx-auto w-full bg-[#383838] max-w-[375px] rounded-t-3xl"
-      controlslist="nofullscreen nodownload noremoteplayback noplaybackrate"
-      [id]="playerState.selectedTrack()?.id"
+      [src]="playerState.selectedTrack()?.audio"
+      tuiMedia
+      [(currentTime)]="currentTime"
+      [paused]="!playerState.isPlaying()"
       (pause)="playerState.setIsPlaying(false)"
       (play)="playerState.setIsPlaying(true)"
-    >
-      <source [src]="playerState.selectedTrack()?.audio" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+    ></audio>
+    <div class="flex items-center">
+      <input
+        tuiSlider
+        step="any"
+        type="range"
+        class="slider"
+        [max]="audio.duration"
+        [(ngModel)]="currentTime"
+      />
+    </div>
+    <button
+      tuiIconButton
+      size="m"
+      appearance="secondary"
+      [iconStart]="this.playerState.isPlaying() ? '@tui.pause' : '@tui.play'"
+      [style.border-radius.%]="100"
+      (click)="toggleState()"
+    ></button>
   </div>
-}
+</div>

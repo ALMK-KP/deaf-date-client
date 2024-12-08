@@ -4,6 +4,7 @@ import {
   Component,
   inject,
   Input,
+  OnInit,
 } from '@angular/core';
 import { GlobalStore } from '../../../global.store';
 
@@ -19,7 +20,7 @@ import { PlayerState } from '../player.state';
   styleUrl: './track-list-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TrackListItemComponent {
+export class TrackListItemComponent implements OnInit {
   @Input() track: Track;
   @Input() orderId: number;
   dragging = false;
@@ -33,6 +34,12 @@ export class TrackListItemComponent {
     private readonly cdr: ChangeDetectorRef,
     private readonly dialogHelper: DialogService,
   ) {}
+
+  ngOnInit() {
+    if (this.orderId === 0) {
+      this.player.selectTrack(this.track);
+    }
+  }
 
   toggleDragging(value: boolean) {
     this.dragging = value;
@@ -61,5 +68,10 @@ export class TrackListItemComponent {
 
   disableDefaultContextMenu(event: Event) {
     event.preventDefault();
+  }
+
+  selectTrack() {
+    this.player.selectTrack(this.track);
+    this.player.setIsPlaying(true);
   }
 }

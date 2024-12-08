@@ -21,7 +21,7 @@ export const PlayerState = signalStore(
     };
 
     const selectTrack = (selectedTrack: Track) => {
-      patchState(store, { selectedTrack, isPlaying: true });
+      patchState(store, { selectedTrack });
     };
 
     return {
