@@ -70,8 +70,10 @@ export class TrackListItemComponent implements OnInit {
     event.preventDefault();
   }
 
-  selectTrack() {
-    this.player.selectTrack(this.track);
-    this.player.setIsPlaying(true);
+  selectTrack(val: boolean) {
+    if (val) {
+      this.player.selectTrack(this.track);
+    }
+    this.player.setIsPlaying(val);
   }
 }

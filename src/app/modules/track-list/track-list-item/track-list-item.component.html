@@ -38,7 +38,20 @@
             [style.height.px]="16"
             [style.width.px]="16"
             [class.text-[#4ac99b]]="player.selectedTrack()?.id === track.id"
-            (click)="selectTrack()"
+            (click)="selectTrack(true)"
+          />
+        }
+        @if (
+          hoveredId === track.id &&
+          player.isPlaying() &&
+          player.selectedTrack()?.id === track.id
+        ) {
+          <tui-icon
+            icon="@tui.pause-filled"
+            class="hover:cursor-pointer text-[#4ac99b]"
+            [style.height.px]="18"
+            [style.width.px]="18"
+            (click)="selectTrack(false)"
           />
         }
         @if (

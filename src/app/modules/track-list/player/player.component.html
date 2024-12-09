@@ -23,7 +23,9 @@
       tuiIconButton
       size="m"
       appearance="secondary"
-      [iconStart]="this.playerState.isPlaying() ? '@tui.pause' : '@tui.play'"
+      [iconStart]="
+        this.playerState.isPlaying() ? '@tui.pause-filled' : '@tui.play-filled'
+      "
       [style.border-radius.%]="100"
       (click)="toggleState()"
     ></button>
