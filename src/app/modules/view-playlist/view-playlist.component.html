@@ -1,6 +1,6 @@
 <app-track-list />
 <div class="flex gap-2 mb-2 pt-4 mt-auto">
-  @if (isCreatorOfCurrentPlaylist) {
+  @if (store.mode() === ViewModeEnum.ENCODED && isCreatorOfCurrentPlaylist) {
     <button
       size="s"
       tuiButton
@@ -15,7 +15,7 @@
       }}
     </button>
   }
-  @if (store.tracks().length) {
+  @if (store.mode() === ViewModeEnum.ENCODED && store.tracks().length) {
     <button
       size="s"
       tuiButton
@@ -24,6 +24,17 @@
       (click)="openConfirmDialog()"
     >
       reveal
+    </button>
+  }
+
+  @if (store.mode() === ViewModeEnum.DECODED) {
+    <button
+      size="s"
+      tuiButton
+      appearance="outline-grayscale"
+      (click)="goToCreationMode()"
+    >
+      create your own playlist
     </button>
   }
 </div>

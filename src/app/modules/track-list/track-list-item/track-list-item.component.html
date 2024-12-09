@@ -69,7 +69,7 @@
       </div>
       @if (track.thumbnail && !isMode(viewModeEnum.ENCODED)) {
         <div
-          class="block flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+          class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
         >
           <div class="stretchy-wrapper">
             <div>
@@ -77,6 +77,13 @@
             </div>
           </div>
         </div>
+      }
+      @if (isMode(viewModeEnum.ENCODED)) {
+        <div
+          class="flex-shrink-0 self-start w-[40px] h-[40px] rounded-lg"
+          [class.bg-[#3a3a3a]]="player.selectedTrack()?.id !== track.id"
+          [class.bg-[#4ac99b]]="player.selectedTrack()?.id === track.id"
+        ></div>
       }
       <div
         class="grow"
