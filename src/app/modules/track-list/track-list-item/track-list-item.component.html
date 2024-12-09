@@ -10,7 +10,7 @@
   (click)="onMobileClicked()"
 >
   <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
-  <div class="flex gap-3">
+  <div class="flex gap-1.5">
     @if (isMode(viewModeEnum.CREATION) && !store.isMobile()) {
       <button
         cdkDragHandle
@@ -26,7 +26,7 @@
       </button>
     }
     <div class="flex gap-3 w-full">
-      <div class="self-start h-[37.5px] flex items-center shrink-0 w-4">
+      <div class="self-start h-[37.5px] flex items-center shrink-0 w-3">
         @if (
           hoveredId === track.id &&
           (!player.isPlaying() ||

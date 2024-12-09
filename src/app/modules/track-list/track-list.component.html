@@ -1,4 +1,4 @@
-@if (store.tracks().length) {
+@if (store.tracks().length || store.isAddingTrackLoading()) {
   <div cdkDropListGroup>
     <ul
       cdkDropList
@@ -16,7 +16,7 @@
   </div>
 }
 
-@if (!store.tracks().length && store.isLoading()) {
+@if (store.isLoading() && !store.isAddingTrackLoading()) {
   <div class="grow flex items-center justify-center mt-8">
     <div class="loader-thin"></div>
   </div>
@@ -32,6 +32,8 @@
   </p>
 }
 
-<app-player *appAttachTo="'playerContainer'" />
+@if (store.tracks().length) {
+  <app-player *appAttachTo="'playerContainer'" />
+}
 
 <app-track-context-menu-dialog />

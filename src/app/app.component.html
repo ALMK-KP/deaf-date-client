@@ -3,12 +3,12 @@
     <div [style.height.rem]="scale"></div>
     <h1
       class="sticky top-0 z-30 text-xl font-semibold tracking-widest text-center bg-[var(--tui-background-base)]"
-      [class.text-[#4ac99b]]="!orangeMode"
-      [class.border-[#4ac99b]]="!orangeMode"
-      [class.text-orange-500]="orangeMode"
-      [class.border-orange-500]="orangeMode"
-      [style.fontSize.rem]="scale"
+      [style.font-size.rem]="scale"
       [class.border-b]="scale < 0.8"
+      [class.text-[#4ac99b]]="!orangeMode"
+      [class.text-orange-500]="orangeMode"
+      [class.border-[#4ac99b]]="!orangeMode"
+      [class.border-orange-500]="orangeMode"
       (tuiElasticSticky)="onElastic($event)"
     >
       deafdate
