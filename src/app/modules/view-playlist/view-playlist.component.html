@@ -1,40 +1,27 @@
 <app-track-list />
 <div class="flex gap-2 mb-2 pt-4 mt-auto">
-  @if (store.mode() === ViewModeEnum.ENCODED && isCreatorOfCurrentPlaylist) {
-    <button
-      size="s"
-      tuiButton
-      appearance="outline-grayscale"
-      class="grow"
-      routerLink="/"
-    >
-      {{
-        isCreatorOfCurrentPlaylist
-          ? "back to creation"
-          : "create your own playlist"
-      }}
-    </button>
-  }
+  <button
+    size="s"
+    tuiButton
+    appearance="neutral"
+    class="grow"
+    (click)="goToCreationMode()"
+  >
+    {{
+      isCreatorOfCurrentPlaylist
+        ? "Back to creation"
+        : "Create your own playlist"
+    }}
+  </button>
   @if (store.mode() === ViewModeEnum.ENCODED && store.tracks().length) {
     <button
       size="s"
       tuiButton
-      appearance="outline-grayscale"
+      appearance="neutral"
       class="grow"
       (click)="openConfirmDialog()"
     >
-      reveal
-    </button>
-  }
-
-  @if (store.mode() === ViewModeEnum.DECODED) {
-    <button
-      size="s"
-      tuiButton
-      appearance="outline-grayscale"
-      (click)="goToCreationMode()"
-    >
-      create your own playlist
+      Reveal
     </button>
   }
 </div>

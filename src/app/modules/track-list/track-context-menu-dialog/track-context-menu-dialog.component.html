@@ -10,7 +10,7 @@
       <a
         [href]="track.ytLink"
         target="_blank"
-        appearance="secondary"
+        appearance="neutral"
         size="s"
         tuiButton
         class="w-full mb-2"
@@ -19,7 +19,7 @@
       </a>
 
       <button
-        appearance="secondary-destructive"
+        appearance="destructive"
         size="s"
         tuiButton
         class="w-full mb-[36px]"
@@ -37,7 +37,7 @@
         <button
           size="s"
           tuiButton
-          appearance="outline-destructive"
+          appearance="destructive"
           class="grow"
           (click)="store.removeTrack(track.id); observer.complete()"
         >
@@ -46,7 +46,7 @@
         <button
           size="s"
           tuiButton
-          appearance="outline-grayscale"
+          appearance="neutral"
           class="grow"
           (click)="isConfirmationMode = false"
         >
