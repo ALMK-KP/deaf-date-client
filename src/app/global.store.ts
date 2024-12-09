@@ -12,6 +12,7 @@ import { PLAYLIST_ID_LS_KEY } from './shared/utils/constants';
 import { KnowledgeLevelEnum, ViewModeEnum } from './shared/utils/enums';
 import { Track, Response } from './shared/utils/interfaces';
 import { TUI_IS_MOBILE } from '@taiga-ui/cdk';
+import { SnackbarService } from './shared/services/snackbar.service';
 
 interface GlobalState {
   isLoading: boolean;
@@ -35,6 +36,11 @@ export const GlobalStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withDevtools('global'),
+  withMethods((store, snackbar = inject(SnackbarService)) => ({
+    successAlert(message: string) {
+      snackbar.success(message);
+    },
+  })),
   withMethods((store, tracksService = inject(TracksService)) => ({
     updateMode(mode: ViewModeEnum) {
       patchState(store, { mode });
@@ -51,6 +57,7 @@ export const GlobalStore = signalStore(
         trackId,
         customTitle,
       );
+      store.successAlert('Custom title updated');
       patchState(store, { tracks: tracks.data, isLoading: false });
     },
     async addTrackToPlaylist(track: Track) {
@@ -62,6 +69,7 @@ export const GlobalStore = signalStore(
         patchState(store, { isLoading: false, isAddingTrackLoading: false });
         return;
       }
+      store.successAlert('Track added');
       patchState(store, {
         tracks: tracks.data,
         playlistId,
@@ -97,6 +105,7 @@ export const GlobalStore = signalStore(
           await tracksService.removeTrack(trackId);
         const playlistId = tracks.length ? store.playlistId() : '';
         patchState(store, { tracks, playlistId, isLoading: false });
+        store.successAlert('Track removed');
         if (!playlistId) {
           localStorage.removeItem(PLAYLIST_ID_LS_KEY);
         }
@@ -108,6 +117,7 @@ export const GlobalStore = signalStore(
         playlistId,
         reorderedTracks,
       );
+      store.successAlert('Tracks reordered');
       patchState(store, { tracks: tracks.data, isLoading: false });
     },
   })),
