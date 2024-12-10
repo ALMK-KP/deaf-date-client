@@ -6,6 +6,7 @@
 
 body {
   --tui-text-action: #4ac99b !important;
+  caret-color: #4ac99b;
   @apply bg-neutral-700 text-neutral-200;
 }
 

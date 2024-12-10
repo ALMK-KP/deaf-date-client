@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
   Output,
+  viewChild,
 } from '@angular/core';
 import { GlobalStore } from '../../../global.store';
 
@@ -33,6 +35,7 @@ export class TextareaEditInlineComponent {
   isEditingMode = false;
 
   readonly store = inject(GlobalStore);
+  textareaRef = viewChild('textarea', { read: ElementRef });
 
   onBlur() {
     if (!this.tempEntryValue) {
@@ -49,5 +52,10 @@ export class TextareaEditInlineComponent {
         ? ''
         : this.tempEntryValue,
     );
+  }
+
+  enterEditingMode() {
+    this.isEditingMode = true;
+    this.textareaRef()?.nativeElement.focus();
   }
 }

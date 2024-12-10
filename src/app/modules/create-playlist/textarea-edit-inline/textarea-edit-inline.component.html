@@ -2,6 +2,7 @@
   <form action="#0">
     <div class="grow-wrap">
       <textarea
+        #textareaRef
         name="text"
         id="text"
         maxlength="200"
@@ -28,7 +29,7 @@
       iconStart="@tui.pencil"
       size="xs"
       tuiIconButton
-      (click)="isEditingMode = !isEditingMode"
+      (click)="enterEditingMode()"
     >
       Edit heading
     </button>
