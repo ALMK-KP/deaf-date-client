@@ -14,6 +14,14 @@
         onInput="this.parentNode.dataset.replicatedValue = this.value"
         onFocus="this.parentNode.dataset.replicatedValue = this.value"
       ></textarea>
+      <span class="absolute -bottom-4 right-0 text-xs"
+        ><span
+          [class.text-red-400]="
+            tempEntryValue.length === MAX_CUSTOM_TITLE_LENGTH
+          "
+          >{{ tempEntryValue.length }}</span
+        >/{{ MAX_CUSTOM_TITLE_LENGTH }}</span
+      >
     </div>
   </form>
 }

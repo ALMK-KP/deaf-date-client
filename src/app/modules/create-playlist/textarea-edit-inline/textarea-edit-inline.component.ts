@@ -30,6 +30,7 @@ export class TextareaEditInlineComponent {
   private readonly noCustomTitleConst = 'No custom title';
   private _entryValue = this.noCustomTitleConst;
 
+  MAX_CUSTOM_TITLE_LENGTH = 200;
   tempEntryValue = this._entryValue;
   noCustomTitle = true;
   isEditingMode = false;
