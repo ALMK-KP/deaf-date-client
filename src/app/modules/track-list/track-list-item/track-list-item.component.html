@@ -81,14 +81,24 @@
       @if (isMode(viewModeEnum.ENCODED)) {
         <div
           class="flex-shrink-0 self-start w-[40px] h-[40px] rounded-lg"
-          [class.bg-[#3a3a3a]]="player.selectedTrack()?.id !== track.id"
+          [class.bg-[#464646]]="player.selectedTrack()?.id !== track.id"
           [class.bg-[#4ac99b]]="player.selectedTrack()?.id === track.id"
         ></div>
       }
       <div
-        class="grow"
+        class="grow rounded-lg"
         [class.max-w-[252px]]="!store.isMobile()"
         [class.max-w-[264px]]="store.isMobile()"
+        [class.bg-[#464646]]="
+          isMode(viewModeEnum.ENCODED) &&
+          !track.customTitle &&
+          player.selectedTrack()?.id !== track.id
+        "
+        [class.bg-[#4ac99b]]="
+          isMode(viewModeEnum.ENCODED) &&
+          !track.customTitle &&
+          player.selectedTrack()?.id === track.id
+        "
       >
         @if (!isMode(viewModeEnum.ENCODED)) {
           <div class="flex justify-between items-start">
@@ -110,7 +120,21 @@
           </div>
         }
 
-        <p tuiFade class="text-xs text-nowrap text-neutral-400 max-w-[332px]">
+        <p
+          tuiFade
+          class="text-xs max-w-[332px]"
+          [class.text-nowrap]="!isMode(viewModeEnum.ENCODED)"
+          [class.text-justify]="isMode(viewModeEnum.ENCODED)"
+          [class.text-neutral-400]="
+            !isMode(viewModeEnum.ENCODED) ||
+            (isMode(viewModeEnum.ENCODED) &&
+              player.selectedTrack()?.id !== track.id)
+          "
+          [class.text-[#4ac99b]]="
+            isMode(viewModeEnum.ENCODED) &&
+            player.selectedTrack()?.id === track.id
+          "
+        >
           {{ track.customTitle }}
         </p>
       </div>
