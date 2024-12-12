@@ -15,13 +15,14 @@
     >
       <router-outlet></router-outlet>
     </main>
-    @if (connectedUsers) {
-      <div
-        class="bg-green-700 rounded-full w-12 h-12 absolute top-0 left-0 flex justify-center items-center text-neutral-300 font-bold text-2xl"
-      >
-        +{{ connectedUsers }}
-      </div>
-    }
+    <div
+      class="rounded-full w-8 h-8 absolute top-0 right-0 m-1 flex justify-center items-center text-neutral-300 font-bold text-2xl"
+      [class.bg-[#464646]]="!connectedUsers"
+      [class.bg-[#4ac99b]]="connectedUsers"
+      [class.text-[#464646]]="connectedUsers"
+    >
+      <tui-icon icon="@tui.radio" class="hover:cursor-pointer" />
+    </div>
   </div>
 </tui-root>
 <app-confirm-dialog />

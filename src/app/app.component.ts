@@ -1,4 +1,4 @@
-import { TuiRoot } from '@taiga-ui/core';
+import { TuiIcon, TuiRoot } from '@taiga-ui/core';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -21,6 +21,7 @@ import { AsyncPipe } from '@angular/common';
   standalone: true,
   imports: [
     // NG
+    AsyncPipe,
     RouterOutlet,
     // Custom
     TrackListModule,
@@ -30,8 +31,8 @@ import { AsyncPipe } from '@angular/common';
     TargetDirective,
     // Libs
     TuiRoot,
+    TuiIcon,
     TuiElasticSticky,
-    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
