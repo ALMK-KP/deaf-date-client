@@ -18,7 +18,6 @@
 .grow-wrap > textarea {
   /* You could leave this, but after a user resizes, then it ruins the auto sizing */
   resize: none;
-  text-indent: 52px;
 
   /* Firefox shows scrollbar on growth, you can hide like this. */
   overflow: hidden;

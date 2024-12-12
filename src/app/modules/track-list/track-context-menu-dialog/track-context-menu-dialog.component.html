@@ -69,13 +69,11 @@
           </div>
         </div>
       </div>
-      <p class="text-sm">{{ track?.title }}</p>
+      <p id="original-title" class="text-sm self-start line-clamp-2">{{ track?.title }}</p>
     </div>
-    <div class="relative left-0 -top-[19px]">
       <app-textarea-edit-inline
         [entryValue]="track.customTitle"
         (valueChangedEmitter)="store.updateTrack(track.id, $event)"
       />
-    </div>
   </div>
 </ng-template>

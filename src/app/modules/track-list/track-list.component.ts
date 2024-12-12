@@ -22,7 +22,6 @@ export class TrackListComponent {
   readonly store = inject(GlobalStore);
   dragging = false;
   viewModeEnum = ViewModeEnum;
-  open: boolean;
 
   websocketsService = inject(WebsocketsService);
 

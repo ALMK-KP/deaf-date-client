@@ -1,45 +1,58 @@
-@if (isEditingMode) {
-  <form action="#0">
-    <div class="grow-wrap">
-      <textarea
-        #textareaRef
-        name="text"
-        id="text"
-        maxlength="200"
-        rows="1"
-        autofocus
-        [spellcheck]="false"
-        [(ngModel)]="tempEntryValue"
-        (blur)="onBlur()"
-        onInput="this.parentNode.dataset.replicatedValue = this.value"
-        onFocus="this.parentNode.dataset.replicatedValue = this.value"
-      ></textarea>
-      <span class="absolute -bottom-4 right-0 text-xs"
-        ><span
-          [class.text-red-400]="
-            tempEntryValue.length === MAX_CUSTOM_TITLE_LENGTH
-          "
-          >{{ tempEntryValue.length }}</span
-        >/{{ MAX_CUSTOM_TITLE_LENGTH }}</span
-      >
-    </div>
-  </form>
-}
-@if (!isEditingMode) {
-  <p
-    class="bg-transparent indent-[52px] py-[0.1rem] text-sm font-medium text-neutral-400"
-    [class.italic]="noCustomTitle"
-    [class.text-thin]="noCustomTitle"
-  >
-    {{ tempEntryValue }}
-    <button
-      appearance="icon"
-      iconStart="@tui.pencil"
-      size="xs"
-      tuiIconButton
-      (click)="enterEditingMode()"
+<div
+  class="relative left-0 pb-4"
+  [class.-top-[19px]]="!isLongOriginalTitle"
+  [class.-mb-[19px]]="!isLongOriginalTitle"
+  [class.top-0]="isLongOriginalTitle"
+>
+  @if (isEditingMode) {
+    <form action="#0">
+      <div class="grow-wrap">
+        <textarea
+          #textareaRef
+          name="text"
+          id="text"
+          maxlength="200"
+          rows="1"
+          autofocus
+          [spellcheck]="false"
+          [(ngModel)]="tempEntryValue"
+          (blur)="onBlur()"
+          [class.indent-[52px]]="!isLongOriginalTitle"
+          onInput="this.parentNode.dataset.replicatedValue = this.value"
+          onFocus="this.parentNode.dataset.replicatedValue = this.value"
+        ></textarea>
+        <span
+          class="absolute right-0 text-xs"
+          [class.-bottom-0.5]="isLongOriginalTitle"
+          [class.bottom-0]="!isLongOriginalTitle"
+          ><span
+            [class.text-red-400]="
+              tempEntryValue.length === MAX_CUSTOM_TITLE_LENGTH
+            "
+            >{{ tempEntryValue.length }}</span
+          >/{{ MAX_CUSTOM_TITLE_LENGTH }}</span
+        >
+      </div>
+    </form>
+  }
+  @if (!isEditingMode) {
+    <p
+      #customTitleNotEditable
+      class="bg-transparent py-[0.1rem] text-sm font-medium text-neutral-400"
+      [class.italic]="noCustomTitle"
+      [class.text-thin]="noCustomTitle"
+      [class.indent-[52px]]="!isLongOriginalTitle"
     >
-      Edit heading
-    </button>
-  </p>
-}
+      {{ tempEntryValue }}
+      <button
+        appearance="icon"
+        iconStart="@tui.pencil"
+        size="xs"
+        tuiIconButton
+        (click)="enterEditingMode()"
+      >
+        Edit heading
+      </button>
+    </p>
+  }
+</div>

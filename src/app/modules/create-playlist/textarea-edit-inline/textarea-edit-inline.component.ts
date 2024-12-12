@@ -1,5 +1,7 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -16,7 +18,7 @@ import { GlobalStore } from '../../../global.store';
   styleUrl: './textarea-edit-inline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaEditInlineComponent {
+export class TextareaEditInlineComponent implements AfterViewInit {
   @Input()
   set entryValue(val: string) {
     if (val) {
@@ -34,9 +36,25 @@ export class TextareaEditInlineComponent {
   tempEntryValue = this._entryValue;
   noCustomTitle = true;
   isEditingMode = false;
+  isLongOriginalTitle: boolean;
 
   readonly store = inject(GlobalStore);
   textareaRef = viewChild('textarea', { read: ElementRef });
+  customTitleNotEditable = viewChild('customTitleNotEditable', {
+    read: ElementRef,
+  });
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngAfterViewInit() {
+    const { top } =
+      this.customTitleNotEditable()?.nativeElement?.getBoundingClientRect();
+    const { bottom } = document
+      .querySelector('#original-title')
+      ?.getBoundingClientRect()!;
+    this.isLongOriginalTitle = bottom > top;
+    this.cdr.detectChanges();
+  }
 
   onBlur() {
     if (!this.tempEntryValue) {
