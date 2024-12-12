@@ -15,9 +15,10 @@
           rows="1"
           autofocus
           [spellcheck]="false"
-          [(ngModel)]="tempEntryValue"
-          (blur)="onBlur()"
           [class.indent-[52px]]="!isLongOriginalTitle"
+          [(ngModel)]="tempEntryValue"
+          (blur)="onSave()"
+          (keyup.enter)="onSave()"
           onInput="this.parentNode.dataset.replicatedValue = this.value"
           onFocus="this.parentNode.dataset.replicatedValue = this.value"
         ></textarea>

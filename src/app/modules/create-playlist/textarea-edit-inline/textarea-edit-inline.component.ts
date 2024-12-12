@@ -56,7 +56,7 @@ export class TextareaEditInlineComponent implements AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  onBlur() {
+  onSave() {
     if (!this.tempEntryValue) {
       this.tempEntryValue = this.noCustomTitleConst;
     }
