@@ -46,6 +46,7 @@
     >
       {{ tempEntryValue }}
       <button
+        *ngIf="store.mode() === ViewModeEnum.CREATION"
         appearance="icon"
         iconStart="@tui.pencil"
         size="xs"

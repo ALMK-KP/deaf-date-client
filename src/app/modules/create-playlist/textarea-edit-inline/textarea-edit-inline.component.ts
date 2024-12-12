@@ -11,6 +11,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { GlobalStore } from '../../../global.store';
+import { ViewModeEnum } from '../../../shared/utils/enums';
 
 @Component({
   selector: 'app-textarea-edit-inline',
@@ -77,4 +78,6 @@ export class TextareaEditInlineComponent implements AfterViewInit {
     this.isEditingMode = true;
     this.textareaRef()?.nativeElement.focus();
   }
+
+  protected readonly ViewModeEnum = ViewModeEnum;
 }

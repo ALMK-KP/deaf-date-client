@@ -7,26 +7,29 @@
     (tuiSheetDialogChange)="dialogClosed()"
   >
     @if (!isConfirmationMode) {
-      <a
-        [href]="track.ytLink"
-        target="_blank"
-        appearance="neutral"
-        size="s"
-        tuiButton
-        class="w-full mb-2"
-      >
-        Open in YouTube
-      </a>
+      <div class="mb-[36px]">
+        <a
+          [href]="track.ytLink"
+          target="_blank"
+          appearance="neutral"
+          size="s"
+          tuiButton
+          class="w-full mb-2"
+        >
+          Open in YouTube
+        </a>
 
-      <button
-        appearance="destructive"
-        size="s"
-        tuiButton
-        class="w-full mb-[36px]"
-        (click)="isConfirmationMode = true"
-      >
-        Remove
-      </button>
+        <button
+          *ngIf="store.mode() === ViewModeEnum.CREATION"
+          appearance="destructive"
+          size="s"
+          tuiButton
+          class="w-full"
+          (click)="isConfirmationMode = true"
+        >
+          Remove
+        </button>
+      </div>
     }
 
     @if (isConfirmationMode) {
@@ -69,11 +72,13 @@
           </div>
         </div>
       </div>
-      <p id="original-title" class="text-sm self-start line-clamp-2">{{ track?.title }}</p>
+      <p id="original-title" class="text-sm self-start line-clamp-2">
+        {{ track?.title }}
+      </p>
     </div>
-      <app-textarea-edit-inline
-        [entryValue]="track.customTitle"
-        (valueChangedEmitter)="store.updateTrack(track.id, $event)"
-      />
+    <app-textarea-edit-inline
+      [entryValue]="track.customTitle"
+      (valueChangedEmitter)="store.updateTrack(track.id, $event)"
+    />
   </div>
 </ng-template>

@@ -11,6 +11,7 @@ import {
 import { TuiSheetDialogOptions } from '@taiga-ui/addon-mobile';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { GlobalStore } from '../../../global.store';
+import { ViewModeEnum } from '../../../shared/utils/enums';
 
 @Component({
   selector: 'app-track-context-menu-dialog',
@@ -46,4 +47,6 @@ export class TrackContextMenuDialogComponent {
   dialogClosed() {
     this.isConfirmationMode = false;
   }
+
+  protected readonly ViewModeEnum = ViewModeEnum;
 }
