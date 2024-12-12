@@ -1,1 +1,1 @@
-export const PLAYLIST_ID_LS_KEY = 'deafdatePlaylistId';
+export const PLAYLIST_ID_LS_KEY = 'DEAFDATE_PLAYLIST_ID';
