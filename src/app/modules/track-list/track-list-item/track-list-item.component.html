@@ -1,6 +1,6 @@
 <li
   cdkDrag
-  class="py-2 pl-2 rounded-lg text-sm bg-[#222] hover:bg-[#3a3a3a]"
+  class="rounded-lg bg-gray-darker py-2 pl-2 text-sm hover:bg-gray"
   [class.no-user-select]="store.isMobile()"
   [cdkDragDisabled]="!isMode(viewModeEnum.CREATION)"
   (cdkDragStarted)="toggleDragging(true)"
@@ -14,7 +14,7 @@
     @if (isMode(viewModeEnum.CREATION) && !store.isMobile()) {
       <button
         cdkDragHandle
-        class="shrink-0 self-start h-[37.5px] text-center text-[#4ac99b] font-bold tracking-widest outline-none -ml-1.5"
+        class="-ml-1.5 h-[37.5px] shrink-0 self-start text-center font-bold tracking-widest text-primary outline-none"
         [class.invisible]="hoveredId !== track.id"
         [class.visible]="hoveredId === track.id"
       >
@@ -25,8 +25,8 @@
         />
       </button>
     }
-    <div class="flex gap-3 w-full">
-      <div class="self-start h-[37.5px] flex items-center shrink-0 w-3">
+    <div class="flex w-full gap-3">
+      <div class="flex h-[37.5px] w-3 shrink-0 items-center self-start">
         @if (
           hoveredId === track.id &&
           (!player.isPlaying() ||
@@ -37,7 +37,7 @@
             class="hover:cursor-pointer"
             [style.height.px]="16"
             [style.width.px]="16"
-            [class.text-[#4ac99b]]="player.selectedTrack()?.id === track.id"
+            [class.text-primary]="player.selectedTrack()?.id === track.id"
             (click)="selectTrack(true)"
           />
         }
@@ -48,7 +48,7 @@
         ) {
           <tui-icon
             icon="@tui.pause-filled"
-            class="hover:cursor-pointer text-[#4ac99b]"
+            class="text-primary hover:cursor-pointer"
             [style.height.px]="18"
             [style.width.px]="18"
             (click)="selectTrack(false)"
@@ -59,7 +59,7 @@
           (player.selectedTrack()?.id !== track.id ||
             (player.selectedTrack()?.id === track.id && !player.isPlaying()))
         ) {
-          <p [class.text-[#4ac99b]]="player.selectedTrack()?.id === track.id">
+          <p [class.text-primary]="player.selectedTrack()?.id === track.id">
             {{ orderId + 1 }}.
           </p>
         }
@@ -69,7 +69,7 @@
       </div>
       @if (track.thumbnail && !isMode(viewModeEnum.ENCODED)) {
         <div
-          class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+          class="h-[40px] w-[40px] flex-shrink-0 self-start overflow-hidden rounded-lg object-cover"
         >
           <div class="stretchy-wrapper">
             <div>
@@ -80,32 +80,32 @@
       }
       @if (isMode(viewModeEnum.ENCODED)) {
         <div
-          class="flex-shrink-0 self-start w-[40px] h-[40px] rounded-lg"
-          [class.bg-[#464646]]="player.selectedTrack()?.id !== track.id"
-          [class.bg-[#4ac99b]]="player.selectedTrack()?.id === track.id"
+          class="h-[40px] w-[40px] flex-shrink-0 self-start rounded-lg"
+          [class.bg-gray-light]="player.selectedTrack()?.id !== track.id"
+          [class.bg-primary]="player.selectedTrack()?.id === track.id"
         ></div>
       }
       <div
         class="grow rounded-lg"
         [class.max-w-[252px]]="!store.isMobile()"
         [class.max-w-[264px]]="store.isMobile()"
-        [class.bg-[#464646]]="
+        [class.bg-gray-light]="
           isMode(viewModeEnum.ENCODED) &&
           !track.customTitle &&
           player.selectedTrack()?.id !== track.id
         "
-        [class.bg-[#4ac99b]]="
+        [class.bg-primary]="
           isMode(viewModeEnum.ENCODED) &&
           !track.customTitle &&
           player.selectedTrack()?.id === track.id
         "
       >
         @if (!isMode(viewModeEnum.ENCODED)) {
-          <div class="flex justify-between items-start">
+          <div class="flex items-start justify-between">
             <h3
               tuiFade
               class="text-nowrap"
-              [class.text-[#4ac99b]]="player.selectedTrack()?.id === track.id"
+              [class.text-primary]="player.selectedTrack()?.id === track.id"
             >
               {{ track.title }}
             </h3>
@@ -122,15 +122,15 @@
 
         <p
           tuiFade
-          class="text-xs max-w-[332px]"
+          class="max-w-[332px] text-xs"
           [class.text-nowrap]="!isMode(viewModeEnum.ENCODED)"
           [class.text-justify]="isMode(viewModeEnum.ENCODED)"
-          [class.text-neutral-400]="
+          [class.text-gray-lighter]="
             !isMode(viewModeEnum.ENCODED) ||
             (isMode(viewModeEnum.ENCODED) &&
               player.selectedTrack()?.id !== track.id)
           "
-          [class.text-[#4ac99b]]="
+          [class.text-primary]="
             isMode(viewModeEnum.ENCODED) &&
             player.selectedTrack()?.id === track.id
           "

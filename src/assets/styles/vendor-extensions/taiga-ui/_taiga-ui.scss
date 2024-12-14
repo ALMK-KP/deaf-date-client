@@ -1,0 +1,36 @@
+tui-input-inline.custom-title-control-override {
+  white-space: break-spaces;
+  @apply text-sm font-medium text-white;
+
+  .t-before,
+  input {
+    white-space: break-spaces;
+    -webkit-text-fill-color: forestgreen;
+    @apply text-sm font-medium text-white;
+  }
+
+  input {
+    white-space: break-spaces;
+    -webkit-text-fill-color: forestgreen;
+  }
+}
+
+.t-cleaner {
+  border-width: 0 !important;
+}
+
+tui-dropdown {
+  inline-size: calc(100% - 8px) !important;
+  max-inline-size: 360px !important;
+}
+
+.t-sheet {
+  max-inline-size: 375px !important;
+  margin: 0 auto;
+  z-index: 50;
+  position: relative;
+}
+
+[tuiWrapper][data-appearance="textfield"]:has(:focus-visible):after {
+  color: #4ac99b !important;
+}

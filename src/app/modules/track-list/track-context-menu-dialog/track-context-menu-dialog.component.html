@@ -14,7 +14,7 @@
           appearance="neutral"
           size="s"
           tuiButton
-          class="w-full mb-2"
+          class="mb-2 w-full"
         >
           Open in YouTube
         </a>
@@ -33,10 +33,10 @@
     }
 
     @if (isConfirmationMode) {
-      <p class="text-center text-sm mt-1">
+      <p class="mt-1 text-center text-sm">
         Are you sure you want to delete this track from the playlist?
       </p>
-      <div class="flex gap-2 mt-4 mb-[36px]">
+      <div class="mb-[36px] mt-4 flex gap-2">
         <button
           size="s"
           tuiButton
@@ -61,10 +61,10 @@
 }
 
 <ng-template #labelRef [polymorpheus]="options" let-track="data">
-  <div class="border-b-emerald-800 border-b">
+  <div class="border-b border-b-primary">
     <div class="flex gap-3">
       <div
-        class="flex-shrink-0 self-start w-[40px] h-[40px] object-cover rounded-lg overflow-hidden"
+        class="h-[40px] w-[40px] flex-shrink-0 self-start overflow-hidden rounded-lg object-cover"
       >
         <div class="stretchy-wrapper">
           <div>
@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <p id="original-title" class="text-sm self-start line-clamp-2">
+      <p id="original-title" class="line-clamp-2 self-start text-sm">
         {{ track?.title }}
       </p>
     </div>

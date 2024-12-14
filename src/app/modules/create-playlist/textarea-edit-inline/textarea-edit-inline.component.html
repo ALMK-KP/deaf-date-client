@@ -27,9 +27,7 @@
           [class.-bottom-0.5]="isLongOriginalTitle"
           [class.bottom-0]="!isLongOriginalTitle"
           ><span
-            [class.text-red-400]="
-              tempEntryValue.length === MAX_CUSTOM_TITLE_LENGTH
-            "
+            [class.text-red]="tempEntryValue.length === MAX_CUSTOM_TITLE_LENGTH"
             >{{ tempEntryValue.length }}</span
           >/{{ MAX_CUSTOM_TITLE_LENGTH }}</span
         >
@@ -39,7 +37,7 @@
   @if (!isEditingMode) {
     <p
       #customTitleNotEditable
-      class="bg-transparent py-[0.1rem] text-sm font-medium text-neutral-400"
+      class="bg-transparent py-[0.1rem] text-sm font-medium text-gray-lighter"
       [class.italic]="noCustomTitle"
       [class.text-thin]="noCustomTitle"
       [class.indent-[52px]]="!isLongOriginalTitle"

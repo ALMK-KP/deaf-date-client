@@ -2,7 +2,7 @@
 .grow-wrap {
   /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
   display: grid;
-  @apply text-sm font-medium text-neutral-400;
+  @apply text-sm font-medium text-gray-lighter;
 }
 .grow-wrap::after {
   /* Note the weird space! Needed to preventy jumpy behavior */
@@ -13,7 +13,7 @@
 
   /* Hidden from view, clicks, and screen readers */
   visibility: hidden;
-  @apply text-sm font-medium text-neutral-400;
+  @apply text-sm font-medium text-gray-lighter;
 }
 .grow-wrap > textarea {
   /* You could leave this, but after a user resizes, then it ruins the auto sizing */
@@ -21,7 +21,7 @@
 
   /* Firefox shows scrollbar on growth, you can hide like this. */
   overflow: hidden;
-  @apply outline-none bg-transparent text-sm font-medium text-neutral-400;
+  @apply outline-none bg-transparent text-sm font-medium text-gray-lighter;
 }
 .grow-wrap > textarea,
 .grow-wrap::after {

@@ -1,8 +1,8 @@
 <tui-root tuiTheme="dark">
-  <div class="max-w-[375px] mx-auto">
+  <div class="mx-auto max-w-[375px]">
     <div [style.height.rem]="scale"></div>
     <h1
-      class="sticky top-0 z-30 text-xl text-[#4ac99b] border-[#4ac99b] font-semibold tracking-widest text-center bg-[var(--tui-background-base)]"
+      class="sticky top-0 z-30 border-primary bg-gray-darker text-center text-xl font-semibold tracking-widest text-primary"
       [style.font-size.rem]="scale"
       [class.border-b]="scale < 0.8"
       (tuiElasticSticky)="onElastic($event)"
@@ -10,16 +10,16 @@
       deafdate
     </h1>
     <main
-      class="p-2 mt-4 flex flex-col"
+      class="mt-4 flex flex-col p-2"
       style="min-height: calc(100vh - (61px + 40px))"
     >
       <router-outlet></router-outlet>
     </main>
     <div
-      class="rounded-full w-8 h-8 absolute top-0 right-0 m-1 flex justify-center items-center text-neutral-300 font-bold text-2xl"
-      [class.bg-[#464646]]="!connectedUsers"
-      [class.bg-[#4ac99b]]="connectedUsers"
-      [class.text-[#464646]]="connectedUsers"
+      class="absolute right-0 top-0 m-1 flex h-8 w-8 items-center justify-center rounded-full text-2xl font-bold text-white"
+      [class.bg-gray-light]="!connectedUsers"
+      [class.bg-primary]="connectedUsers"
+      [class.text-gray-light]="connectedUsers"
     >
       <tui-icon icon="@tui.radio" class="hover:cursor-pointer" />
     </div>

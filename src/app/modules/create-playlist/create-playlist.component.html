@@ -1,8 +1,8 @@
 <app-search-for-track (addTrack)="store.addTrackToPlaylist($event)" />
 
-<div class="flex gap-2 items-center pt-4">
+<div class="flex items-center gap-2 pt-4">
   @if (store.tracks().length || store.isAddingTrackLoading()) {
-    <h2 class="text-lg font-normal text-[#4ac99b] tracking-wider">
+    <h2 class="text-lg font-normal tracking-wider text-primary">
       Your playlist
     </h2>
   }
@@ -25,7 +25,7 @@
 />
 
 @if (store.tracks().length) {
-  <div class="flex gap-2 mb-2 mt-auto pt-4">
+  <div class="mb-2 mt-auto flex gap-2 pt-4">
     <button
       size="s"
       tuiButton
@@ -35,12 +35,7 @@
     >
       Open as deaf date
     </button>
-    <button
-      size="s"
-      tuiButton
-      appearance="neutral"
-      (click)="copyLink()"
-    >
+    <button size="s" tuiButton appearance="neutral" (click)="copyLink()">
       Copy link
     </button>
   </div>

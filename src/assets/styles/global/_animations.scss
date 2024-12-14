@@ -1,0 +1,80 @@
+.loader-thin {
+  width: 60px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side, #4ac99b 90%, #0000);
+  background:
+    var(--_g) 0% 50%,
+    var(--_g) 50% 50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 100%;
+  animation: l7 1s infinite linear;
+}
+@keyframes l7 {
+  33% {
+    background-size:
+      calc(100% / 3) 0%,
+      calc(100% / 3) 100%,
+      calc(100% / 3) 100%;
+  }
+  50% {
+    background-size:
+      calc(100% / 3) 100%,
+      calc(100% / 3) 0%,
+      calc(100% / 3) 100%;
+  }
+  66% {
+    background-size:
+      calc(100% / 3) 100%,
+      calc(100% / 3) 100%,
+      calc(100% / 3) 0%;
+  }
+}
+
+.track-playing {
+  width: 16px;
+  aspect-ratio: 1;
+  --c: no-repeat linear-gradient(#4ac99b 0 0);
+  background:
+    var(--c) 0% 100%,
+    var(--c) 50% 100%,
+    var(--c) 100% 100%;
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {
+  0% {
+    background-size:
+      20% 100%,
+      20% 100%,
+      20% 100%;
+  }
+  20% {
+    background-size:
+      20% 60%,
+      20% 100%,
+      20% 100%;
+  }
+  40% {
+    background-size:
+      20% 80%,
+      20% 60%,
+      20% 100%;
+  }
+  60% {
+    background-size:
+      20% 100%,
+      20% 80%,
+      20% 60%;
+  }
+  80% {
+    background-size:
+      20% 100%,
+      20% 100%,
+      20% 80%;
+  }
+  100% {
+    background-size:
+      20% 100%,
+      20% 100%,
+      20% 100%;
+  }
+}

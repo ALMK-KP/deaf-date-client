@@ -2,7 +2,7 @@
   <div cdkDropListGroup>
     <ul
       cdkDropList
-      class="pt-2 text-white text-sm gap-2 flex flex-col"
+      class="flex flex-col gap-2 pt-2 text-sm text-white"
       [cdkDropListData]="store.tracks()"
       (cdkDropListDropped)="drop($event)"
     >
@@ -10,20 +10,20 @@
         <app-track-list-item [track]="track" [orderId]="i" />
       }
       @if (store.isAddingTrackLoading()) {
-        <li class="rounded-lg h-[40px] w-full" [tuiSkeleton]="true"></li>
+        <li class="h-[40px] w-full rounded-lg" [tuiSkeleton]="true"></li>
       }
     </ul>
   </div>
 }
 
 @if (store.isLoading() && !store.isAddingTrackLoading()) {
-  <div class="grow flex items-center justify-center mt-8">
+  <div class="mt-8 flex grow items-center justify-center">
     <div class="loader-thin"></div>
   </div>
 }
 
 @if (!store.tracks().length && !store.isLoading()) {
-  <p class="text-center italic pt-24 pb-20">
+  <p class="pb-20 pt-24 text-center italic">
     {{
       isMode(viewModeEnum.CREATION)
         ? "No tracks added yet"
