@@ -15,16 +15,20 @@
     >
       <router-outlet></router-outlet>
     </main>
-    <div
-      class="absolute right-0 top-0 m-1 flex h-8 w-8 items-center justify-center rounded-full text-2xl font-bold text-white"
-      [class.bg-gray-light]="!connectedUsers"
-      [class.bg-primary]="connectedUsers"
-      [class.text-gray-light]="connectedUsers"
-    >
-      <tui-icon icon="@tui.radio" class="hover:cursor-pointer" />
-    </div>
+    @if (streamingStore.roomId()) {
+      <div
+        class="absolute right-0 top-0 m-1 flex h-8 w-8 items-center justify-center rounded-full text-2xl font-bold text-white"
+        [class.bg-gray-light]="!connectedUsers"
+        [class.bg-primary]="connectedUsers"
+        [class.text-gray-light]="connectedUsers"
+        (click)="openStreamingDialog()"
+      >
+        <tui-icon icon="@tui.radio" class="hover:cursor-pointer" />
+      </div>
+    }
   </div>
 </tui-root>
 <app-confirm-dialog />
+<app-streaming-dialog />
 <ng-container appTarget="playerContainer" />
 <div class="h-[40px]"></div>

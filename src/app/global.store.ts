@@ -13,6 +13,7 @@ import { KnowledgeLevelEnum, ViewModeEnum } from './shared/utils/enums';
 import { Track, Response } from './shared/utils/interfaces';
 import { TUI_IS_MOBILE } from '@taiga-ui/cdk';
 import { SnackbarService } from './shared/services/snackbar.service';
+import { StreamingStore } from './streaming.store';
 
 interface GlobalState {
   isLoading: boolean;
@@ -41,86 +42,95 @@ export const GlobalStore = signalStore(
       snackbar.success(message);
     },
   })),
-  withMethods((store, tracksService = inject(TracksService)) => ({
-    updateMode(mode: ViewModeEnum) {
-      patchState(store, { mode });
-    },
-    updatePlaylistId(playlistId: string) {
-      patchState(store, { playlistId });
-    },
-    resetPlaylist() {
-      patchState(store, { tracks: [], playlistId: '' });
-    },
-    async updateTrack(trackId: number, customTitle: string) {
-      patchState(store, { isLoading: true });
-      const tracks: Response<Track> = await tracksService.updateCustomTitle(
-        trackId,
-        customTitle,
-      );
-      store.successAlert('Custom title updated');
-      patchState(store, { tracks: tracks.data, isLoading: false });
-    },
-    async addTrackToPlaylist(track: Track) {
-      patchState(store, { isLoading: true, isAddingTrackLoading: true });
-      const tracks: Response<Track> =
-        await tracksService.saveTrackToPlaylist(track);
-      const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY);
-      if (!playlistId) {
-        patchState(store, { isLoading: false, isAddingTrackLoading: false });
-        return;
-      }
-      store.successAlert('Track added');
-      patchState(store, {
-        tracks: tracks.data,
-        playlistId,
-        isLoading: false,
-        isAddingTrackLoading: false,
-      });
-    },
-    async loadTracks(knowledgeLevel: KnowledgeLevelEnum): Promise<void> {
-      patchState(store, { isLoading: true });
-      if (!store.playlistId()) {
-        patchState(store, { tracks: [], isLoading: false });
-      } else {
-        const tracks: Response<Track> = await tracksService.getPlaylist(
-          store.playlistId(),
-          knowledgeLevel,
+  withMethods(
+    (
+      store,
+      tracksService = inject(TracksService),
+      streamingStore = inject(StreamingStore),
+    ) => ({
+      updateMode(mode: ViewModeEnum) {
+        patchState(store, { mode });
+      },
+      updatePlaylistId(playlistId: string) {
+        patchState(store, { playlistId });
+      },
+      resetPlaylist() {
+        patchState(store, { tracks: [], playlistId: '' });
+      },
+      async updateTrack(trackId: number, customTitle: string) {
+        patchState(store, { isLoading: true });
+        const tracks: Response<Track> = await tracksService.updateCustomTitle(
+          trackId,
+          customTitle,
         );
-        console.log(tracks);
+        store.successAlert('Custom title updated');
         patchState(store, { tracks: tracks.data, isLoading: false });
-      }
-    },
-    async removePlaylist() {
-      if (store.playlistId()) {
-        patchState(store, { isLoading: true });
-        localStorage.removeItem(PLAYLIST_ID_LS_KEY);
-        await tracksService.removePlaylist(store.playlistId());
-        patchState(store, { tracks: [], playlistId: '', isLoading: false });
-      }
-    },
-    async removeTrack(trackId: number) {
-      if (store.playlistId()) {
-        patchState(store, { isLoading: true });
-        const { data: tracks }: Response<Track> =
-          await tracksService.removeTrack(trackId);
-        const playlistId = tracks.length ? store.playlistId() : '';
-        patchState(store, { tracks, playlistId, isLoading: false });
-        store.successAlert('Track removed');
+      },
+      async addTrackToPlaylist(track: Track) {
+        patchState(store, { isLoading: true, isAddingTrackLoading: true });
+        const tracks: Response<Track> =
+          await tracksService.saveTrackToPlaylist(track);
+        const playlistId = localStorage.getItem(PLAYLIST_ID_LS_KEY);
         if (!playlistId) {
-          localStorage.removeItem(PLAYLIST_ID_LS_KEY);
+          patchState(store, { isLoading: false, isAddingTrackLoading: false });
+          return;
         }
-      }
-    },
-    async reorderTracks(playlistId: string, reorderedTracks: Array<Track>) {
-      patchState(store, { isLoading: true });
-      const tracks: Response<Track> = await tracksService.reorderTracks(
-        playlistId,
-        reorderedTracks,
-      );
-      store.successAlert('Tracks reordered');
-      patchState(store, { tracks: tracks.data, isLoading: false });
-    },
-  })),
+        store.successAlert('Track added');
+        streamingStore.updateRoomId(tracks.playlistId);
+        patchState(store, {
+          tracks: tracks.data,
+          playlistId,
+          isLoading: false,
+          isAddingTrackLoading: false,
+        });
+      },
+      async loadTracks(knowledgeLevel: KnowledgeLevelEnum): Promise<void> {
+        patchState(store, { isLoading: true });
+        if (!store.playlistId()) {
+          patchState(store, { tracks: [], isLoading: false });
+        } else {
+          const tracks: Response<Track> = await tracksService.getPlaylist(
+            store.playlistId(),
+            knowledgeLevel,
+          );
+          console.log(tracks);
+          patchState(store, { tracks: tracks.data, isLoading: false });
+        }
+      },
+      async removePlaylist() {
+        if (store.playlistId()) {
+          patchState(store, { isLoading: true });
+          localStorage.removeItem(PLAYLIST_ID_LS_KEY);
+          await tracksService.removePlaylist(store.playlistId());
+          streamingStore.updateRoomId(null);
+          patchState(store, { tracks: [], playlistId: '', isLoading: false });
+        }
+      },
+      async removeTrack(trackId: number) {
+        if (store.playlistId()) {
+          patchState(store, { isLoading: true });
+          const { data: tracks }: Response<Track> =
+            await tracksService.removeTrack(trackId);
+          const playlistId = tracks.length ? store.playlistId() : '';
+          patchState(store, { tracks, playlistId, isLoading: false });
+          store.successAlert('Track removed');
+          if (!playlistId) {
+            localStorage.removeItem(PLAYLIST_ID_LS_KEY);
+            streamingStore.updateRoomId(null);
+          }
+        }
+      },
+      async reorderTracks(playlistId: string, reorderedTracks: Array<Track>) {
+        patchState(store, { isLoading: true });
+        const tracks: Response<Track> = await tracksService.reorderTracks(
+          playlistId,
+          reorderedTracks,
+        );
+        store.successAlert('Tracks reordered');
+        patchState(store, { tracks: tracks.data, isLoading: false });
+      },
+    }),
+  ),
   withHooks((store, isMobile = inject(TUI_IS_MOBILE)) => ({
     onInit() {
       patchState(store, { isMobile });

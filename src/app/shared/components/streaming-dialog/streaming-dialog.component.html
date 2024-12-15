@@ -1,0 +1,14 @@
+<ng-template [(tuiSheetDialog)]="isOpened">
+  <div class="mb-8">
+    Your username: {{ streamingStore.currentUser()?.name }}
+    @if (!streamingStore.otherUsers()) {
+      <p class="italic">No other users available</p>
+    }
+    @if (streamingStore.otherUsers()) {
+      <p>Available users:</p>
+      @for (user of streamingStore.otherUsers(); track user.id) {
+        <div>{{ user.name }}</div>
+      }
+    }
+  </div>
+</ng-template>

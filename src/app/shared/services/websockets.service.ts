@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { io, Socket } from 'socket.io-client';
 import { Subject } from 'rxjs';
@@ -15,13 +15,20 @@ export class WebsocketsService {
   connectedUsersChange$ = this._connectedUsersChange$.asObservable();
 
   constructor() {
-    this.socket = io(environment.WEBSOCKETS_SERVER_URL);
+    // this.socket.on('TOGGLE_PLAY_EVENT', (val: any) => {
+    //   this._toggledPlayEvent$.next(val);
+    // });
+  }
 
-    this.socket.on('TOGGLE_PLAY_EVENT', (val: any) => {
-      this._toggledPlayEvent$.next(val);
+  connect(roomId: string | null) {
+    this.socket = io(environment.WEBSOCKETS_SERVER_URL, {
+      query: {
+        roomId,
+      },
     });
 
-    this.socket.on('CONNECTED_USERS_CHANGE', (val: number) => {
+    this.socket.on('CONNECTED_USERS_CHANGE', (val: Array<any>) => {
+      console.log(val);
       this._connectedUsersChange$.next(val);
     });
   }

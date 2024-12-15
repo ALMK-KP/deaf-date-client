@@ -20,6 +20,7 @@ import { TuiSheetDialog } from '@taiga-ui/addon-mobile';
 import { TuiHovered, TuiMedia } from '@taiga-ui/cdk';
 import { FormsModule } from '@angular/forms';
 import { PlayerState } from './player.state';
+import { StreamingDialogComponent } from '../../shared/components/streaming-dialog/streaming-dialog.component';
 
 @NgModule({
   declarations: [

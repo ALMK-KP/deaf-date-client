@@ -15,6 +15,9 @@ import { ViewPlaylistModule } from './modules/view-playlist/view-playlist.module
 import { TuiElasticSticky } from '@taiga-ui/addon-mobile';
 import { tuiClamp } from '@taiga-ui/cdk';
 import { AsyncPipe } from '@angular/common';
+import { StreamingStore } from './streaming.store';
+import { StreamingDialogComponent } from './shared/components/streaming-dialog/streaming-dialog.component';
+import { DialogService } from './shared/services/dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +36,7 @@ import { AsyncPipe } from '@angular/common';
     TuiRoot,
     TuiIcon,
     TuiElasticSticky,
+    StreamingDialogComponent,
   ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,8 +46,12 @@ export class AppComponent {
   scale = 1;
 
   websocketsService = inject(WebsocketsService);
+  streamingStore = inject(StreamingStore);
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private readonly dialogHelper: DialogService,
+  ) {
     this.websocketsService.connectedUsersChange$.subscribe((val: any) => {
       this.connectedUsers = val - 1;
       this.cdr.markForCheck();
@@ -54,5 +62,9 @@ export class AppComponent {
   onElastic(scale: number) {
     this.scale = tuiClamp(scale, 0.7, 1);
     this.cdr.detectChanges();
+  }
+
+  openStreamingDialog() {
+    this.dialogHelper.openStreamingDialog();
   }
 }

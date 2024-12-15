@@ -55,3 +55,8 @@ export interface ConfirmDialogData {
   confirmBtnLabel: string;
   actionType: ConfirmDialogActionEnum;
 }
+
+export interface User {
+  id: string;
+  name: string;
+}

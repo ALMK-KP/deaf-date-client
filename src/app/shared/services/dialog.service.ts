@@ -15,6 +15,7 @@ export class DialogService {
     Partial<TuiSheetDialogOptions<any>>
   >();
   confirmDialogAction$ = new Subject<ConfirmDialogActionEnum>();
+  openStreamingDialog$ = new Subject<boolean>();
 
   openConfirmDialog(
     label: string,
@@ -31,5 +32,9 @@ export class DialogService {
     this.trackContextMenuDialogOptions$.next({
       data: track,
     });
+  }
+
+  openStreamingDialog() {
+    this.openStreamingDialog$.next(true);
   }
 }
