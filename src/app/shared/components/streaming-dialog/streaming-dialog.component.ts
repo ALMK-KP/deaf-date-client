@@ -15,13 +15,14 @@ import { GlobalStore } from '../../../global.store';
 import { ViewModeEnum } from '../../utils/enums';
 import { TuiButton } from '@taiga-ui/core';
 import { StreamingStore } from '../../../streaming.store';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-streaming-dialog',
   standalone: true,
   templateUrl: './streaming-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TuiButton, TuiSheetDialog],
+  imports: [TuiButton, TuiSheetDialog, NgIf],
 })
 export class StreamingDialogComponent {
   options: Partial<TuiSheetDialogOptions<any>>;

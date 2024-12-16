@@ -1,6 +1,9 @@
 <ng-template [(tuiSheetDialog)]="isOpened">
   <div class="mb-8">
-    Your username: {{ streamingStore.currentUser()?.name }}
+    <p class="font-lighter text-right text-xs">
+      <span class="text-gray-lighter">Your username: </span>
+      {{ streamingStore.currentUserName() }}
+    </p>
     @if (!streamingStore.otherUsers()) {
       <p class="italic">No other users available</p>
     }
@@ -10,5 +13,7 @@
         <div>{{ user.name }}</div>
       }
     }
+
+    <button size="s" tuiButton class="w-full" disabled>Connect</button>
   </div>
 </ng-template>
