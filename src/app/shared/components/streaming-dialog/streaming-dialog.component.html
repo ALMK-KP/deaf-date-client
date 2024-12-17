@@ -1,19 +1,29 @@
 <ng-template [(tuiSheetDialog)]="isOpened">
   <div class="mb-8">
     <p class="font-lighter text-right text-xs">
-      <span class="text-gray-lighter">Your username: </span>
+      <span class="text-gray-lighter">You: </span>
       {{ streamingStore.currentUserName() }}
     </p>
-    @if (!streamingStore.otherUsers()) {
-      <p class="italic">No other users available</p>
+    @if (streamingStore.otherUsers().length) {
+      <h2 class="text-lg font-normal tracking-wider text-primary">
+        Users online:
+      </h2>
+      <div class="flex gap-2 flex-wrap">
+        @for (user of streamingStore.otherUsers(); track user.id) {
+          <span
+            class="mt-2 rounded-lg bg-gray-light p-2 text-right text-sm font-thin"
+          >
+            {{ user.name }}
+          </span>
+        }
+      </div>
     }
-    @if (streamingStore.otherUsers()) {
-      <p>Available users:</p>
-      @for (user of streamingStore.otherUsers(); track user.id) {
-        <div>{{ user.name }}</div>
-      }
+    @if (!streamingStore.otherUsers().length) {
+      <p class="pt-7 pb-6 text-center text-sm italic text-gray-lighter">
+        No other users available
+      </p>
     }
 
-    <button size="s" tuiButton class="w-full" disabled>Connect</button>
+    <button size="s" tuiButton class="mt-4 w-full" disabled>Connect</button>
   </div>
 </ng-template>
