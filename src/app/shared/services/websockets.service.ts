@@ -7,7 +7,8 @@ import {
   animals,
   uniqueNamesGenerator,
 } from 'unique-names-generator';
-import { ConnectedUsersChangeResponse } from '../utils/interfaces';
+import { ConnectedUsersChangeResponse, Track } from '../utils/interfaces';
+import { PlayerState } from '../../modules/track-list/player.state';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +18,12 @@ export class WebsocketsService {
   private _toggledPlayEvent$ = new Subject();
   private _connectedUsersChange$ = new Subject<ConnectedUsersChangeResponse>();
   private _socketIdChange$ = new Subject<string>();
+  private _playerStateChange$ = new Subject<PlayerState>();
 
   toggledPlayEvent$ = this._toggledPlayEvent$.asObservable();
   connectedUsersChange$ = this._connectedUsersChange$.asObservable();
   socketIdChange$ = this._socketIdChange$.asObservable();
+  playerStateChange$ = this._playerStateChange$.asObservable();
 
   connect(roomId: string | null, username: string) {
     this.socket = io(environment.WEBSOCKETS_SERVER_URL, {
@@ -41,10 +44,14 @@ export class WebsocketsService {
         this._connectedUsersChange$.next(res);
       },
     );
+
+    this.socket.on('TOGGLE_PLAY_EVENT', (res: PlayerState) => {
+      this._playerStateChange$.next(res);
+    });
   }
 
-  emitTogglePlay(payload: any) {
-    this.socket.emit('TOGGLE_PLAY_EVENT', payload);
+  emitTogglePlay(isPlaying: boolean, selectedTrack: Track) {
+    this.socket.emit('TOGGLE_PLAY_EVENT', { isPlaying, selectedTrack });
   }
 
   getRandomUsername() {

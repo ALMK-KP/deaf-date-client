@@ -9,7 +9,6 @@ import { inject } from '@angular/core';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { PLAYLIST_ID_LS_KEY, USERNAME_LS_KEY } from './shared/utils/constants';
 import { ConnectedUsersChangeResponse, User } from './shared/utils/interfaces';
-import { SnackbarService } from './shared/services/snackbar.service';
 import { ActivationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { WebsocketsService } from './shared/services/websockets.service';
@@ -32,11 +31,6 @@ export const StreamingStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withDevtools('streaming'),
-  withMethods((store, snackbar = inject(SnackbarService)) => ({
-    successAlert(message: string) {
-      snackbar.success(message);
-    },
-  })),
   withMethods((store) => ({
     updateRoomId(roomId: string | null) {
       patchState(store, { roomId });

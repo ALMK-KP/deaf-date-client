@@ -1,8 +1,16 @@
 import { Track } from '../../shared/utils/interfaces';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { inject } from '@angular/core';
+import { WebsocketsService } from '../../shared/services/websockets.service';
 
-interface PlayerState {
+export interface PlayerState {
   isPlaying: boolean;
   selectedTrack: Track | null;
 }
@@ -15,9 +23,11 @@ const initialState: PlayerState = {
 export const PlayerState = signalStore(
   withState(initialState),
   withDevtools('global'),
-  withMethods((store) => {
+  withMethods((store, websockets = inject(WebsocketsService)) => {
     const setIsPlaying = (val: boolean) => {
       patchState(store, { isPlaying: val });
+      if (!store.selectedTrack()) return;
+      websockets.emitTogglePlay(store.isPlaying(), store.selectedTrack()!);
     };
 
     const selectTrack = (selectedTrack: Track) => {
@@ -29,4 +39,14 @@ export const PlayerState = signalStore(
       selectTrack,
     };
   }),
+  withHooks((store, websockets = inject(WebsocketsService)) => ({
+    onInit() {
+      websockets.playerStateChange$.subscribe((res: PlayerState) => {
+        patchState(store, {
+          isPlaying: res.isPlaying,
+          selectedTrack: res.selectedTrack,
+        });
+      });
+    },
+  })),
 );
