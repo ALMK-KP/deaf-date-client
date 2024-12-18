@@ -6,24 +6,23 @@
     </p>
     @if (streamingStore.otherUsers().length) {
       <h2 class="text-lg font-normal tracking-wider text-primary">
-        Users online:
+        Connected users:
       </h2>
-      <div class="flex gap-2 flex-wrap">
+      <div class="flex flex-wrap gap-1 py-3">
         @for (user of streamingStore.otherUsers(); track user.id) {
-          <span
-            class="mt-2 rounded-lg bg-gray-light p-2 text-right text-sm font-thin"
+          <div
+            tuiStatus="var(--tui-status-positive)"
+            class="rounded-3xl bg-gray-light px-2 py-1 text-right text-sm font-thin"
           >
             {{ user.name }}
-          </span>
+          </div>
         }
       </div>
     }
     @if (!streamingStore.otherUsers().length) {
-      <p class="pt-7 pb-6 text-center text-sm italic text-gray-lighter">
+      <p class="pb-6 pt-7 text-center text-sm italic text-gray-lighter">
         No other users available
       </p>
     }
-
-    <button size="s" tuiButton class="mt-4 w-full" disabled>Connect</button>
   </div>
 </ng-template>

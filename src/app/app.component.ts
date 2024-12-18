@@ -6,7 +6,6 @@ import {
   inject,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WebsocketsService } from './shared/services/websockets.service';
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { TargetDirective } from './shared/directives/target.directive';
 import { TrackListModule } from './modules/track-list/track-list.module';
@@ -42,22 +41,14 @@ import { DialogService } from './shared/services/dialog.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  connectedUsers: number;
   scale = 1;
 
-  websocketsService = inject(WebsocketsService);
   streamingStore = inject(StreamingStore);
 
   constructor(
     private cdr: ChangeDetectorRef,
     private readonly dialogHelper: DialogService,
-  ) {
-    this.websocketsService.connectedUsersChange$.subscribe((val: any) => {
-      this.connectedUsers = val - 1;
-      this.cdr.markForCheck();
-      console.log(val);
-    });
-  }
+  ) {}
 
   onElastic(scale: number) {
     this.scale = tuiClamp(scale, 0.7, 1);
