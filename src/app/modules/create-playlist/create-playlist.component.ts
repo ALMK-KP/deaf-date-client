@@ -59,7 +59,7 @@ export class CreatePlaylistComponent {
 
   copyLink() {
     this.clipboard.copy(
-      `${environment.BASE_URL}/encoded/${this.store.playlistId()}`,
+      `${environment.BASE_URL}encoded/${this.store.playlistId()}`,
     );
     this.snackbar.info('Link copied');
   }
