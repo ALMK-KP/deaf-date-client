@@ -4,7 +4,8 @@
       #audio
       [src]="playerState.selectedTrack()?.audio"
       tuiMedia
-      [(currentTime)]="currentTime"
+      [currentTime]="currentTime"
+      (timeupdate)="setCurrentTime($event)"
       [paused]="!playerState.isPlaying()"
       (pause)="playerState.setIsPlaying(false)"
       (play)="playerState.setIsPlaying(true)"
@@ -16,7 +17,8 @@
         type="range"
         class="slider"
         [max]="audio.duration"
-        [(ngModel)]="currentTime"
+        [value]="currentTime"
+        (change)="manuallyChangeCurrentTime($event)"
       />
     </div>
     <button

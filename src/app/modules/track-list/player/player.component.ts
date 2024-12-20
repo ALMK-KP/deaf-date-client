@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   effect,
   ElementRef,
@@ -8,6 +7,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { PlayerState } from '../player.state';
+import { TuiInputSliderComponent } from '@taiga-ui/legacy';
 
 @Component({
   selector: 'app-player',
@@ -16,13 +16,29 @@ import { PlayerState } from '../player.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerComponent {
-  currentTime = 0;
-
   audioRef = viewChild<ElementRef>('audio');
+  currentTime = 0;
 
   readonly playerState = inject(PlayerState);
 
-  protected toggleState(): void {
+  constructor() {
+    effect(() => {
+      this.currentTime = this.playerState.currentTime();
+    });
+  }
+
+  toggleState(): void {
     this.playerState.setIsPlaying(!this.playerState.isPlaying());
+    this.playerState.setCurrentTime(this.currentTime);
+  }
+
+  setCurrentTime($event: any) {
+    this.currentTime = $event.target.currentTime;
+  }
+
+  manuallyChangeCurrentTime($event: Event) {
+    const currentTime = ($event.target as unknown as TuiInputSliderComponent)
+      ?.value;
+    this.playerState.setCurrentTime(currentTime);
   }
 }

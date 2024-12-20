@@ -50,8 +50,16 @@ export class WebsocketsService {
     });
   }
 
-  emitTogglePlay(isPlaying: boolean, selectedTrack: Track) {
-    this.socket.emit('TOGGLE_PLAY_EVENT', { isPlaying, selectedTrack });
+  emitTogglePlay(
+    isPlaying: boolean,
+    selectedTrack: Track,
+    currentTime: number,
+  ) {
+    this.socket.emit('TOGGLE_PLAY_EVENT', {
+      isPlaying,
+      selectedTrack,
+      currentTime,
+    });
   }
 
   getRandomUsername() {
